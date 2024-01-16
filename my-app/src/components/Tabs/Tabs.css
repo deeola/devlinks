@@ -1,0 +1,18 @@
+.tabs{
+
+    background-color: #EFEBFF;
+    color: purple;
+    padding: 11px 27px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.tabs:hover{
+    background-color: unset;
+    color: purple;
+}
+
+[data-tabsType="default"]{
+    background-color: unset;
+    color: gray;
+}

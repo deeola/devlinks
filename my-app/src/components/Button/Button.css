@@ -1,0 +1,30 @@
+.bgColor{
+width: 100%;
+padding: 11px 27px;
+border-radius: 5px;
+background:  #633CFF;
+outline: none;
+border: none;
+color: white;
+font-size: 16px;
+font-weight: 600;
+font-family: Instrument Sans;
+line-height: 24px;
+cursor: pointer;
+}
+
+
+[data-subtype="active"] {
+    opacity: 0.5;
+}
+
+[data-subtype="disabled"] {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+[data-buttonType="secondary"] {
+    background-color: white;
+    color: #633CFF;
+    border: 1px solid #633CFF;
+}
