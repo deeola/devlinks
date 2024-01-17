@@ -23,8 +23,8 @@ jobs:
 
     - name: Run ESLint
       run: npm run lint
-      working-directory: ./devlinks
+      working-directory: my-app
 
     - name: Run tests
       run: npm test
-      working-directory: ./devlinks
+      working-directory: my-app
