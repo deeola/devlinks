@@ -12,6 +12,8 @@ interface UInputs {
 
 export default function InputField(Props: UInputs) {
   const { type, id, name,  img, errorMessage, error } = Props;
+
+
   return (
     <div className={`input-container ${error ? 'error' : ''}`}>
       <span className="image">

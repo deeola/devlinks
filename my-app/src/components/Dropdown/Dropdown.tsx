@@ -1,4 +1,5 @@
 import React, { ComponentProps } from "react";
+import Select from 'react-select';
 import "./Dropdown.css";
 
 type T = {
@@ -16,8 +17,17 @@ interface DropdownFieldProps {
 }
 
 
-export default function Dropdown(Props: DropdownFieldProps ) {
-  const { options, id, name, img, error } = Props;
+
+
+export default function Dropdown( Props: DropdownFieldProps) {
+    const { options, id, name, img, error } = Props;
+
+ 
+
+  console.log(options[0]?.image)
+
+  
+
   return (
     <div className={`dropdown-container ${error ? "error" : ""}`}>
       <span className="image">
@@ -28,10 +38,10 @@ export default function Dropdown(Props: DropdownFieldProps ) {
           id={id}
           name={name}
           data-id="myDropdown"
-          className={error ? "error-border" : ""}
+          className={error ? "error-border" : "selected"}
         >
           {options.map((option) => (
-            <option key={option.value} value={option.value}>
+            <option className="myOption" key={option.value} value={option.value}>
               <div className="option-container">
                 <span className="option-image">
                   <img src={option.image} alt="Option" />

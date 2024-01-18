@@ -6,6 +6,7 @@ import Tabs from './components/Tabs/Tabs';
 import InputField from './components/Input/InputField';
 import iconLink from "./assets/images/icon-link.svg";
 import Dropdown from './components/Dropdown/Dropdown';
+import ImageUploadComponent from './components/Uploadimage/UploadImage';
 
 function App() {
   return (
@@ -21,7 +22,9 @@ function App() {
       <Tabs text='default' TabsType="default" />
 
       <InputField type='text' name='login'id='login' errorMessage='please check again ' img={iconLink}  />
+
       <Dropdown options={[{value :  "hello", label:  "Option 1", image : iconLink}, {value :  "hi", label:  "Option 2", image:iconLink}]} img={iconLink}/>
+    <ImageUploadComponent />
     </div>
   );
 }
