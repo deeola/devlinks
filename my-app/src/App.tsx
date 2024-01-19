@@ -7,11 +7,13 @@ import InputField from './components/Input/InputField';
 import iconLink from "./assets/images/icon-link.svg";
 import Dropdown from './components/Dropdown/Dropdown';
 import ImageUploadComponent from './components/Uploadimage/UploadImage';
+import Logo from './components/Logo/Logo';
+import Auth from './pages/Auth';
 
 function App() {
   return (
     <div className="App">
-      <Button text='adebola' />
+      {/* <Button text='adebola' />
       <Button text='praise' backgroundSubtype='active'  />
       <Button text='adeola'  backgroundSubtype='disabled' />
 
@@ -25,6 +27,12 @@ function App() {
 
       <Dropdown options={[{value :  "hello", label:  "Option 1", image : iconLink}, {value :  "hi", label:  "Option 2", image:iconLink}]} img={iconLink}/>
     <ImageUploadComponent />
+    <Logo size='large' /> */}
+
+    <Auth componentType='login' />
+    <Auth componentType='create' />
+
+
     </div>
   );
 }
