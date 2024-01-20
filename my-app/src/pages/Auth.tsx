@@ -16,11 +16,12 @@ export default function Auth(Props: TAuth) {
   const { componentType } = Props;
 
   return (
-    <section>
-      <div>
+    <section className="authSection">
+        <div className="authContainer">
+        <div className="logoContainer">
         <Logo size="large" />
       </div>
-      <div>
+      <div className="devAuthContainer">
         <div>
           <MHeader
             text={componentType === "login" ? "Login" : "Create account"}
@@ -92,6 +93,8 @@ export default function Auth(Props: TAuth) {
           />
         </div>
       </div>
+        </div>
+      
     </section>
   );
 }
