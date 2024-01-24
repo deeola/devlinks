@@ -1,3 +1,16 @@
+@font-face {
+    font-family: "instrumentSansVariable";
+    src: url("../../assets/fonts/InstrumentSans-VariableFont_wdth\,wght.ttf")
+      format("truetype");
+  }
+  
+  @font-face {
+    font-family: "instrumentSansItalic";
+    src: url("../../assets/fonts/InstrumentSans-Italic-VariableFont_wdth\,wght.ttf")
+      format("truetype");
+  }
+
+
 .input-container{
 display: flex;
 align-items: center;
@@ -5,6 +18,7 @@ justify-content: space-between;
 border: 1px solid #D9D9D9;
 padding: 12px 16px;
 border-radius: 8px;
+font-family: "instrumentSansVariable";
 }
 
 .image{
@@ -23,12 +37,14 @@ width: 5%;
     background-color: antiquewhite;  
     align-items: center;
     position: relative;
+    font-family: "instrumentSansVariable";
 }
 
 input{
     width: 100%;
     border: none;
     color: black;
+    font-family: "instrumentSansVariable";
 }
 
 input:focus{

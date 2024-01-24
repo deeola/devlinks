@@ -1,3 +1,16 @@
+
+@font-face {
+    font-family: "instrumentSansVariable";
+    src: url("../../assets/fonts/InstrumentSans-VariableFont_wdth\,wght.ttf")
+      format("truetype");
+  }
+  
+  @font-face {
+    font-family: "instrumentSansItalic";
+    src: url("../../assets/fonts/InstrumentSans-Italic-VariableFont_wdth\,wght.ttf")
+      format("truetype");
+  }
+
 .bgColor{
 width: 100%;
 padding: 11px 27px;
@@ -8,7 +21,7 @@ border: none;
 color: white;
 font-size: 16px;
 font-weight: 600;
-font-family: Instrument Sans;
+font-family: "instrumentSansVariable";
 line-height: 24px;
 cursor: pointer;
 }

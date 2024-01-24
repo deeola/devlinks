@@ -1,17 +1,29 @@
+@font-face {
+    font-family: "instrumentSansVariable";
+    src: url("../../src/assets/fonts/InstrumentSans-VariableFont_wdth\,wght.ttf")
+      format("truetype");
+  }
+  
+  @font-face {
+    font-family: "instrumentSansItalic";
+    src: url("../../src/assets/fonts/InstrumentSans-Italic-VariableFont_wdth\,wght.ttf")
+      format("truetype");
+  }
+  
 .authSection{
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: #FAFAFA;
+    height: 100vh;
+    
     
 }
 .authContainer{
-    margin-top: 150px;
-    width: 35%;
+    width: 30%;
     display: flex;
     flex-direction: column;
-/* align-items: center; */
     justify-content: center;
 }
 
@@ -36,4 +48,25 @@ padding: 40px;
 
 .label{
     margin-bottom: 5px;
+    font-family: "instrumentSansVariable";
+}
+
+.inputcontainer, .buttoncontainer{
+    margin-bottom: 24px;
+}
+
+
+.questioncontainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.loginQuestion{
+ color: #633CFF !important;
+ cursor: pointer;
+ margin-left: 3px;
+
+
 }

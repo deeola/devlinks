@@ -35,13 +35,13 @@ export default function Auth(Props: TAuth) {
             />
           </div>
           <div>
-            <div>
+            <div className="inputcontainer">
               <SBody className="label" text="Email address" />
               <InputField img={mailbox} type="email" id="email" name="email" />
             </div>
             {componentType === "login" && (
-              <div>
-                <SBody className="label" text="password" />
+              <div className="inputcontainer">
+                <SBody className="label" text="Password" />
                 <InputField
                   img={password}
                   type="password"
@@ -53,7 +53,7 @@ export default function Auth(Props: TAuth) {
 
             {componentType === "create" && (
               <div>
-                <div>
+                <div className="inputcontainer">
                   <SBody className="label" text="Create password" />
 
                   <InputField
@@ -63,7 +63,7 @@ export default function Auth(Props: TAuth) {
                     name="createpassword"
                   />
                 </div>
-                <div>
+                <div className="inputcontainer">
                   <SBody className="label" text="Confirm password" />
                   <InputField
                     img={password}
@@ -76,10 +76,13 @@ export default function Auth(Props: TAuth) {
               </div>
             )}
           </div>
+          <div className="buttoncontainer">
           <Button
             text={componentType === "login" ? "Login" : "Create new account"}
           />
-          <div>
+          </div>
+          
+          <div className="questioncontainer">
             <MBody
               text={
                 componentType === "login"
@@ -88,7 +91,8 @@ export default function Auth(Props: TAuth) {
               }
             />
             <MBody
-              text={componentType === "login" ? "create account" : "Login"}
+            className="loginQuestion"
+              text={componentType === "login" ? "Create account" : "Login"}
             />
           </div>
         </div>
