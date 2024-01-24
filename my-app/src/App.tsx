@@ -9,6 +9,7 @@ import Dropdown from './components/Dropdown/Dropdown';
 import ImageUploadComponent from './components/Uploadimage/UploadImage';
 import Logo from './components/Logo/Logo';
 import Auth from './pages/Auth';
+import Customize from './pages/Customize/Customize';
 
 function App() {
   return (
@@ -29,8 +30,9 @@ function App() {
     <ImageUploadComponent />
     <Logo size='large' /> */}
 
-    {/* <Auth componentType='login' /> */}
-    <Auth componentType='create' />
+     {/* <Auth componentType='login' />  */}
+     <Customize />
+
      {/* <Auth componentType='create' />  */}
 
 
