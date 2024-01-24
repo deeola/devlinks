@@ -1,86 +1,108 @@
 @font-face {
-    font-family: "instrumentSansVariable";
-    src: url("../../src/assets/fonts/InstrumentSans-VariableFont_wdth\,wght.ttf")
-      format("truetype");
-  }
-  
-  @font-face {
-    font-family: "instrumentSansItalic";
-    src: url("../../src/assets/fonts/InstrumentSans-Italic-VariableFont_wdth\,wght.ttf")
-      format("truetype");
-  }
-  
-.authSection{
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #FAFAFA;
-    height: 100vh;
-    
-    
-}
-.authContainer{
-    width: 30%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  font-family: "instrumentSansVariable";
+  src: url("../../src/assets/fonts/InstrumentSans-VariableFont_wdth\,wght.ttf")
+    format("truetype");
 }
 
-.devAuthContainer{
-background-color: white;
-padding: 40px;
+@font-face {
+  font-family: "instrumentSansItalic";
+  src: url("../../src/assets/fonts/InstrumentSans-Italic-VariableFont_wdth\,wght.ttf")
+    format("truetype");
 }
 
-.logoContainer{
-    margin-bottom: 40px;
-    width: 30%; 
-    align-self: center;
+.authSection {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fafafa;
+  height: 100vh;
+}
+.authContainer {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.authHeaderContainer{
-   margin-bottom: 40px;
+.devAuthContainer {
+  background-color: white;
+  padding: 40px;
 }
 
-.authHeading{
-    margin-bottom: 20px;
+.logoContainer {
+  margin-bottom: 40px;
+  width: 30%;
+  align-self: center;
 }
 
-.label{
-    margin-bottom: 5px;
-    font-family: "instrumentSansVariable";
+.authHeaderContainer {
+  margin-bottom: 40px;
 }
 
-.inputcontainer, .buttoncontainer, .passwordcontain{
-    margin-bottom: 24px;
+.authHeading {
+  margin-bottom: 20px;
 }
 
-
-.questioncontainer{
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.label {
+  margin-bottom: 5px;
+  font-family: "instrumentSansVariable";
 }
 
+.inputcontainer,
+.buttoncontainer,
+.passwordcontain {
+  margin-bottom: 24px;
+}
 
-.loginQuestion{
- color: #633CFF !important;
- cursor: pointer;
- margin-left: 3px;
+.questioncontainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-
+.loginQuestion {
+  color: #633cff !important;
+  cursor: pointer;
+  margin-left: 3px;
 }
 
 @media (max-width: 820px) {
-    .authContainer{
-        width: 70%;
-  
-    }
+  .authContainer {
+    width: 70%;
+  }
 }
 
-
 @media (max-width: 360px) {
-    .authContainer{
-        width: 90%;
-    }
+  .authSection {
+    background-color: white;
+    width: 100%;
+    padding: 32px;
+    height: unset;
+  }
+
+  .authContainer {
+    width: 100%;
+
+  }
+
+  .devAuthContainer {
+    padding: unset;
+  }
+
+  .logoContainer {
+    margin-bottom: 40px;
+    width: 60%;
+    align-self: unset;
+
+
+  }
+
+  .authHeading {
+    margin-bottom: 8px;
+  }
+
+  .questioncontainer {
+    flex-direction: column;
+  }
 }

@@ -40,3 +40,13 @@ text-align: left;
     text-align: left;
 
 }
+
+
+@media (max-width: 360px) {
+
+ 
+  .Mheader {
+font-size: 24px;
+  }
+ 
+}

@@ -76,7 +76,7 @@ export default function Auth(Props: TAuth) {
                   />
                 </div>
                 <div className="passwordcontain">
-                <MBody text="Password must contain at least 8 characters" />
+                <SBody text="Password must contain at least 8 characters" />
                 </div>
                
               </div>
