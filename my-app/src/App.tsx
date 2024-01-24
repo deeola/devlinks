@@ -29,7 +29,8 @@ function App() {
     <ImageUploadComponent />
     <Logo size='large' /> */}
 
-    <Auth componentType='login' />
+    {/* <Auth componentType='login' /> */}
+    <Auth componentType='create' />
      {/* <Auth componentType='create' />  */}
 
 

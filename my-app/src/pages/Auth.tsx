@@ -37,7 +37,7 @@ export default function Auth(Props: TAuth) {
           <div>
             <div className="inputcontainer">
               <SBody className="label" text="Email address" />
-              <InputField img={mailbox} type="email" id="email" name="email" />
+              <InputField img={mailbox} type="email" id="email" name="email" placeholder="e.g. alex@email.com" />
             </div>
             {componentType === "login" && (
               <div className="inputcontainer">
@@ -47,6 +47,7 @@ export default function Auth(Props: TAuth) {
                   type="password"
                   id="password"
                   name="password"
+                  placeholder="Enter your password"
                 />
               </div>
             )}
@@ -61,6 +62,7 @@ export default function Auth(Props: TAuth) {
                     type="password"
                     id="createpassword"
                     name="createpassword"
+                    placeholder="At least 8 characters"
                   />
                 </div>
                 <div className="inputcontainer">
@@ -70,9 +72,13 @@ export default function Auth(Props: TAuth) {
                     type="password"
                     id="confirmpassword"
                     name="confirmpassword"
+                    placeholder="At least 8 characters"
                   />
                 </div>
+                <div className="passwordcontain">
                 <MBody text="Password must contain at least 8 characters" />
+                </div>
+               
               </div>
             )}
           </div>

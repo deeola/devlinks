@@ -51,7 +51,7 @@ padding: 40px;
     font-family: "instrumentSansVariable";
 }
 
-.inputcontainer, .buttoncontainer{
+.inputcontainer, .buttoncontainer, .passwordcontain{
     margin-bottom: 24px;
 }
 
