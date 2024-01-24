@@ -70,3 +70,17 @@ padding: 40px;
 
 
 }
+
+@media (max-width: 820px) {
+    .authContainer{
+        width: 70%;
+  
+    }
+}
+
+
+@media (max-width: 360px) {
+    .authContainer{
+        width: 90%;
+    }
+}
