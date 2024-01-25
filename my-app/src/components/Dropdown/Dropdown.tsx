@@ -1,58 +1,71 @@
-import React, { ComponentProps } from "react";
-import Select from 'react-select';
+import React, { useState } from "react";
 import "./Dropdown.css";
 
-type T = {
-  value: string;
-  label: string;
-  image: string;
+type Tdropdown = {
+  dropArray?: {
+    image: string;
+    label: string;
+    selected?: boolean;
+  }[];
+  dropdownImage: string;
 };
 
-interface DropdownFieldProps {
-  options: T[];
-  id?: string;
-  name?: string;
-  img?: string;
-  error?: boolean;
-}
+export default function Dropdown(Props: Tdropdown) {
+  const { dropArray, dropdownImage } = Props;
 
+  const [isActive, setIsActive] = useState<boolean>(false);
+  const [selectedValue, setSelectedValue] = useState<string>(
+    "Dropdown Field Active"
+  );
 
+  const handleClick = () => {
+    setIsActive(!isActive);
+  };
 
-
-export default function Dropdown( Props: DropdownFieldProps) {
-    const { options, id, name, img, error } = Props;
-
- 
-
-  console.log(options[0]?.image)
-
-  
+  const handleOptionClick = (option: string) => {
+    setSelectedValue(option);
+    setIsActive(false);
+  };
 
   return (
-    <div className={`dropdown-container ${error ? "error" : ""}`}>
-      <span className="image">
-        <img src={img} alt="Icon" />
-      </span>
-      <div className="dropdown-and-error">
-        <select
-          id={id}
-          name={name}
-          data-id="myDropdown"
-          className={error ? "error-border" : "selected"}
-        >
-          {options.map((option) => (
-            <option className="myOption" key={option.value} value={option.value}>
-              <div className="option-container">
-                <span className="option-image">
-                  <img src={option.image} alt="Option" />
-                </span>
-                <span>{option.label}</span>
-                
-              </div>
-            </option>
-          ))}
-        </select>
-      </div>
+    <div className={`custom-select ${isActive ? "active" : ""}`}>
+      <button
+        className="select-button"
+        role="combobox"
+        aria-labelledby="select button"
+        aria-haspopup="listbox"
+        aria-expanded={isActive ? "true" : "false"}
+        aria-controls="select-dropdown"
+        onClick={handleClick}
+      >
+       
+        <div className="dropdown-selected-value">
+        <span className="image">
+          <img src={dropdownImage} alt="Icon" />
+        </span>
+          <span className="selected-value">{selectedValue}</span>
+        
+        </div>
+
+        <span className="arrow"></span>
+      </button>
+      <ul className="select-dropdown" role="listbox" id="select-dropdown">
+        {dropArray?.map((list, index) => (
+          <li
+            key={index}
+            role="option"
+            onClick={() => handleOptionClick(list.label)}
+          >
+            <input type="radio" id={list.label} name={list.label} />
+            <label htmlFor={list.label}>
+              <img className="bx bxl-github" src={list.image} />
+              {list.label}
+            </label>
+          </li>
+        ))}
+
+        {/* Include other list items similarly */}
+      </ul>
     </div>
   );
 }

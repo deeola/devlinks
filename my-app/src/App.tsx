@@ -35,7 +35,9 @@ function App() {
     <Logo size='large' /> */}
 
      {/* <Auth componentType='login' />  */}
-     <Customize />
+
+     {/* <Dropdown id='dropdown' name='dropdown' type=''/> */}
+     {/* <Customize /> */}
 
      {/* <Auth componentType='create' />  */}
 
@@ -46,6 +48,8 @@ function App() {
 
 
       </Routes> */}
+
+      <Dropdown dropdownImage={iconLink} dropArray={[{label:  "hello", selected:  false, image : iconLink}, {label :  "hi", selected:  false, image:iconLink}]} />
 
 
     </div>
