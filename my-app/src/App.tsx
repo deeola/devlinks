@@ -10,6 +10,10 @@ import ImageUploadComponent from './components/Uploadimage/UploadImage';
 import Logo from './components/Logo/Logo';
 import Auth from './pages/Auth';
 import Customize from './pages/Customize/Customize';
+import {
+  Routes,
+  Route
+} from "react-router-dom";
 
 function App() {
   return (
@@ -34,6 +38,14 @@ function App() {
      <Customize />
 
      {/* <Auth componentType='create' />  */}
+
+     {/* <Routes>
+
+          <Route path="/" element={<Customize/>} />
+          <Route path="/login" element={<Auth componentType='create' />} />
+
+
+      </Routes> */}
 
 
     </div>

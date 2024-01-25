@@ -1,3 +1,118 @@
-.customContainer{
-    display: flex;
+.customize-container {
+  height: 100vh;
+}
+
+.customize {
+  background-color: #fafafa;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.Navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 24px;
+  background-color: white;
+}
+
+.navlinks-button {
+  display: flex;
+  justify-content: space-between;
+  width: 62%;
+}
+
+.navlinks {
+  display: flex;
+  width: 27%;
+  justify-content: space-between;
+}
+
+.custom-logo-container {
+}
+
+.customContainer {
+  display: flex;
+  justify-content: space-between;
+  height: 90%;
+  padding: 16px 24px;
+}
+
+.phone-prev {
+  width: 45%;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-links {
+
+  margin-left: 30px;
+}
+
+
+
+/* customelink.tsx styling*/
+
+.customelinkcontainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  background-color: white;
+}
+
+.your-links {
+  margin-bottom: 15px;
+}
+
+.add-new-link {
+  margin: 35px 0px;
+}
+
+.edit-links-remove {
+  padding: 40px;
+}
+
+.link-middle {
+  background-color: #fafafa;
+  padding: 50px 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+}
+
+.link-middle-image {
+  margin-bottom: 40px;
+}
+
+.link-middle-header {
+  margin-bottom: 30px;
+}
+
+.link-middle-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.link-middle-mbody {
+  text-align: center !important;
+  width: 45%;
+}
+
+.custome-save-button {
+  padding: 25px;
+  background-color: white;
+  border-top: 1px solid gainsboro;
+  display: flex;
+  justify-content: end;
+}
+
+.custom-button {
+  width: 10% !important;
 }

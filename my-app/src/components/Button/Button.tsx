@@ -6,17 +6,18 @@ type Color = "active" | "disabled";
 type Button = {
     text: string,
     buttonType?: "secondary",
-    backgroundSubtype?: Color
+    backgroundSubtype?: Color,
+    classname? :  string
 }
 
 
 export default function Button(Props: Button) {
 
-    const { text, buttonType, backgroundSubtype } = Props;
+    const { text, buttonType, backgroundSubtype, classname } = Props;
 
 
     return (
-        <button className="bgColor" data-subtype={backgroundSubtype} data-buttonType={buttonType}> { text }</button >
+        <button className={`bgColor ${classname}`} data-subtype={backgroundSubtype} data-buttonType={buttonType}> { text }</button >
     )
 }
 
