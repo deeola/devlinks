@@ -41,3 +41,10 @@ cursor: pointer;
     color: #633CFF;
     border: 1px solid #633CFF;
 }
+
+[data-buttonType="secondary"]:hover {
+  color: #633CFF;
+    background-color: #EFEBFF;
+    border: 1px solid #633CFF;
+  
+}

@@ -1,5 +1,5 @@
 .customize-container {
-  height: 100vh;
+  /* height: 100vh; */
 }
 
 .customize {
@@ -48,7 +48,6 @@
 }
 
 .custom-links {
-
   margin-left: 30px;
 }
 

@@ -26,7 +26,7 @@ export default function CustomeLink() {
         </div>
       
       <div className="custome-save-button">
-        <Button classname="custom-button"  text="Save" />
+        <Button backgroundSubtype="active" classname="custom-button"  text="Save" />
       </div>
     </div>
   );
