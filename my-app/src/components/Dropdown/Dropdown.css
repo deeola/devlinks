@@ -85,6 +85,10 @@
     gap: 1rem;
     align-items: center;
   }
+
+  .select-dropdown li:not(:last-child) {
+    border-bottom: 1px solid #ccc; 
+  }
   
   .select-dropdown li label {
     width: 100%;
