@@ -7,17 +7,18 @@ type Button = {
     text: string,
     buttonType?: "secondary",
     backgroundSubtype?: Color,
-    classname? :  string
+    classname? :  string,
+    onClick? : () => void
 }
 
 
 export default function Button(Props: Button) {
 
-    const { text, buttonType, backgroundSubtype, classname } = Props;
+    const { text, buttonType, backgroundSubtype, classname, onClick } = Props;
 
 
     return (
-        <button className={`bgColor ${classname}`} data-subtype={backgroundSubtype} data-buttonType={buttonType}> { text }</button >
+        <button onClick={onClick} className={`bgColor ${classname}`} data-subtype={backgroundSubtype} data-buttonType={buttonType}> { text }</button >
     )
 }
 

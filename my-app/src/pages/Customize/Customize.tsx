@@ -8,6 +8,8 @@ import CustomeLink from "./CustomeLink";
 import links from "../../assets/images/icon-link.svg";
 import profiledetails from "../../assets/images/icon-profile-details-header.svg";
 import { Link } from "react-router-dom";
+import AddLink from "../../components/Addlink/AddLink";
+import { linkArray } from "../../linkArray";
 
 export default function Customize() {
   return (
@@ -38,6 +40,8 @@ export default function Customize() {
           </div>
           <div className="custom-links">
             <CustomeLink />
+
+           
           </div>
         </div>
       </section>

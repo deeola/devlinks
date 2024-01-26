@@ -2,28 +2,32 @@ import React, { useState } from "react";
 import "./Dropdown.css";
 
 type Tdropdown = {
-  dropArray?: {
+  dropArray: {
     image: string;
     label: string;
     selected?: boolean;
   }[];
-  dropdownImage?: string;
+  dropArrayImage: string
 };
 
 export default function Dropdown(Props: Tdropdown) {
-  const { dropArray, dropdownImage } = Props;
+  const { dropArray, dropArrayImage } = Props;
 
   const [isActive, setIsActive] = useState<boolean>(false);
   const [selectedValue, setSelectedValue] = useState<string>(
-    "Dropdown Field Active"
+   dropArray[0].label
+  );
+  const [selectedImage, setSelectedImage] = useState<string>(
+    dropArray[0].image
   );
 
   const handleClick = () => {
     setIsActive(!isActive);
   };
 
-  const handleOptionClick = (option: string) => {
+  const handleOptionClick = (option: string, image: string) => {
     setSelectedValue(option);
+    setSelectedImage(image)
     setIsActive(false);
   };
 
@@ -41,9 +45,10 @@ export default function Dropdown(Props: Tdropdown) {
        
         <div className="dropdown-selected-value">
         <span className="image">
-          <img src={dropdownImage} alt="Icon" />
+          <img src= { dropArray.length === 0 ? dropArrayImage: selectedImage} alt="Icon" />
         </span>
-          <span className="selected-value">{selectedValue}</span>
+
+         <span className="selected-value">{ dropArray.length !== 0 ? selectedValue  :  dropArray[0].label}</span>
         
         </div>
 
@@ -54,7 +59,7 @@ export default function Dropdown(Props: Tdropdown) {
           <li
             key={index}
             role="option"
-            onClick={() => handleOptionClick(list.label)}
+            onClick={() => handleOptionClick(list.label, list.image)}
           >
             <input type="radio" id={list.label} name={list.label} />
             <label htmlFor={list.label}>
@@ -63,8 +68,6 @@ export default function Dropdown(Props: Tdropdown) {
             </label>
           </li>
         ))}
-
-        {/* Include other list items similarly */}
       </ul>
     </div>
   );

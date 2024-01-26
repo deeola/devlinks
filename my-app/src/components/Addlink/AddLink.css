@@ -1,0 +1,15 @@
+.addlink-container{
+    /* background-color: gainsboro; */
+width: 100%;
+}
+
+.addlinknumber-remove{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.label{
+margin-top: 12px;
+color: #333;
+}

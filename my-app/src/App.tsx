@@ -14,8 +14,13 @@ import {
   Routes,
   Route
 } from "react-router-dom";
+import AddLink from './components/Addlink/AddLink';
+import { linkArray } from './linkArray';
+
+
 
 function App() {
+
   return (
     <div className="App">
       {/* <Button text='adebola' />
@@ -49,8 +54,13 @@ function App() {
 
       </Routes> */}
 
-      <Dropdown dropdownImage={iconLink} dropArray={[{label:  "hello", selected:  false, image : iconLink}, {label :  "hi", selected:  false, image:iconLink}]} />
-      <ImageUploadComponent />
+  
+      {/* <ImageUploadComponent /> */}
+      {/* <AddLink  placeholder='https://www.github.com/benwright' number={1} dropArray={linkArray} /> */}
+
+      <Customize /> 
+
+      
 
     </div>
   );
