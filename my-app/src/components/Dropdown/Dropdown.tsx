@@ -7,7 +7,7 @@ type Tdropdown = {
     label: string;
     selected?: boolean;
   }[];
-  dropdownImage: string;
+  dropdownImage?: string;
 };
 
 export default function Dropdown(Props: Tdropdown) {
