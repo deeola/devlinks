@@ -29,11 +29,13 @@ return (
         <div>
             <div>
                 <label className="label">Platform</label>
-                <Dropdown dropArrayImage={iconLink}  dropArray={dropArray} />
+                <div className="platform-link"><Dropdown dropArrayImage={iconLink}  dropArray={dropArray} /></div>
+                
             </div>
             <div>
             <label className="label">Link</label>
-            <InputField type='text' name='link' id='link' errorMessage={errorMessage} img={iconLink} placeholder={placeholder}  />
+            <div className="platform-link"><InputField type='text' name='link' id='link' errorMessage={errorMessage} img={iconLink} placeholder={placeholder}  /><InputField type='text' name='link' id='link' errorMessage={errorMessage} img={iconLink} placeholder={placeholder}  /></div>
+            
             </div>
         </div>
     </div>
