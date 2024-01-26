@@ -50,7 +50,7 @@ function App() {
       </Routes> */}
 
       <Dropdown dropdownImage={iconLink} dropArray={[{label:  "hello", selected:  false, image : iconLink}, {label :  "hi", selected:  false, image:iconLink}]} />
-
+      <ImageUploadComponent />
 
     </div>
   );

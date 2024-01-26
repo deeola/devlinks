@@ -1,51 +1,58 @@
-import React, { useState } from 'react';
+import React, { useRef, useState, ChangeEvent } from "react";
+import uploadimageicon from "../../assets/images/icon-upload-image.svg";
+import "./UploadImage.css";
+import { MBody } from "../Text/Text";
 
-const ImageUploadComponent: React.FC = () => {
-  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
 
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files && event.target.files[0];
 
-    if (file) {
+export default function UploadImage () {
+  const ref = useRef<HTMLInputElement>(null);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [fileInputStyle, setFileInputStyle] = useState<React.CSSProperties>({});
+
+  const handleClick = () => {
+    ref.current?.click();
+  };
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.currentTarget.files ?? []) as File[];
+    setSelectedFiles(files);
+
+    if (files.length > 0) {
       const reader = new FileReader();
-
-      reader.onloadend = () => {
-        setUploadedImage(reader.result as string);
-        console.log('Image uploaded:', reader.result);
+      reader.onload = () => {
+        if (typeof reader.result === "string") {
+          setFileInputStyle({
+            backgroundImage: `url(${reader.result})`,
+          });
+        }
       };
-
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(files[0]);
     }
   };
 
   return (
-    <div>
-      <div className="upload-container ">
-        {uploadedImage ? (
-          <div
-            className="uploaded-image"
-            style={{ backgroundImage: `url(${uploadedImage})` }}
-          >
-            <span onClick={() => setUploadedImage(null)}>Change Image</span>
-          </div>
-        ) : (
-          <label className="upload-label">
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageUpload}
-              className="upload-input"
-            />
-            <div className="upload-icon">Icon</div>
-            <span>Upload Image</span>
-          </label>
-        )}
+    <div className="upload-image-container">
+      <div onClick={handleClick} className={`file-input ${selectedFiles.length ? "uploaded" : ""}`} style={fileInputStyle}>
+        <div  className={`overlay ${selectedFiles.length ? "uploaded" : ""}`} ></div>
+        <div className="upload-image-text">
+          <img src={uploadimageicon} className={`upload-icon ${selectedFiles.length ? "uploaded" : ""}`}  />
+          <span  className={`upload-text ${selectedFiles.length ? "uploaded" : ""}`} >{!selectedFiles.length ? "+Upload Image" : "Change Image"}</span>
+        </div>
+
+        <input
+          type="file"
+          ref={ref}
+          className="hidden"
+          onChange={handleChange}
+          accept="image/*"
+        />
       </div>
-      <div className="status-text">
-        {uploadedImage ? 'Image Uploaded' : 'Image Not Uploaded'}
+      <div>
+        <MBody
+          text={!selectedFiles.length ? "Image not uploaded" : "Image Uploaded"}
+        />
       </div>
     </div>
   );
-};
-
-export default ImageUploadComponent;
+}
