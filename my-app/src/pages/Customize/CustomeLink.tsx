@@ -7,10 +7,14 @@ import { linkArray } from "../../linkArray";
 
 export default function CustomeLink() {
   const [addlink, setAddLink] = useState<boolean>(false);
+  const [linkAdded, setLinkAdded] = useState<number>(0);
+
 
   const handleDisplayForm = () => {
     setAddLink(true);
   };
+
+  
   return (
     <div className="customelinkcontainer">
       <div className="edit-links-remove">

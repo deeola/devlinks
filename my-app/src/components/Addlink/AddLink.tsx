@@ -34,7 +34,7 @@ return (
             </div>
             <div>
             <label className="label">Link</label>
-            <div className="platform-link"><InputField type='text' name='link' id='link' errorMessage={errorMessage} img={iconLink} placeholder={placeholder}  /><InputField type='text' name='link' id='link' errorMessage={errorMessage} img={iconLink} placeholder={placeholder}  /></div>
+            <div className="platform-link"><InputField type='text' name='link' id='link' errorMessage={errorMessage} img={iconLink} placeholder={placeholder}  /></div>
             
             </div>
         </div>
