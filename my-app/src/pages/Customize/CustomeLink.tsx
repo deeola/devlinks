@@ -9,10 +9,21 @@ export default function CustomeLink() {
   const [addlink, setAddLink] = useState<boolean>(false);
   const [linkAdded, setLinkAdded] = useState<number>(0);
 
+  const [linkComponents, setLinkComponents] = useState<JSX.Element[]>([]);
 
-  const handleDisplayForm = () => {
+  const handleAddLink = (): void => {
+    setLinkComponents(prevComponents => [
+      ...prevComponents,
+      <AddLink
+        key={prevComponents.length + 1}
+        placeholder="https://www.example.com"
+        number={prevComponents.length + 1}
+        dropArray={linkArray}
+      />
+    ]);
     setAddLink(true);
   };
+
 
   
   return (
@@ -22,12 +33,13 @@ export default function CustomeLink() {
         <MBody text="Add/edit/remove links below and then share all your profiles with the world!" />
         <div className="add-new-link">
           <Button
-            onClick={handleDisplayForm}
+           onClick={handleAddLink}
             buttonType="secondary"
             text="+ Add new link"
           />
         </div>
-        {!addlink ? (
+        <div >
+        {linkComponents.length === 0 ? (
           <div className="link-middle">
             <div className="link-middle-image">
               <img src={picture} alt="get-started-icon" />
@@ -43,12 +55,13 @@ export default function CustomeLink() {
             </div>
           </div>
         ) : (
-          <AddLink
-            placeholder="https://www.github.com/benwright"
-            number={1}
-            dropArray={linkArray}
-          />
+
+            <div style={{ maxHeight: "250px", overflowY: "auto" }}>
+  {linkComponents}
+            </div>
+        
         )}
+        </div>
       </div>
 
       <div className="custome-save-button">
@@ -60,4 +73,11 @@ export default function CustomeLink() {
       </div>
     </div>
   );
+
+
+
+
 }
+
+
+

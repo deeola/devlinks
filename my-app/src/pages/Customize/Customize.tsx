@@ -40,7 +40,6 @@ export default function Customize() {
           </div>
           <div className="custom-links">
             <CustomeLink />
-
            
           </div>
         </div>
