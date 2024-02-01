@@ -9,3 +9,5 @@ const RemoveLink = () => {
         type: "REMOVE LINK"
     }
 }
+
+export {}
