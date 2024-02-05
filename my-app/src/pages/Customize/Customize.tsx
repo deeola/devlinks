@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import "./Customize.css";
 import Logo from "../../components/Logo/Logo";
 import Tabs from "../../components/Tabs/Tabs";
@@ -12,6 +12,9 @@ import AddLink from "../../components/Addlink/AddLink";
 import { linkArray } from "../../linkArray";
 
 export default function Customize() {
+  const [values, setValues] = useState([])
+  const [linkss, setLinkss] = useState([{name: "github", link:"www.link.com"}])
+
   return (
     <div className="customize-container">
       <section className="customize">

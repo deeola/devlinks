@@ -8,15 +8,19 @@ type Tdropdown = {
     selected?: boolean;
   }[];
   dropArrayImage: string
+  selectedValue: string;
+  onChange: (value: string) => void;
 };
 
 export default function Dropdown(Props: Tdropdown) {
   const { dropArray, dropArrayImage } = Props;
 
   const [isActive, setIsActive] = useState<boolean>(false);
+  
   const [selectedValue, setSelectedValue] = useState<string>(
    dropArray[0].label
   );
+
   const [selectedImage, setSelectedImage] = useState<string>(
     dropArray[0].image
   );
