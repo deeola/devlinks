@@ -14,11 +14,11 @@ export default function PhonePreview() {
 
 
   const arr = [
-    { color: "#000000", image: gitlab, text: "Gitlab", link: "www.gitlab.com" },
-    { color: "#4C4C4C", image: facebook, text: "Facebook", link: "www.facebook.com"  },
-    { color: "#818181", image: x, text: "X", link: "www.x.com"  },
-    { color: "#000000", image: gitlab, text: "Gitlab", link: "www.gitlab.com"  },
-    { color: "#4C4C4C", image: facebook, text: "Facebook", link: "www.facebook.com"  },
+    { color: "#000000", image: gitlab, text: "Gitlab", link: "http://www.gitlab.com" },
+    { color: "#4C4C4C", image: facebook, text: "Facebook", link: "http://facebook.com"  },
+    { color: "#818181", image: x, text: "X", link: "http://x.com"   },
+    { color: "#000000", image: gitlab, text: "Gitlab", link: "http://www.gitlab.com"  },
+    { color: "#4C4C4C", image: facebook, text: "Facebook", link: "http://facebook.com"  },
   ];
 
   let name: string | boolean = "Praise Bamigboye"
@@ -97,9 +97,12 @@ export default function PhonePreview() {
                 width="237"
                 height="44"
               >
-                <div
+                <a
                   className="linkTagContainer"
                   style={{ backgroundColor: myarray.color }}
+                  href={myarray.link}
+                  target="_blank"
+                  rel="noreferrer"
                 >
                   <div className="linkTagSubContainer">
                     <img src={myarray.image} alt="Imagee" style={{ width: "100%" }} />
@@ -108,7 +111,7 @@ export default function PhonePreview() {
                   <div>
                     <img src={arrow} alt="arrow" style={{ width: "100%" }} />
                   </div>
-                </div>
+                </a>
               </foreignObject>
             ))}
             {shouldScroll && (
