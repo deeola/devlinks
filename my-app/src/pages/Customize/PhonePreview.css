@@ -45,3 +45,23 @@
     color: black !important;
     font-size: 20px !important;
 }
+
+.rounded-image-container {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+
+  
+  }
+  .rounded-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+  }
+  .rounded-image-foreign{
+
+  }
