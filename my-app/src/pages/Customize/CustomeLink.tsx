@@ -7,32 +7,46 @@ import { linkArray } from "../../linkArray";
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from "../../state/store";
 import { addNewLink } from "../../state/link/linkSlice";
+import { addComponent } from "../../state/link/linkComponentSlice";
 
 export default function CustomeLink() {
-  const [addlink, setAddLink] = useState<boolean>(false);
-  const [linkAdded, setLinkAdded] = useState<number>(0);
-  const [linked, setLinks] = useState([{name: "github", link:"www.link.com", picture: picture}])
 
-  const [linkComponents, setLinkComponents] = useState<JSX.Element[]>([]);
+  const dispatch = useDispatch();
+
+  // selectors
 
   const links = useSelector((state: RootState) => state.link.links);
-  const dispatch = useDispatch();
+  const linksComponents = useSelector((state: RootState) => state.linkComponentSlice.components);
+
+  console.log(linksComponents, "linksComponents")
+
+
+
+
+  // value from inputfield and dropdown
+    const [linked, setLinks] = useState([{name: "github", link:"www.link.com", picture: picture}])
+
+  // const [linkComponents, setLinkComponents] = useState<JSX.Element[]>([]);
+
+ 
+
+  console.log(linksComponents, "linksComponents")
+
+ 
 
   console.log(links, "addLink");
 
   const handleAddLink = (): void => {
-    setLinkComponents((prevComponents) => [
-      ...prevComponents,
+    dispatch(addComponent(
       <AddLink
-        key={prevComponents.length + 1}
-        placeholder="https://mylink.com"
-        number={prevComponents.length + 1}
+        key={0}
+        placeholder="https://mylinked.com"
+        number={linksComponents.length + 1}
         dropArray={linkArray}
         value=""
         onChange={() => {}}
       />,
-    ]);
-    setAddLink(true);
+    ))
   };
 
   const handleSave = (): void => {
@@ -54,7 +68,7 @@ export default function CustomeLink() {
           />
         </div>
         <div>
-          {linkComponents.length === 0 ? (
+          {linksComponents.length === 0 ? (
             <div className="link-middle">
               <div className="link-middle-image">
                 <img src={picture} alt="get-started-icon" />
@@ -70,14 +84,16 @@ export default function CustomeLink() {
               </div>
             </div>
           ) : (
-            <div>{linkComponents}</div>
+            linksComponents.map((linked) => (
+              <>{linked}</>
+            ))
           )}
         </div>
       </div>
 
       <div className="custome-save-button">
         <Button
-          backgroundSubtype= {linkComponents.length === 0 && "active"}
+          backgroundSubtype= {linksComponents.length === 0 && "active"}
           classname="custom-button"
           text="Save"
           onClick={handleSave}
