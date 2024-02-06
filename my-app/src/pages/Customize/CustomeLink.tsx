@@ -4,20 +4,28 @@ import Button from "../../components/Button/Button";
 import picture from "../../assets/images/illustration-empty.svg";
 import AddLink from "../../components/Addlink/AddLink";
 import { linkArray } from "../../linkArray";
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from "../../state/store";
+import { addNewLink } from "../../state/link/linkSlice";
 
 export default function CustomeLink() {
   const [addlink, setAddLink] = useState<boolean>(false);
   const [linkAdded, setLinkAdded] = useState<number>(0);
-  const [links, setLinks] = useState([{name: "github", link:"www.link.com", picture: picture}])
+  const [linked, setLinks] = useState([{name: "github", link:"www.link.com", picture: picture}])
 
   const [linkComponents, setLinkComponents] = useState<JSX.Element[]>([]);
+
+  const links = useSelector((state: RootState) => state.link.links);
+  const dispatch = useDispatch();
+
+  console.log(links, "addLink");
 
   const handleAddLink = (): void => {
     setLinkComponents((prevComponents) => [
       ...prevComponents,
       <AddLink
         key={prevComponents.length + 1}
-        placeholder="https://www.example.com"
+        placeholder="https://mylink.com"
         number={prevComponents.length + 1}
         dropArray={linkArray}
         value=""
@@ -27,9 +35,12 @@ export default function CustomeLink() {
     setAddLink(true);
   };
 
-  const handleSave = (): void =>{
-console.log(links)
+  const handleSave = (): void => {
+    dispatch(addNewLink(linked))
+    console.log(links)
   }
+
+
   return (
     <div className="customelinkcontainer">
       <div className="edit-links-remove">
@@ -66,7 +77,7 @@ console.log(links)
 
       <div className="custome-save-button">
         <Button
-          backgroundSubtype="active"
+          backgroundSubtype= {linkComponents.length === 0 && "active"}
           classname="custom-button"
           text="Save"
           onClick={handleSave}
