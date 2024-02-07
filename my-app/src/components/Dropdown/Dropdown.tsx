@@ -10,7 +10,7 @@ type Tdropdown = {
     label: string;
     selected?: boolean;
     bgColor: string;
-    id: number;
+    id: string;
   }[];
   dropArrayImage: string;
   selectedValue: string;
@@ -35,7 +35,7 @@ export default function Dropdown(Props: Tdropdown) {
     dropArray[0].bgColor
   );
 
-  const [selectedId, setSelectedId] = useState<number>(
+  const [selectedId, setSelectedId] = useState<string>(
     dropArray[0].id
   );
 
@@ -53,7 +53,7 @@ export default function Dropdown(Props: Tdropdown) {
     setIsActive(!isActive);
   };
 
-  const handleOptionClick = (option: string, image: string, color: string, id: number) => {
+  const handleOptionClick = (option: string, image: string, color: string, id: string) => {
     setSelectedId(id)
     setSelectedValue(option);
     setSelectedImage(image);

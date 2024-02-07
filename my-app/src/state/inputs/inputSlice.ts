@@ -10,7 +10,7 @@ type Input = {
 
 const initialState: Input = {
   value: "",
-  error: true,
+  error: false,
   touched: false,
   type: "text",
   errorMessage: "",
@@ -26,14 +26,14 @@ const inputSlice = createSlice({
     },
 
     validateField: (state) => {
-    
       if (state.type === "email") {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         state.errorMessage = "Please enter a valid email address.";
         state.error = !emailRegex.test(state.value);
       } else if (state.type === "text") {
-        state.errorMessage = "Please enter a value.";
         state.error = state.value.trim() === '';
+        state.errorMessage = "Please enter a value.";
+        
       } else if (state.type === "number") {
         state.errorMessage = "Please enter a number.";
         state.error = isNaN(Number(state.value));

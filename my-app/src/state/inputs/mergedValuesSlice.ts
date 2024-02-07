@@ -4,7 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 
 export type MergedValues = { 
-    id: number;
+    id: string;
     value: string;
     label: string;
     bgColor: string;
@@ -12,7 +12,7 @@ export type MergedValues = {
 }
 
 const initialState = {
-  mergedValue: { id: 0, value: "", label: "", bgColor: "", image:"" } as MergedValues
+  mergedValue:{ id: "", value: "", label: "", bgColor: "", image:"" } as MergedValues
 };
 
 export const mergedValuesSlice = createSlice({

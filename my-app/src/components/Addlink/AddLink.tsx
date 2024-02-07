@@ -10,24 +10,25 @@ import { updateMergedValue } from "../../state/inputs/mergedValuesSlice";
 import { MergedValues } from "../../state/inputs/mergedValuesSlice";
 
 type AddLinks = {
-  number: number;
+
   dropArray: {
     image: string;
     label: string;
     selected?: boolean;
     bgColor: string;
-    id: number;
+    id: string;
   }[];
-  placeholder: string;
-  value: string;
-  onChange: (value: string) => void;
+  id: string,
+  number: number
+
 
 };
 
 export default function AddLink(Props: AddLinks) {
   const dispatch = useDispatch();
 
-  const { number, dropArray } = Props;
+  const { number, id, dropArray } = Props;
+
 
   const [selectedDropdownValue, setSelectedDropdownValue] = useState<string>(
     dropArray[0].label
@@ -37,7 +38,7 @@ export default function AddLink(Props: AddLinks) {
     setSelectedDropdownValue(value);
 
     const partialMergedValue: Partial<MergedValues> = {
-      id: number,
+      id: id,
       bgColor: "#3B3054",
     };
 
@@ -56,7 +57,7 @@ export default function AddLink(Props: AddLinks) {
   const handleRemove = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    dispatch(removeLink(number));
+    dispatch(removeLink(id));
   };
 
   return (

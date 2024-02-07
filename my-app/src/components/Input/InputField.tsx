@@ -25,7 +25,7 @@ export default function InputField(Props: UInputs) {
 
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const updatedValue = e.target.value; // Update the value before creating the partialMergedValue object
+    const updatedValue = e.target.value;
 
     const partialMergedValue: Partial<MergedValues> = {
       value:updatedValue
@@ -46,7 +46,7 @@ export default function InputField(Props: UInputs) {
   }
 
   return (
-    <div className={`input-container ${error && touched  ? 'error' : ''}`}>
+    <div className={`input-container ${error   ? 'error' : ''}`}>
       <span className="image">
         <img src={img} alt="Icon" />
       </span>
@@ -59,7 +59,7 @@ export default function InputField(Props: UInputs) {
           id={id}
           name={name}
           data-id="myInput"
-          className={`${error && touched ? 'error-text' : ''}`}
+          className={`${error ? 'error-text' : ''}`}
           placeholder={placeholder}
         />
         {touched && error && <span className="error-span"> {errorMessage} </span>}
