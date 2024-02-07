@@ -18,7 +18,7 @@ export default function Button(Props: Button) {
 
 
     return (
-        <button onClick={onClick} className={`bgColor ${classname}`} data-subtype={backgroundSubtype} data-buttonType={buttonType}> { text }</button >
+        <button onClick={onClick} className={`bgColor ${classname}`} data-subtype={backgroundSubtype} data-buttontype={buttonType}> { text }</button >
     )
 }
 

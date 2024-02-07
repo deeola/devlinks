@@ -1,24 +1,13 @@
 import {createSlice} from "@reduxjs/toolkit";
+import { MergedValues } from "../inputs/mergedValuesSlice";
 
-
-type Link = {
-id: number;
-image: string;
-label: string;
-link: string;
-bgcolor: string;
-}
 
 interface LinkState {
-    links: Link[];
-    onRemove: (id: number) => void;
+    links: MergedValues[];
 }
 
 const initialState: LinkState = {
-    links: [],
-    onRemove: (id: number) => {
-        console.log("onRemove", id);
-    }
+    links: []
 }
 
 
@@ -27,11 +16,17 @@ const linkSlice = createSlice({
     initialState,
     reducers:{
         addNewLink: (state, action) => {
-            state.links.push(action.payload);
+            const { payload } = action;
+            const linkExists = state.links.some(link => link.id === payload.id);
+            if (!linkExists) {
+                state.links.push(payload);
+              } else {
+                // dispatch(showDuplicateLinkNotification()); 
+              }
         },
         removeLink: (state, action) => {
-            state.links = state.links.filter(link => link.id !== action.payload);
-        },
+            state.links = state.links.filter(link => link.id !== action.payload);        
+        }
     },
 });
 

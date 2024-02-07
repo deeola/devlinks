@@ -4,7 +4,10 @@ import { MBody } from "../Text/Text";
 import Dropdown from "../Dropdown/Dropdown";
 import InputField from "../Input/InputField";
 import iconLink from "../../assets/images/icon-link.svg";
-
+import { useDispatch } from "react-redux";
+import { removeLink } from "../../state/link/linkSlice";
+import { updateMergedValue } from "../../state/inputs/mergedValuesSlice";
+import { MergedValues } from "../../state/inputs/mergedValuesSlice";
 
 type AddLinks = {
   number: number;
@@ -12,36 +15,55 @@ type AddLinks = {
     image: string;
     label: string;
     selected?: boolean;
+    bgColor: string;
+    id: number;
   }[];
-  errorMessage?: string;
   placeholder: string;
-  value: string; // Add value property
-  onChange: (value: string) => void; // Add onChange property
+  value: string;
+  onChange: (value: string) => void;
+
 };
 
 export default function AddLink(Props: AddLinks) {
-  const { number, dropArray, errorMessage, placeholder } = Props;
+  const dispatch = useDispatch();
+
+  const { number, dropArray } = Props;
 
   const [selectedDropdownValue, setSelectedDropdownValue] = useState<string>(
     dropArray[0].label
   );
-  const [inputValue, setInputValue] = useState<string>("");
 
-  // Function to update the selected dropdown value
   const handleDropdownChange = (value: string) => {
     setSelectedDropdownValue(value);
+
+    const partialMergedValue: Partial<MergedValues> = {
+      id: number,
+      bgColor: "#3B3054",
+    };
+
+    dispatch(updateMergedValue(partialMergedValue));
   };
 
-  // Function to update the input value
   const handleInputChange = (value: string) => {
-    setInputValue(value);
+    // const partialMergedValue: Partial<MergedValues> = {
+    //   id: number,
+    //   value: value,
+    // };
+
+    // dispatch(updateMergedValue(partialMergedValue));
+  };
+
+  const handleRemove = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    dispatch(removeLink(number));
   };
 
   return (
     <div className="addlink-container">
       <div className="addlinknumber-remove">
         <MBody text={`= Link #${number}`} />
-        <MBody text="Remove" />
+        <button onClick={handleRemove}> Remove </button>
       </div>
       <div>
         <div>
@@ -59,14 +81,10 @@ export default function AddLink(Props: AddLinks) {
           <label className="label">Link</label>
           <div className="platform-link">
             <InputField
-              value={inputValue}
-              onChange={handleInputChange}
-              type="text"
               name="link"
               id="link"
-              errorMessage={errorMessage}
               img={iconLink}
-              placeholder={placeholder}
+              placeholder={"www.your-link.com"}
             />
           </div>
         </div>

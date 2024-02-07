@@ -7,13 +7,10 @@ import PhonePreview from "./PhonePreview";
 import CustomeLink from "./CustomeLink";
 import links from "../../assets/images/icon-link.svg";
 import profiledetails from "../../assets/images/icon-profile-details-header.svg";
-import { Link } from "react-router-dom";
-import AddLink from "../../components/Addlink/AddLink";
-import { linkArray } from "../../linkArray";
+
 
 export default function Customize() {
-  const [values, setValues] = useState([])
-  const [linkss, setLinkss] = useState([{name: "github", link:"www.link.com"}])
+
 
   return (
     <div className="customize-container">

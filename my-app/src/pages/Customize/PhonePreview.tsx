@@ -9,8 +9,12 @@ import { MBody, SBody } from "../../components/Text/Text";
 import facebook from "../../assets/images/icon-facebook.svg";
 import gitlab from "../../assets/images/icon-github.svg";
 import x from "../../assets/images/icon-twitter.svg";
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from "../../state/store";
 
 export default function PhonePreview() {
+
+    const links = useSelector((state: RootState) => state.link.links);
 
 
   const arr = [
@@ -79,7 +83,7 @@ export default function PhonePreview() {
        
   
 
-        {arr.length === 0 ? (
+        {links.length === 0 ? (
           <>
             <rect width="237" height="44" x="35" y="278" fill="#EEE" rx="8" />
             <rect width="237" height="44" x="35" y="342" fill="#EEE" rx="8" />
@@ -89,7 +93,7 @@ export default function PhonePreview() {
           </>
         ) : (
           <>
-            {arr.slice(0, shouldScroll ? 5 : undefined).map((myarray, index) => (
+            {links.slice(0, shouldScroll ? 5 : undefined).map((myarray, index) => (
               <foreignObject
                 key={index}
                 x="35"
@@ -99,14 +103,14 @@ export default function PhonePreview() {
               >
                 <a
                   className="linkTagContainer"
-                  style={{ backgroundColor: myarray.color }}
-                  href={myarray.link}
+                  style={{ backgroundColor: myarray.bgColor }}
+                  href={myarray.value}
                   target="_blank"
                   rel="noreferrer"
                 >
                   <div className="linkTagSubContainer">
                     <img src={myarray.image} alt="Imagee" style={{ width: "100%" }} />
-                    <SBody className="labelText" text={myarray.text} />
+                    <SBody className="labelText" text={myarray.label} />
                   </div>
                   <div>
                     <img src={arrow} alt="arrow" style={{ width: "100%" }} />

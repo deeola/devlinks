@@ -8,7 +8,7 @@ import iconLink from "./assets/images/icon-link.svg";
 import Dropdown from './components/Dropdown/Dropdown';
 import ImageUploadComponent from './components/Uploadimage/UploadImage';
 import Logo from './components/Logo/Logo';
-import Auth from './pages/Auth';
+// import Auth from './pages/Auth';
 import Customize from './pages/Customize/Customize';
 import {
   Routes,
