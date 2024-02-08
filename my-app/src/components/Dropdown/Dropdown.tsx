@@ -3,15 +3,9 @@ import { updateMergedValue } from "../../state/inputs/mergedValuesSlice";
 import { MergedValues } from "../../state/inputs/mergedValuesSlice";
 import { useDispatch } from "react-redux";
 import "./Dropdown.css";
+import { linkArray } from "../../linkArray";
 
 type Tdropdown = {
-  dropArray: {
-    image: string;
-    label: string;
-    selected?: boolean;
-    bgColor: string;
-    id: string;
-  }[];
   dropArrayImage: string;
   selectedValue: string;
   onChange: (value: string) => void;
@@ -20,23 +14,23 @@ type Tdropdown = {
 export default function Dropdown(Props: Tdropdown) {
   const dispatch = useDispatch();
 
-  const { dropArray, dropArrayImage } = Props;
+  const { dropArrayImage } = Props;
 
   const [isActive, setIsActive] = useState<boolean>(false);
 
   const [selectedValue, setSelectedValue] = useState<string>(
-    dropArray[0].label
+    linkArray[0].label
   );
 
   const [selectedImage, setSelectedImage] = useState<string>(
-    dropArray[0].image
+    linkArray[0].image
   );
   const [selectedBgColor, setSelectedBgColor] = useState<string>(
-    dropArray[0].bgColor
+    linkArray[0].bgColor
   );
 
   const [selectedId, setSelectedId] = useState<string>(
-    dropArray[0].id
+    linkArray[0].id
   );
 
   useEffect(() => {
@@ -84,20 +78,20 @@ export default function Dropdown(Props: Tdropdown) {
         <div className="dropdown-selected-value">
           <span className="image">
             <img
-              src={dropArray.length === 0 ? dropArrayImage : selectedImage}
+              src={linkArray.length === 0 ? dropArrayImage : selectedImage}
               alt="Icon"
             />
           </span>
 
           <span className="selected-value">
-            {dropArray.length !== 0 ? selectedValue : dropArray[0].label}
+            {linkArray.length !== 0 ? selectedValue : linkArray[0].label}
           </span>
         </div>
 
         <span className="arrow"></span>
       </button>
       <ul className="select-dropdown" role="listbox" id="select-dropdown">
-        {dropArray?.map((list, index) => (
+        {linkArray.map((list, index) => (
           <li
             key={index}
             role="option"

@@ -15,8 +15,10 @@ import {
 
 import { validateField } from "../../state/inputs/inputSlice";
 import { v4 as uuidv4 } from "uuid";
+import AddnewLink from "../../components/Addlink/Addnewlink";
 
 export default function CustomeLink() {
+
   const dispatch = useDispatch();
   // selectors
   const links = useSelector((state: RootState) => state.link.links);
@@ -29,6 +31,34 @@ export default function CustomeLink() {
   const error = useSelector((state: RootState) => state.error.code);
   const value = useSelector((state: RootState) => state.input.value);
   const myerror = useSelector((state: RootState) => state.input.error);
+
+
+  const [prompts, setPrompts] = useState([
+    {
+      prompt: "",
+      answer: "",
+      timestamp: new Date().getTime()
+    }
+  ]);
+  
+  console.log(prompts);
+  
+
+  const handlePrompt = (e: React.ChangeEvent<HTMLTextAreaElement> | React.ChangeEvent<HTMLSelectElement>, i: number) => {
+    const { name, value } = e.target;
+
+    setPrompts(prevPrompts => {
+      const updatedPrompts = [...prevPrompts];
+      updatedPrompts[i] = {
+        ...updatedPrompts[i],
+        [name]: value
+      };
+      return updatedPrompts;
+    });
+  };
+  
+
+
 
 
   const handleSave = (): void => {
@@ -44,22 +74,36 @@ export default function CustomeLink() {
   };
 
 
+  const handleAddPrompt = () => {
+    setPrompts([...prompts, {
+      prompt: "",
+      answer: "",
+      timestamp: new Date().getTime()
+    }])
+  }
+
+
  
+  const handleDelete = (i: any) => {
+    let deletePrompts = [...prompts];
+    deletePrompts.splice(i, 1);
+    setPrompts(deletePrompts);
+  }
 
 
   const handleAddLink = (): void => {
 
 
-    dispatch(
-      addComponent(
-        <AddLink
-          id={uuidv4()}
-          dropArray={linkArray}
-          number={linksComponents.length + 1}
-        />
-      )
-    );
+    // dispatch(
+    //   addComponent(
+    //     <AddLink
+        
+    //     />
+    //   )
+    // );
+    handleAddPrompt()
 
+    dispatch(addComponent("hello"))
 
 
 
@@ -79,7 +123,7 @@ export default function CustomeLink() {
             text="+ Add new link"
           />
         </div>
-        <div>
+        {/* <div>
           {linksComponents.length === 0 ? (
             <div className="link-middle">
               <div className="link-middle-image">
@@ -95,11 +139,18 @@ export default function CustomeLink() {
                 />
               </div>
             </div>
-          ) : (
-            linksComponents.map((linked) => <>{linked}</>)
-          )}
-        </div>
+          ) : 
+            linksComponents.map((link) => (
+              <AddLink key={uuidv4()} id={uuidv4()} number={linksComponents.length + 1} />
+            ))
+          }
+        </div> */}
+
       </div>
+
+    <AddnewLink dropArrayImage={picture} error={false} type="text" />
+
+      
 
       <div className="custome-save-button">
         <Button

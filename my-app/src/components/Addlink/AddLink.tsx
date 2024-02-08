@@ -4,34 +4,28 @@ import { MBody } from "../Text/Text";
 import Dropdown from "../Dropdown/Dropdown";
 import InputField from "../Input/InputField";
 import iconLink from "../../assets/images/icon-link.svg";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { removeLink } from "../../state/link/linkSlice";
 import { updateMergedValue } from "../../state/inputs/mergedValuesSlice";
 import { MergedValues } from "../../state/inputs/mergedValuesSlice";
+import { v4 as uuidv4 } from "uuid";
+import { RootState } from "../../state/store";
 
 type AddLinks = {
-
-  dropArray: {
-    image: string;
-    label: string;
-    selected?: boolean;
-    bgColor: string;
-    id: string;
-  }[];
-  id: string,
-  number: number
-
-
+number: number;
+id: string;
+key: string;
 };
 
 export default function AddLink(Props: AddLinks) {
   const dispatch = useDispatch();
 
-  const { number, id, dropArray } = Props;
+  const { number, key, id } = Props;
+
 
 
   const [selectedDropdownValue, setSelectedDropdownValue] = useState<string>(
-    dropArray[0].label
+   "Github"
   );
 
   const handleDropdownChange = (value: string) => {
@@ -70,18 +64,20 @@ export default function AddLink(Props: AddLinks) {
         <div>
           <label className="label">Platform</label>
           <div className="platform-link">
-            <Dropdown
+            {/* <Dropdown
               selectedValue={selectedDropdownValue}
               onChange={handleDropdownChange}
               dropArrayImage={iconLink}
-              dropArray={dropArray}
-            />
+              key={key}
+
+            /> */}
           </div>
         </div>
         <div>
           <label className="label">Link</label>
           <div className="platform-link">
             <InputField
+            key={key}
               name="link"
               id="link"
               img={iconLink}

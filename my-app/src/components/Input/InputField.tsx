@@ -18,6 +18,9 @@ interface UInputs {
 export default function InputField(Props: UInputs) {
   const dispatch = useDispatch();
 
+   // Local state for managing the input field value
+   const [localValue, setLocalValue] = React.useState("");
+
   const inputState = useSelector((state: RootState) => state.input);
   const { id, name, img,   placeholder } = Props;
   const { type, errorMessage, error,  value,  touched  } = inputState;
@@ -26,7 +29,7 @@ export default function InputField(Props: UInputs) {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const updatedValue = e.target.value;
-
+    setLocalValue(updatedValue);
     const partialMergedValue: Partial<MergedValues> = {
       value:updatedValue
     };
@@ -52,7 +55,7 @@ export default function InputField(Props: UInputs) {
       </span>
       <div className="input-and-error">
         <input
-          value={value}
+          value={localValue}
           onChange={handleInputChange}
           onBlur={handleBlur}
           type={type}
