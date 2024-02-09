@@ -43,8 +43,7 @@ export default function CustomeLink() {
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
-  let linksed = 0;
-  const linkedArray = ["1"];
+
 
   const handleButtonClick = (i: number) => {
     setActiveIndex(i === activeIndex ? null : i);
@@ -189,13 +188,16 @@ export default function CustomeLink() {
 
   //   }
 
-  const handleSave = () => {
-    // dispatch(addNewLink("hello"));
-    console.log(links, "mylinksComponents");
-  };
+ 
 
   const handleDisplayFirstPrompt = () => {
     setIsActive(true);
+  };
+
+  const handleSave = () => {
+    console.log(prompts, "mylinksComponentsPrompts")
+    dispatch(addNewLink(prompts));
+    console.log(links, "mylinksComponents");
   };
 
   return (

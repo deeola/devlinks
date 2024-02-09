@@ -17,6 +17,9 @@ export default function PhonePreview() {
     const links = useSelector((state: RootState) => state.link.links);
 
 
+
+
+
   const arr = [
     { color: "#000000", image: gitlab, text: "Gitlab", link: "http://www.gitlab.com" },
     { color: "#4C4C4C", image: facebook, text: "Facebook", link: "http://facebook.com"  },

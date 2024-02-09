@@ -17,12 +17,14 @@ const linkSlice = createSlice({
     reducers:{
         addNewLink: (state, action) => {
             const { payload } = action;
-            const linkExists = state.links.some(link => link.id === payload.id);
-            if (!linkExists) {
-                state.links.push(payload);
-              } else {
-                // dispatch(showDuplicateLinkNotification()); 
-              }
+            payload.forEach((prompt: any) => {
+                const linkExists = state.links.some(link => link.id === prompt.id);
+                if (!linkExists) {
+                  state.links.push(prompt);
+                } else {
+                  // dispatch(showDuplicateLinkNotification()); 
+                }
+              });
         },
         removeLink: (state, action) => {
             state.links = state.links.filter(link => link.id !== action.payload);        
