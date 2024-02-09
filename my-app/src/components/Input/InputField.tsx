@@ -31,7 +31,7 @@ export default function InputField(Props: UInputs) {
     const updatedValue = e.target.value;
     setLocalValue(updatedValue);
     const partialMergedValue: Partial<MergedValues> = {
-      value:updatedValue
+      // value:updatedValue
     };
 
   

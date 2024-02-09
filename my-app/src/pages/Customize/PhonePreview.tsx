@@ -104,7 +104,7 @@ export default function PhonePreview() {
                 <a
                   className="linkTagContainer"
                   style={{ backgroundColor: myarray.bgColor }}
-                  href={myarray.value}
+                  href={myarray.answer}
                   target="_blank"
                   rel="noreferrer"
                 >

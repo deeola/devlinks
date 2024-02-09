@@ -9,178 +9,184 @@ type Tdropdown = {
   dropArrayImage: string;
   error: boolean;
   type: string;
+  handleOptionClick: (e: any, i: any, label: string, image: string, placeholder: string, bgColor: string, id: string) => void;
+  prompts: any;
+  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>, i: number) => void;
+handleDelete: (i: any) => void;
+handleButtonClick: (i: number) => void;
+activeIndex: number | null;
 };
 
 export default function AddnewLink(Props: Tdropdown) {
-  const { dropArrayImage, error, type } = Props;
-  const [isActive, setIsActive] = useState<boolean>(false);
-  const [selectedlabel, setSelectedLabel] = useState<string>(
-    linkArray[0].label
-  );
-  const [selectedImage, setSelectedImage] = useState<string>(
-    linkArray[0].image
-  );
-  const [selectedPlaceholder, setSelectedPlaceholder] = useState<string>(
-    linkArray[0].placeholder
-  );
-  const [selectedBgColor, setSelectedBgColor] = useState<string>(
-    linkArray[0].bgColor
-  );
-  const [selectedId, setSelectedId] = useState<string>(linkArray[0].id);
+  const { dropArrayImage, error, type, handleOptionClick, prompts, handleInputChange, handleDelete, handleButtonClick, activeIndex } = Props;
+//   const [isActive, setIsActive] = useState<boolean>(false);
+//   const [selectedlabel, setSelectedLabel] = useState<string>(
+//     linkArray[0].label
+//   );
+//   const [selectedImage, setSelectedImage] = useState<string>(
+//     linkArray[0].image
+//   );
+//   const [selectedPlaceholder, setSelectedPlaceholder] = useState<string>(
+//     linkArray[0].placeholder
+//   );
+//   const [selectedBgColor, setSelectedBgColor] = useState<string>(
+//     linkArray[0].bgColor
+//   );
+//   const [selectedId, setSelectedId] = useState<string>(linkArray[0].id);
 
-  const [selectedUrl, setSelectedSelectedUrl] = useState<string>("");
+//   const [selectedUrl, setSelectedSelectedUrl] = useState<string>("");
 
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+//   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
-  const handleButtonClick = (i: number) => {
-    setActiveIndex(i === activeIndex ? null : i);
-  };
+//   const handleButtonClick = (i: number) => {
+//     setActiveIndex(i === activeIndex ? null : i);
+//   };
 
-  const handleDelete = (i: any) => {
-    let deletePrompts = [...prompts];
-    deletePrompts.splice(i, 1);
-    setPrompts(deletePrompts);
-  };
+//   const handleDelete = (i: any) => {
+//     let deletePrompts = [...prompts];
+//     deletePrompts.splice(i, 1);
+//     setPrompts(deletePrompts);
+//   };
 
-  useEffect(() => {
-    setPrompts((prevPrompts) => {
-      const updatedPrompts = [...prevPrompts];
-      updatedPrompts[0] = {
-        ...updatedPrompts[0],
-        label: selectedlabel,
-        bgColor: selectedBgColor,
-        placeholder: selectedPlaceholder,
-        image: selectedImage,
-        id: selectedId,
-        urlAddress: selectedUrl,
-      };
-      return updatedPrompts;
-    });
-  }, [
-    selectedlabel,
-    selectedBgColor,
-    selectedPlaceholder,
-    selectedImage,
-    selectedId,
-    selectedUrl,
-  ]);
+//   useEffect(() => {
+//     setPrompts((prevPrompts) => {
+//       const updatedPrompts = [...prevPrompts];
+//       updatedPrompts[0] = {
+//         ...updatedPrompts[0],
+//         label: selectedlabel,
+//         bgColor: selectedBgColor,
+//         placeholder: selectedPlaceholder,
+//         image: selectedImage,
+//         id: selectedId,
+//         urlAddress: selectedUrl,
+//       };
+//       return updatedPrompts;
+//     });
+//   }, [
+//     selectedlabel,
+//     selectedBgColor,
+//     selectedPlaceholder,
+//     selectedImage,
+//     selectedId,
+//     selectedUrl,
+//   ]);
 
-  const [prompts, setPrompts] = useState([
-    {
-      prompt: "",
-      answer: "",
-      label: linkArray[0].label,
-      bgColor: "",
-      image: "",
-      id: "",
-      placeholder: "",
-      urlAddress: "",
-      timestamp: new Date().getTime(),
-    },
-  ]);
+//   const [prompts, setPrompts] = useState([
+//     {
+//       prompt: "",
+//       answer: "",
+//       label: linkArray[0].label,
+//       bgColor: "",
+//       image: "",
+//       id: "",
+//       placeholder: "",
+//       urlAddress: "",
+//       timestamp: new Date().getTime(),
+//     },
+//   ]);
 
-  console.log(prompts);
+//   console.log(prompts);
 
-  const handlePrompt = (
-    e:
-      | React.ChangeEvent<HTMLTextAreaElement>
-      | React.ChangeEvent<HTMLSelectElement>
-      | React.ChangeEvent<HTMLInputElement>,
+//   const handlePrompt = (
+//     e:
+//       | React.ChangeEvent<HTMLTextAreaElement>
+//       | React.ChangeEvent<HTMLSelectElement>
+//       | React.ChangeEvent<HTMLInputElement>,
 
-    i: number
-  ) => {
-    const { name, value } = e.target;
+//     i: number
+//   ) => {
+//     const { name, value } = e.target;
 
-    setPrompts((prevPrompts) => {
-      const updatedPrompts = [...prevPrompts];
-      updatedPrompts[i] = {
-        ...updatedPrompts[i],
-        [name]: value,
-        label: selectedlabel,
-        bgColor: selectedBgColor,
-        placeholder: selectedPlaceholder,
-        image: selectedImage,
-        id: selectedId,
-        urlAddress: selectedUrl,
-      };
-      return updatedPrompts;
-    });
-  };
+//     setPrompts((prevPrompts) => {
+//       const updatedPrompts = [...prevPrompts];
+//       updatedPrompts[i] = {
+//         ...updatedPrompts[i],
+//         [name]: value,
+//         label: selectedlabel,
+//         bgColor: selectedBgColor,
+//         placeholder: selectedPlaceholder,
+//         image: selectedImage,
+//         id: selectedId,
+//         urlAddress: selectedUrl,
+//       };
+//       return updatedPrompts;
+//     });
+//   };
 
-  const handleAddPrompt = () => {
-    setPrompts([
-      ...prompts,
-      {
-        prompt: "",
-        answer: "",
-        label: selectedlabel,
-        bgColor: "",
-        image: "",
-        id: "",
-        placeholder: "",
-        urlAddress: "",
-        timestamp: new Date().getTime(),
-      },
-    ]);
-  };
+//   const handleAddPrompt = () => {
+//     setPrompts([
+//       ...prompts,
+//       {
+//         prompt: "",
+//         answer: "",
+//         label: selectedlabel,
+//         bgColor: "",
+//         image: "",
+//         id: "",
+//         placeholder: "",
+//         urlAddress: "",
+//         timestamp: new Date().getTime(),
+//       },
+//     ]);
+//   };
 
-  const handleOptionClick = (
-    e: any,
-    i: any,
-    label: string,
-    image: string,
-    placeholder: string,
-    bgColor: string,
-    id: string
-  ) => {
-    const updatedPrompts = prompts.map((prompt, index) => {
-      if (index === i) {
-        return {
-          ...prompt,
-          selectedlabel: label, 
-          bgColor: bgColor, 
-          image: image,
-          placeholder: placeholder,
-          id: id,
-          label: label,
-        };
-      }
-      return prompt;
-    });
+//   const handleOptionClick = (
+//     e: any,
+//     i: any,
+//     label: string,
+//     image: string,
+//     placeholder: string,
+//     bgColor: string,
+//     id: string
+//   ) => {
+//     const updatedPrompts = prompts.map((prompt, index) => {
+//       if (index === i) {
+//         return {
+//           ...prompt,
+//           selectedlabel: label, 
+//           bgColor: bgColor, 
+//           image: image,
+//           placeholder: placeholder,
+//           id: id,
+//           label: label,
+//         };
+//       }
+//       return prompt;
+//     });
   
-    setPrompts(updatedPrompts);
+//     setPrompts(updatedPrompts);
   
-    setIsActive(false);
-    setActiveIndex(null);
-  };
+//     setIsActive(false);
+//     setActiveIndex(null);
+//   };
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    i: number
-  ) => {
-    const { value } = e.target;
+//   const handleInputChange = (
+//     e: React.ChangeEvent<HTMLInputElement>,
+//     i: number
+//   ) => {
+//     const { value } = e.target;
 
-    setPrompts((prevPrompts) => {
-      const updatedPrompts = [...prevPrompts];
-      updatedPrompts[i] = {
-        ...updatedPrompts[i],
-        answer: value,
-      };
-      return updatedPrompts;
-    });
-  };
+//     setPrompts((prevPrompts) => {
+//       const updatedPrompts = [...prevPrompts];
+//       updatedPrompts[i] = {
+//         ...updatedPrompts[i],
+//         answer: value,
+//       };
+//       return updatedPrompts;
+//     });
+//   };
 
-  //   const handleBlur = () => {
+//   //   const handleBlur = () => {
 
-  //     dispatch(validateField());
+//   //     dispatch(validateField());
 
-  //   }
+//   //   }
 
 
 return (
     <div>
-        <div onClick={handleAddPrompt} >Add Prompt</div>
-      {prompts.map((prompt, i) => (
+        {/* <div onClick={handleAddPrompt} >Add Prompt</div> */}
+      {prompts.map((prompt: any, i: any) => (
         <div className="addlink-container" key={prompt.timestamp}>
           <div className="addlinknumber-remove">
             <MBody text={`= Link #${prompts.indexOf(prompt) + 1}`} />

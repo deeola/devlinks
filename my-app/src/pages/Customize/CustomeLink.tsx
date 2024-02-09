@@ -18,170 +18,185 @@ import { v4 as uuidv4 } from "uuid";
 import AddnewLink from "../../components/Addlink/Addnewlink";
 
 export default function CustomeLink() {
-
   const dispatch = useDispatch();
-//   const [isActive, setIsActive] = useState<boolean>(false);
 
-//   const [selectedlabel, setSelectedLabel] = useState<string>(
-//     linkArray[0].label
-//   );
-//   const [selectedImage, setSelectedImage] = useState<string>(
-//     linkArray[0].image
-//   );
-//   const [selectedPlaceholder, setSelectedPlaceholder] = useState<string>(
-//     linkArray[0].placeholder
-//   );
-//   const [selectedBgColor, setSelectedBgColor] = useState<string>(
-//     linkArray[0].bgColor
-//   );
-//   const [selectedId, setSelectedId] = useState<string>(linkArray[0].id);
+  //   // selectors
+  const links = useSelector((state: RootState) => state.link.links);
+  const linksComponents = useSelector((state: RootState) => state.link.links);
 
-//   const [selectedUrl, setSelectedSelectedUrl] = useState<string>("");
+  const [isActive, setIsActive] = useState<boolean>(false);
+  const [selectedlabel, setSelectedLabel] = useState<string>(
+    linkArray[0].label
+  );
+  const [selectedImage, setSelectedImage] = useState<string>(
+    linkArray[0].image
+  );
+  const [selectedPlaceholder, setSelectedPlaceholder] = useState<string>(
+    linkArray[0].placeholder
+  );
+  const [selectedBgColor, setSelectedBgColor] = useState<string>(
+    linkArray[0].bgColor
+  );
+  const [selectedId, setSelectedId] = useState<string>(linkArray[0].id);
 
-//   console.log(selectedlabel, "myselectedlabel");
+  const [selectedUrl, setSelectedSelectedUrl] = useState<string>("");
 
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
-//   // selectors
-    const links = useSelector((state: RootState) => state.link.links);
-  const linksComponents = useSelector(    (state: RootState) => state.link.links  );
-//   const mergedValue = useSelector(
-//     (state: RootState) => state.mergedValuesSlice.mergedValue
-//   );
+  let linksed = 0;
+  const linkedArray = ["1"];
 
- 
+  const handleButtonClick = (i: number) => {
+    setActiveIndex(i === activeIndex ? null : i);
+  };
 
+  const handleDelete = (i: any) => {
+    let deletePrompts = [...prompts];
+    deletePrompts.splice(i, 1);
+    setPrompts(deletePrompts);
+  };
 
+  useEffect(() => {
+    setPrompts((prevPrompts) => {
+      const updatedPrompts = [...prevPrompts];
+      updatedPrompts[0] = {
+        ...updatedPrompts[0],
+        label: selectedlabel,
+        bgColor: selectedBgColor,
+        placeholder: selectedPlaceholder,
+        image: selectedImage,
+        id: selectedId,
+        urlAddress: selectedUrl,
+      };
+      return updatedPrompts;
+    });
+  }, [
+    selectedlabel,
+    selectedBgColor,
+    selectedPlaceholder,
+    selectedImage,
+    selectedId,
+    selectedUrl,
+  ]);
 
-// const [prompts, setPrompts] = useState([
-//   {
-//     prompt: "",
-//     isActive: false,
-//     answer: "",
-//     label: selectedlabel,
-//     bgColor: "",
-//     image: "",
-//     id: "",
-//     placeholder: "",
-//     urlAddress: "",
-//     timestamp: new Date().getTime(),
-//   },
-// ]);
+  const [prompts, setPrompts] = useState([
+    {
+      prompt: "",
+      answer: "",
+      label: linkArray[0].label,
+      bgColor: "",
+      image: "",
+      id: "",
+      placeholder: "",
+      urlAddress: "",
+      timestamp: new Date().getTime(),
+    },
+  ]);
 
+  console.log(prompts);
 
+  const handlePrompt = (
+    e:
+      | React.ChangeEvent<HTMLTextAreaElement>
+      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLInputElement>,
 
+    i: number
+  ) => {
+    const { name, value } = e.target;
 
+    setPrompts((prevPrompts) => {
+      const updatedPrompts = [...prevPrompts];
+      updatedPrompts[i] = {
+        ...updatedPrompts[i],
+        [name]: value,
+        label: selectedlabel,
+        bgColor: selectedBgColor,
+        placeholder: selectedPlaceholder,
+        image: selectedImage,
+        id: selectedId,
+        urlAddress: selectedUrl,
+      };
+      return updatedPrompts;
+    });
+  };
 
-//   const handlePrompt = (
-//       e:
-//       | React.ChangeEvent<HTMLTextAreaElement>
-//       | React.ChangeEvent<HTMLSelectElement>
-//       | React.ChangeEvent<HTMLInputElement>,
-//       i: number
-//   ) => {
-//       const { name, value } = e.target;
+  const handleAddPrompt = () => {
+    setIsActive(true);
+    setPrompts([
+      ...prompts,
+      {
+        prompt: "",
+        answer: "",
+        label: selectedlabel,
+        bgColor: "",
+        image: "",
+        id: "",
+        placeholder: "",
+        urlAddress: "",
+        timestamp: new Date().getTime(),
+      },
+    ]);
+  };
 
-//       setPrompts((prevPrompts) => {
-//       const updatedPrompts = [...prevPrompts];
-//       updatedPrompts[i] = {
-//           ...updatedPrompts[i],
-//           [name]: value,
-//           isActive: false,
-//           label: selectedlabel,
-//           bgColor: selectedBgColor,
-//           placeholder: selectedPlaceholder,
-//           image: selectedImage,
-//           id: selectedId,
-//           urlAddress: selectedUrl,
-//       };
-//       return updatedPrompts;
-//       });
-//   };
+  const handleOptionClick = (
+    e: any,
+    i: any,
+    label: string,
+    image: string,
+    placeholder: string,
+    bgColor: string,
+    id: string
+  ) => {
+    const updatedPrompts = prompts.map((prompt, index) => {
+      if (index === i) {
+        return {
+          ...prompt,
+          selectedlabel: label,
+          bgColor: bgColor,
+          image: image,
+          placeholder: placeholder,
+          id: id,
+          label: label,
+        };
+      }
+      return prompt;
+    });
 
+    setPrompts(updatedPrompts);
+    setActiveIndex(null);
+  };
 
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    i: number
+  ) => {
+    const { value } = e.target;
 
-// const handleAddPrompt = () => {
-//   setPrompts([
-//     ...prompts,
-//     {
-//       prompt: "",
-//       isActive: false,
-//       answer: "",
-//       label: "",
-//       bgColor: "",
-//       image: "",
-//       id: "",
-//       placeholder: "",
-//       urlAddress: "",
-//       timestamp: new Date().getTime(),
-//     },
-//   ]);
-// };
+    setPrompts((prevPrompts) => {
+      const updatedPrompts = [...prevPrompts];
+      updatedPrompts[i] = {
+        ...updatedPrompts[i],
+        answer: value,
+      };
+      return updatedPrompts;
+    });
+  };
 
+  //   const handleBlur = () => {
 
+  //     dispatch(validateField());
 
-// // const handleAddLink = (): void => {
-// //   handleAddPrompt()
-// //   dispatch(addComponent("hello"))
+  //   }
 
-// // };
+  const handleSave = () => {
+    // dispatch(addNewLink("hello"));
+    console.log(links, "mylinksComponents");
+  };
 
-// console.log(prompts);
-
-
-// const handleOptionClick = (
-//   e: any,
-//   i: any,
-//   label: string,
-//   image: string,
-//   placeholder: string,
-//   bgColor: string,
-//   id: string
-// ) => {
- 
-//   setSelectedLabel(label);
-//   setSelectedBgColor(bgColor);
-//   setSelectedImage(image);
-//   setSelectedPlaceholder(placeholder);
-//   setSelectedId(id);
-//   setSelectedSelectedUrl(selectedUrl);
-
-//   handlePrompt(e, i );
-
-//   setIsActive(false);
-
-//   console.log(prompts);
-// };
-
-
-
-
-// const handleDelete = (i: any) => {
-//   console.log(i, "myi")
-//   let deletePrompts = [...prompts];
-//   deletePrompts.splice(i, 1);
-//   setPrompts(deletePrompts);
-// };
-
-// const handleSave = () => {
-//   dispatch(addNewLink(prompts));
-//   console.log(linksComponents, "mylinksComponents");
-// }
-
-// const handleClick = (i: any) => {
-//   setIsActive(!isActive);
-// };
-
-// // const handleClick = (index: any) => {
-
-// //   console.log(prompts)
-// //   setPrompts((prevPrompts) =>
-// //     prevPrompts.map((prompt, i) =>
-// //       i === index ? { ...prompt, isActive: !prompt.isActive } : prompt
-// //     )
-// //   );
-// // };
-
-
+  const handleDisplayFirstPrompt = () => {
+    setIsActive(true);
+  };
 
   return (
     <div className="customelinkcontainer">
@@ -190,13 +205,13 @@ export default function CustomeLink() {
         <MBody text="Add/edit/remove links below and then share all your profiles with the world!" />
         <div className="add-new-link">
           <Button
-            // onClick={handleAddPrompt}
+            onClick={isActive ? handleAddPrompt : handleDisplayFirstPrompt}
             buttonType="secondary"
             text="+ Add new link"
           />
         </div>
-        {/* <div>
-          {linksComponents.length === 0 ? (
+        <div>
+          {!isActive && (
             <div className="link-middle">
               <div className="link-middle-image">
                 <img src={picture} alt="get-started-icon" />
@@ -211,25 +226,30 @@ export default function CustomeLink() {
                 />
               </div>
             </div>
-          ) : 
-            linksComponents.map((link) => (
-              <AddLink key={uuidv4()} id={uuidv4()} number={linksComponents.length + 1} />
-            ))
-          }
-        </div> */}
+          )}
 
+          {isActive && (
+            <AddnewLink
+              handleInputChange={handleInputChange}
+              prompts={prompts}
+              activeIndex={activeIndex}
+              handleDelete={handleDelete}
+              handleButtonClick={handleButtonClick}
+              handleOptionClick={handleOptionClick}
+              dropArrayImage={picture}
+              type="text"
+              error={false}
+            />
+          )}
+        </div>
       </div>
-
-       <AddnewLink dropArrayImage={picture} type="text" error={false}/>
-
-      
 
       <div className="custome-save-button">
         <Button
           backgroundSubtype={linksComponents.length === 0 && "active"}
           classname="custom-button"
           text="Save"
-          //  onClick={handleSave}
+          onClick={handleSave}
         />
       </div>
     </div>
