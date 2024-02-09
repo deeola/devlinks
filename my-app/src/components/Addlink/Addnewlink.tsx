@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { linkArray } from "../../linkArray";
 import "../Dropdown/Dropdown.css";
@@ -11,8 +12,7 @@ type Tdropdown = {
 };
 
 export default function AddnewLink(Props: Tdropdown) {
-  const { error } = Props;
-
+  const { dropArrayImage, error, type } = Props;
   const [isActive, setIsActive] = useState<boolean>(false);
   const [selectedlabel, setSelectedLabel] = useState<string>(
     linkArray[0].label
@@ -30,13 +30,19 @@ export default function AddnewLink(Props: Tdropdown) {
 
   const [selectedUrl, setSelectedSelectedUrl] = useState<string>("");
 
-  console.log(selectedlabel, "myselectedlabel");
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
+  const handleButtonClick = (i: number) => {
+    setActiveIndex(i === activeIndex ? null : i);
+
+  };
+
 
   const [prompts, setPrompts] = useState([
     {
       prompt: "",
       answer: "",
-      label: selectedlabel,
+      label: "",
       bgColor: "",
       image: "",
       id: "",
@@ -46,9 +52,33 @@ export default function AddnewLink(Props: Tdropdown) {
     },
   ]);
 
-  useEffect(() => {
-    console.log(prompts);
-  }, [prompts]);
+  console.log(prompts);
+
+  const handlePrompt = (
+    e:
+      | React.ChangeEvent<HTMLTextAreaElement>
+      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLInputElement>,
+
+    i: number
+  ) => {
+    const { name, value } = e.target;
+
+    setPrompts((prevPrompts) => {
+      const updatedPrompts = [...prevPrompts];
+      updatedPrompts[i] = {
+        ...updatedPrompts[i],
+        [name]: value,
+        label: selectedlabel,
+        bgColor: selectedBgColor,
+        placeholder: selectedPlaceholder,
+        image: selectedImage,
+        id: selectedId,
+        urlAddress: selectedUrl,
+      };
+      return updatedPrompts;
+    });
+  };
 
   const handleAddPrompt = () => {
     setPrompts([
@@ -67,50 +97,20 @@ export default function AddnewLink(Props: Tdropdown) {
     ]);
   };
 
-
-    const handlePrompt = (
-        e:
-        | React.ChangeEvent<HTMLTextAreaElement>
-        | React.ChangeEvent<HTMLSelectElement>
-        | React.ChangeEvent<HTMLInputElement>,
-        i: number
-    ) => {
-        const { name, value } = e.target;
-    
-        setPrompts((prevPrompts) => {
-        const updatedPrompts = [...prevPrompts];
-        updatedPrompts[i] = {
-            ...updatedPrompts[i],
-            [name]: value,
-            prompt: selectedlabel,
-            label: selectedlabel,
-            bgColor: selectedBgColor,
-            placeholder: selectedPlaceholder,
-            image: selectedImage,
-            id: selectedId,
-            urlAddress: selectedUrl,
-        };
-        return updatedPrompts;
-        });
-    };
-
-
-   
-      
-  
-
   const handleDelete = (i: any) => {
     let deletePrompts = [...prompts];
     deletePrompts.splice(i, 1);
     setPrompts(deletePrompts);
   };
 
-  const handleClick = () => {
-    setIsActive(!isActive);
-  };
+  //   const handleClick = (index: any, i: any) => {
 
-  console.log(prompts);
- 
+  //     if(index === i){
+  //         setIsActive(!isActive);
+  //         console.log(i)
+  //     }
+
+  //   };
 
   const handleOptionClick = (
     e: any,
@@ -121,8 +121,7 @@ export default function AddnewLink(Props: Tdropdown) {
     bgColor: string,
     id: string
   ) => {
- 
-
+    console.log("heello");
     setSelectedLabel(label);
     setSelectedBgColor(bgColor);
     setSelectedImage(image);
@@ -130,14 +129,44 @@ export default function AddnewLink(Props: Tdropdown) {
     setSelectedId(id);
     setSelectedSelectedUrl(selectedUrl);
 
-    handlePrompt(e, i );
+    handlePrompt(e, i);
 
     setIsActive(false);
-
-    console.log(prompts);
   };
 
+  const handleInputChange = (e: any, i: any, value: string) => {
+    handlePrompt(e, i);
+    setSelectedSelectedUrl(value);
+  };
 
+  //   const handleBlur = () => {
+
+  //     dispatch(validateField());
+
+  //   }
+
+  useEffect(() => {
+    setPrompts((prevPrompts) => {
+      const updatedPrompts = [...prevPrompts];
+      updatedPrompts[0] = {
+        ...updatedPrompts[0],
+        label: selectedlabel,
+        bgColor: selectedBgColor,
+        placeholder: selectedPlaceholder,
+        image: selectedImage,
+        id: selectedId,
+        urlAddress: selectedUrl,
+      };
+      return updatedPrompts;
+    });
+  }, [
+    selectedlabel,
+    selectedBgColor,
+    selectedPlaceholder,
+    selectedImage,
+    selectedId,
+    selectedUrl,
+  ]);
 
   return (
     <div>
@@ -153,7 +182,7 @@ export default function AddnewLink(Props: Tdropdown) {
                 className="w-full border rounded text-lg leading-tight py-3 px-2 mt-4 mb-3 focus:outline-indigo-200"
                 id="prompt"
                 name="prompt"
-                // onChange={(e) => handlePrompt(e, i)}
+                onChange={(e) => handlePrompt(e, i)}
               >
                 <option>Select Prompt</option>
                 <option value="Dating me is like...">
@@ -176,7 +205,9 @@ export default function AddnewLink(Props: Tdropdown) {
                 </option>
               </select>
 
-              <div className={`custom-select ${isActive ? "active" : ""}`}>
+              <div
+                className={`custom-select ${(i === activeIndex ) ? "active" : ""}`}
+              >
                 <button
                   className="select-button"
                   role="combobox"
@@ -184,11 +215,11 @@ export default function AddnewLink(Props: Tdropdown) {
                   aria-haspopup="listbox"
                   aria-expanded={isActive ? "true" : "false"}
                   aria-controls="select-dropdown"
-                  onClick={handleClick}
+                  onClick={() => handleButtonClick(i)}
                 >
                   <div className="dropdown-selected-value">
                     <span className="image">
-                      <img src={selectedImage} alt="Icon" />
+                      <img src={dropArrayImage} alt="Icon" />
                     </span>
 
                     <span className="selected-value">{selectedlabel}</span>
@@ -205,8 +236,17 @@ export default function AddnewLink(Props: Tdropdown) {
                     <li
                       key={index}
                       role="option"
-                    //   onChange={(e) => handleOptionClick(e, i, list.label, list.image, list.placeholder, list.bgColor, list.id)}
-                    onClick={(e) => handleOptionClick(e, i, list.label, list.image, list.placeholder, list.bgColor, list.id)}
+                      onClick={(e) =>
+                        handleOptionClick(
+                          e,
+                          i,
+                          list.label,
+                          list.image,
+                          list.placeholder,
+                          list.bgColor,
+                          list.id
+                        )
+                      }
                     >
                       <input type="radio" id={list.label} name={list.label} />
                       <label htmlFor={list.label}>
@@ -228,23 +268,16 @@ export default function AddnewLink(Props: Tdropdown) {
                 </span>
                 <div className="input-and-error">
                   <input
-                    //   value={selectedUrl}
-                    //   onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange(e, i)}
-                    // //   onChange={(e) => handleInputChange(e, i)}
-                    // //   onBlur={handleBlur}
-                    //   type={type}
-                    //   id={selectedId}
-                    // name={"urlAddress"}
-                    //   data-id="myInput"
-                    //   className={`${error ? 'error-text' : ''}`}
-                    //   placeholder={selectedPlaceholder}
-
+                    value={selectedUrl}
+                    onChange={(e) => handleInputChange(e, i, e.target.value)}
+                    //   onBlur={handleBlur}
+                    type={type}
+                    //  name={name}
+                    data-id="myInput"
                     className={`${error ? "error-text" : ""}`}
+                    placeholder={selectedPlaceholder}
                     id="answer"
                     name="answer"
-                    placeholder={selectedPlaceholder}
-                    onChange={(e) => handlePrompt(e, i)}
-                    type="text"
                   />
                   {/* {touched && error && <span className="error-span"> {errorMessage} </span>} */}
                 </div>
@@ -260,8 +293,8 @@ export default function AddnewLink(Props: Tdropdown) {
             </div>
             <textarea
               className="border border-dashed py-3 px-2 mb-4 focus:outline-indigo-200"
-              id="answer"
-              name="answer"
+              //   id="answer"
+              //   name="answer"
               rows={5}
               placeholder="Let your true colours shine through"
               onChange={(e) => handlePrompt(e, i)}
@@ -282,5 +315,3 @@ export default function AddnewLink(Props: Tdropdown) {
     </div>
   );
 }
-
-// onClick={(e) => handleOptionClick(e, i, list.label, list.image, list.placeholder, list.bgColor, list.id)}

@@ -89,3 +89,42 @@ export default function AddLink(Props: AddLinks) {
     </div>
   );
 }
+
+
+
+
+// return (
+//   <div>
+//       {linkArray.map((list, index) => (
+//           <div
+//               key={index}
+//               className={`custom-select ${index === activeIndex ? "active" : ""}`}
+//           >
+//               <button
+//                   className="select-button"
+//                   role="combobox"
+//                   aria-labelledby="select button"
+//                   aria-haspopup="listbox"
+//                   aria-expanded={index === activeIndex ? "true" : "false"}
+//                   aria-controls={`select-dropdown-${index}`}
+//                   onClick={() => handleButtonClick(index)}
+//               >
+//                   <div className="dropdown-selected-value">
+//                       <span className="image">
+//                           <img src={dropArrayImage} alt="Icon" />
+//                       </span>
+//                       <span className="selected-value">{selectedlabel}</span>
+//                   </div>
+//                   <span className="arrow"></span>
+//               </button>
+//               <ul
+//                   className="select-dropdown"
+//                   role="listbox"
+//                   id={`select-dropdown-${index}`}
+//               >
+//                   {/* Dropdown options */}
+//               </ul>
+//           </div>
+//       ))}
+//   </div>
+// );
