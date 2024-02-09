@@ -68,7 +68,7 @@ export default function AddnewLink(Props: Tdropdown) {
     {
       prompt: "",
       answer: "",
-      label: selectedlabel,
+      label: linkArray[0].label,
       bgColor: "",
       image: "",
       id: "",
@@ -123,15 +123,6 @@ export default function AddnewLink(Props: Tdropdown) {
     ]);
   };
 
-  //   const handleClick = (index: any, i: any) => {
-
-  //     if(index === i){
-  //         setIsActive(!isActive);
-  //         console.log(i)
-  //     }
-
-  //   };
-
   const handleOptionClick = (
     e: any,
     i: any,
@@ -141,16 +132,23 @@ export default function AddnewLink(Props: Tdropdown) {
     bgColor: string,
     id: string
   ) => {
-    console.log("heello");
-    setSelectedLabel(label);
-    setSelectedBgColor(bgColor);
-    setSelectedImage(image);
-    setSelectedPlaceholder(placeholder);
-    setSelectedId(id);
-    setSelectedSelectedUrl(selectedUrl);
-
-    handlePrompt(e, i);
-
+    const updatedPrompts = prompts.map((prompt, index) => {
+      if (index === i) {
+        return {
+          ...prompt,
+          selectedlabel: label, 
+          bgColor: bgColor, 
+          image: image,
+          placeholder: placeholder,
+          id: id,
+          label: label,
+        };
+      }
+      return prompt;
+    });
+  
+    setPrompts(updatedPrompts);
+  
     setIsActive(false);
     setActiveIndex(null);
   };
@@ -176,6 +174,8 @@ export default function AddnewLink(Props: Tdropdown) {
   //     dispatch(validateField());
 
   //   }
+
+
 
   return (
     <div>
@@ -270,14 +270,6 @@ export default function AddnewLink(Props: Tdropdown) {
                 —
               </button>
             </div>
-            <textarea
-              className="border border-dashed py-3 px-2 mb-4 focus:outline-indigo-200"
-              //   id="answer"
-              //   name="answer"
-              rows={5}
-              placeholder="Let your true colours shine through"
-              onChange={(e) => handlePrompt(e, i)}
-            />
           </div>
         ))}
 
