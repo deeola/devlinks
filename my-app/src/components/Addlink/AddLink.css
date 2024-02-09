@@ -7,9 +7,25 @@ width: 100%;
     display: flex;
     justify-content: space-between;
     margin-bottom: 12px;
+    align-items: center;
 }
 
+
+
 .platform-link{
-margin-bottom: 12px;
+margin-bottom: 15px;
 color: #333;
+}
+
+.remove-button{
+    color: grey;
+    cursor: pointer;
+}
+
+.remove-button:hover{
+    color: black
+}
+
+.input-container{
+    /* margin-bottom: 10px; */
 }

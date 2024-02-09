@@ -4,6 +4,7 @@ import "../Dropdown/Dropdown.css";
 import "../Input/InputField.css";
 import iconLink from "../../assets/images/icon-link.svg";
 import { MBody } from "../Text/Text";
+import "../Addlink/AddLink.css";
 
 type Tdropdown = {
   dropArrayImage: string;
@@ -188,10 +189,12 @@ return (
         {/* <div onClick={handleAddPrompt} >Add Prompt</div> */}
       {prompts.map((prompt: any, i: any) => (
         <div className="addlink-container" key={prompt.timestamp}>
+
           <div className="addlinknumber-remove">
             <MBody text={`= Link #${prompts.indexOf(prompt) + 1}`} />
-            <button onClick={() => handleDelete(i)}> Remove </button>
+            <p className="remove-button" onClick={() => handleDelete(i)}> Remove </p>
           </div>
+
           <div>
             <div>
               <label className="label">Platform</label>
