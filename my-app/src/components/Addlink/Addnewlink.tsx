@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { linkArray } from "../../linkArray";
 import "../Dropdown/Dropdown.css";
@@ -34,15 +33,42 @@ export default function AddnewLink(Props: Tdropdown) {
 
   const handleButtonClick = (i: number) => {
     setActiveIndex(i === activeIndex ? null : i);
-
   };
 
+  const handleDelete = (i: any) => {
+    let deletePrompts = [...prompts];
+    deletePrompts.splice(i, 1);
+    setPrompts(deletePrompts);
+  };
+
+  useEffect(() => {
+    setPrompts((prevPrompts) => {
+      const updatedPrompts = [...prevPrompts];
+      updatedPrompts[0] = {
+        ...updatedPrompts[0],
+        label: selectedlabel,
+        bgColor: selectedBgColor,
+        placeholder: selectedPlaceholder,
+        image: selectedImage,
+        id: selectedId,
+        urlAddress: selectedUrl,
+      };
+      return updatedPrompts;
+    });
+  }, [
+    selectedlabel,
+    selectedBgColor,
+    selectedPlaceholder,
+    selectedImage,
+    selectedId,
+    selectedUrl,
+  ]);
 
   const [prompts, setPrompts] = useState([
     {
       prompt: "",
       answer: "",
-      label: "",
+      label: selectedlabel,
       bgColor: "",
       image: "",
       id: "",
@@ -86,7 +112,7 @@ export default function AddnewLink(Props: Tdropdown) {
       {
         prompt: "",
         answer: "",
-        label: "",
+        label: selectedlabel,
         bgColor: "",
         image: "",
         id: "",
@@ -95,12 +121,6 @@ export default function AddnewLink(Props: Tdropdown) {
         timestamp: new Date().getTime(),
       },
     ]);
-  };
-
-  const handleDelete = (i: any) => {
-    let deletePrompts = [...prompts];
-    deletePrompts.splice(i, 1);
-    setPrompts(deletePrompts);
   };
 
   //   const handleClick = (index: any, i: any) => {
@@ -132,11 +152,23 @@ export default function AddnewLink(Props: Tdropdown) {
     handlePrompt(e, i);
 
     setIsActive(false);
+    setActiveIndex(null);
   };
 
-  const handleInputChange = (e: any, i: any, value: string) => {
-    handlePrompt(e, i);
-    setSelectedSelectedUrl(value);
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    i: number
+  ) => {
+    const { value } = e.target;
+
+    setPrompts((prevPrompts) => {
+      const updatedPrompts = [...prevPrompts];
+      updatedPrompts[i] = {
+        ...updatedPrompts[i],
+        answer: value,
+      };
+      return updatedPrompts;
+    });
   };
 
   //   const handleBlur = () => {
@@ -145,29 +177,6 @@ export default function AddnewLink(Props: Tdropdown) {
 
   //   }
 
-  useEffect(() => {
-    setPrompts((prevPrompts) => {
-      const updatedPrompts = [...prevPrompts];
-      updatedPrompts[0] = {
-        ...updatedPrompts[0],
-        label: selectedlabel,
-        bgColor: selectedBgColor,
-        placeholder: selectedPlaceholder,
-        image: selectedImage,
-        id: selectedId,
-        urlAddress: selectedUrl,
-      };
-      return updatedPrompts;
-    });
-  }, [
-    selectedlabel,
-    selectedBgColor,
-    selectedPlaceholder,
-    selectedImage,
-    selectedId,
-    selectedUrl,
-  ]);
-
   return (
     <div>
       <fieldset className="flex flex-col gap-2 border py-1 px-4">
@@ -175,45 +184,17 @@ export default function AddnewLink(Props: Tdropdown) {
           Prompts
         </legend>
         {prompts.map((prompt, i) => (
-          <div key={prompt.timestamp} className="flex flex-col">
-            <label className="text-3xl font-semibold">Select a prompt</label>
-            <div className="flex flex-row items-center gap-2">
-              <select
-                className="w-full border rounded text-lg leading-tight py-3 px-2 mt-4 mb-3 focus:outline-indigo-200"
-                id="prompt"
-                name="prompt"
-                onChange={(e) => handlePrompt(e, i)}
-              >
-                <option>Select Prompt</option>
-                <option value="Dating me is like...">
-                  Dating me is like...
-                </option>
-                <option value="Fact about me that surprises people:">
-                  Fact about me that surprises people:
-                </option>
-                <option value="I want someone who...">
-                  I want someone who...
-                </option>
-                <option value="I spend most of my money on:">
-                  I spend most of my money on:
-                </option>
-                <option value="The most spontaneous thing I've done:">
-                  The most spontaneous thing I've done:
-                </option>
-                <option value="We're the same type of weird if...">
-                  We're the same type of weird if...
-                </option>
-              </select>
-
+          <div key={prompt.timestamp}>
+            <div>
               <div
-                className={`custom-select ${(i === activeIndex ) ? "active" : ""}`}
+                className={`custom-select ${i === activeIndex ? "active" : ""}`}
               >
                 <button
                   className="select-button"
                   role="combobox"
                   aria-labelledby="select button"
                   aria-haspopup="listbox"
-                  aria-expanded={isActive ? "true" : "false"}
+                  aria-expanded={i === activeIndex ? "true" : "false"}
                   aria-controls="select-dropdown"
                   onClick={() => handleButtonClick(i)}
                 >
@@ -222,7 +203,7 @@ export default function AddnewLink(Props: Tdropdown) {
                       <img src={dropArrayImage} alt="Icon" />
                     </span>
 
-                    <span className="selected-value">{selectedlabel}</span>
+                    <span className="selected-value">{prompt.label}</span>
                   </div>
 
                   <span className="arrow"></span>
@@ -268,16 +249,14 @@ export default function AddnewLink(Props: Tdropdown) {
                 </span>
                 <div className="input-and-error">
                   <input
-                    value={selectedUrl}
-                    onChange={(e) => handleInputChange(e, i, e.target.value)}
-                    //   onBlur={handleBlur}
+                    value={prompt.answer}
+                    onChange={(e) => handleInputChange(e, i)}
                     type={type}
-                    //  name={name}
                     data-id="myInput"
                     className={`${error ? "error-text" : ""}`}
-                    placeholder={selectedPlaceholder}
-                    id="answer"
-                    name="answer"
+                    placeholder={prompt.placeholder}
+                    id={`answer-${i}`}
+                    name={`answer-${i}`}
                   />
                   {/* {touched && error && <span className="error-span"> {errorMessage} </span>} */}
                 </div>
