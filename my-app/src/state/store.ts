@@ -6,6 +6,7 @@ import inputSlice from "./inputs/inputSlice";
 import dropdownSlice from "./inputs/dropdownSlice";
 import mergedValuesSlice from "./inputs/mergedValuesSlice";
 import errorSlice from "./inputs/errorSlice";
+import promptSlice from "./link/promptSlice";
 
 export const store = configureStore({
     reducer: {
@@ -15,7 +16,8 @@ export const store = configureStore({
         input: inputSlice,
         dropdown: dropdownSlice,
         mergedValuesSlice: mergedValuesSlice,
-        error: errorSlice
+        error: errorSlice,
+        promptSlice: promptSlice
         
         
     }

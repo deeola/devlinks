@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { MBody, MHeader } from "../../components/Text/Text";
 import Button from "../../components/Button/Button";
 import picture from "../../assets/images/illustration-empty.svg";
-import AddLink from "../../components/Addlink/AddLink";
+import linkImg from "../../assets/images/icon-link.svg";
+// import AddLink from "../../components/Addlink/AddLink";
 import { linkArray } from "../../linkArray";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../state/store";
@@ -16,9 +17,23 @@ import {
 import { validateField } from "../../state/inputs/inputSlice";
 import { v4 as uuidv4 } from "uuid";
 import AddnewLink from "../../components/Addlink/Addnewlink";
+import { setPrompt } from "../../state/link/promptSlice";
 
-export default function CustomeLink() {
+import { TCustomize } from "./Customize";
+
+type customLink = {
+  prompts: TCustomize[],
+  selectedImage:string,
+  setPrompts:(value: any) => void,
+  setSelectedImage:any,
+  isSaved:boolean,
+  setIsSaved:(value: boolean) => void,
+}
+
+export default function CustomeLink(Props: customLink) {
   const dispatch = useDispatch();
+
+  const { prompts, selectedImage, setPrompts, setSelectedImage, isSaved, setIsSaved } = Props;
 
   //   // selectors
   const links = useSelector((state: RootState) => state.link.links);
@@ -26,14 +41,16 @@ export default function CustomeLink() {
 
   const [isActive, setIsActive] = useState<boolean>(false);
   const [selectedlabel, setSelectedLabel] = useState<string>(
-    linkArray[0].label
+    "Please select a label"
   );
-  const [selectedImage, setSelectedImage] = useState<string>(
-    linkArray[0].image
-  );
+  
   const [selectedPlaceholder, setSelectedPlaceholder] = useState<string>(
-    linkArray[0].placeholder
+    "Enter a link"
   );
+
+ 
+
+
   const [selectedBgColor, setSelectedBgColor] = useState<string>(
     linkArray[0].bgColor
   );
@@ -42,6 +59,14 @@ export default function CustomeLink() {
   const [selectedUrl, setSelectedSelectedUrl] = useState<string>("");
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
+  const [myError, setMyError] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
+
+  const finalValue: any = []
+
+ 
+ 
 
 
 
@@ -56,7 +81,7 @@ export default function CustomeLink() {
   };
 
   useEffect(() => {
-    setPrompts((prevPrompts) => {
+    setPrompts((prevPrompts: any) => {
       const updatedPrompts = [...prevPrompts];
       updatedPrompts[0] = {
         ...updatedPrompts[0],
@@ -75,24 +100,9 @@ export default function CustomeLink() {
     selectedPlaceholder,
     selectedImage,
     selectedId,
-    selectedUrl,
+    selectedUrl
   ]);
 
-  const [prompts, setPrompts] = useState([
-    {
-      prompt: "",
-      answer: "",
-      label: linkArray[0].label,
-      bgColor: "",
-      image: "",
-      id: "",
-      placeholder: "",
-      urlAddress: "",
-      timestamp: new Date().getTime(),
-    },
-  ]);
-
-  console.log(prompts);
 
   const handlePrompt = (
     e:
@@ -104,7 +114,7 @@ export default function CustomeLink() {
   ) => {
     const { name, value } = e.target;
 
-    setPrompts((prevPrompts) => {
+    setPrompts((prevPrompts: any) => {
       const updatedPrompts = [...prevPrompts];
       updatedPrompts[i] = {
         ...updatedPrompts[i],
@@ -121,6 +131,12 @@ export default function CustomeLink() {
   };
 
   const handleAddPrompt = () => {
+
+  // Check if prompt.answer is empty for any existing prompt
+  const hasEmptyAnswer = prompts.some(prompt => prompt.answer === "");
+
+ 
+  if (!hasEmptyAnswer) {
     setIsActive(true);
     setPrompts([
       ...prompts,
@@ -129,13 +145,18 @@ export default function CustomeLink() {
         answer: "",
         label: selectedlabel,
         bgColor: "",
-        image: "",
+        image: selectedImage,
         id: "",
         placeholder: "",
         urlAddress: "",
         timestamp: new Date().getTime(),
       },
     ]);
+  } else {
+   
+    console.error("Cannot add additional link without entering a value for the existing link.");
+
+  }
   };
 
   const handleOptionClick = (
@@ -147,6 +168,15 @@ export default function CustomeLink() {
     bgColor: string,
     id: string
   ) => {
+
+    const hasEmptyAnswer = prompts.some(prompt => prompt.label === label);
+
+    if (hasEmptyAnswer) {
+      console.error("Cannot select a label that already exists.");
+      return;
+    }
+
+
     const updatedPrompts = prompts.map((prompt, index) => {
       if (index === i) {
         return {
@@ -157,6 +187,7 @@ export default function CustomeLink() {
           placeholder: placeholder,
           id: id,
           label: label,
+          isRendable: true
         };
       }
       return prompt;
@@ -172,7 +203,7 @@ export default function CustomeLink() {
   ) => {
     const { value } = e.target;
 
-    setPrompts((prevPrompts) => {
+    setPrompts((prevPrompts: any) => {
       const updatedPrompts = [...prevPrompts];
       updatedPrompts[i] = {
         ...updatedPrompts[i],
@@ -182,11 +213,6 @@ export default function CustomeLink() {
     });
   };
 
-  //   const handleBlur = () => {
-
-  //     dispatch(validateField());
-
-  //   }
 
  
 
@@ -195,9 +221,31 @@ export default function CustomeLink() {
   };
 
   const handleSave = () => {
-    console.log(prompts, "mylinksComponentsPrompts")
-    dispatch(addNewLink(prompts));
-    console.log(links, "mylinksComponents");
+
+
+  
+  const hasEmptyAnswer = prompts.some(prompt => prompt.answer === "");
+
+  if (hasEmptyAnswer) {
+    console.error("Cannot save link with empty answer for any prompt.");
+    setMyError(true)
+    setErrorMessage("Please enter a text.")
+    return; 
+  }
+
+  // Check if any prompt has the same selectedlabel as the one being added
+  const hasDuplicateLabel = prompts.some(prompt => prompt.label === selectedlabel && prompt.label !== "GitLab");
+
+  // If any prompt has the same selectedlabel, display an error or handle as needed
+  if (hasDuplicateLabel) {
+    console.error("Cannot save link with duplicate label.");
+    return; 
+  }
+
+ 
+    dispatch(setPrompt(prompts));
+    setMyError(false)
+
   };
 
   return (
@@ -232,15 +280,16 @@ export default function CustomeLink() {
 
           {isActive && (
             <AddnewLink
+            errorMessage={errorMessage}
               handleInputChange={handleInputChange}
               prompts={prompts}
               activeIndex={activeIndex}
               handleDelete={handleDelete}
               handleButtonClick={handleButtonClick}
               handleOptionClick={handleOptionClick}
-              dropArrayImage={picture}
+         
               type="text"
-              error={false}
+              error={myError}
             />
           )}
         </div>

@@ -41,11 +41,8 @@ export default function InputField(Props: UInputs) {
   }
 
   const handleBlur = () => {
-    // const isValidInput = validateInput(value, type);
-    // setIsValid(isValidInput);
-    dispatch(validateField());
 
-    // console.log(isValidInput, "isValidInput")
+    dispatch(validateField());
   }
 
   return (
@@ -73,38 +70,3 @@ export default function InputField(Props: UInputs) {
 
 
 
-
-
-
-
-//   const dispatch = useDispatch();
-
-
-  
-
-//   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-
-//     onChange(e.target.value);
-
-//     const partialMergedValue: Partial<MergedValues> = {
-//       value: value
-//     };
-//     dispatch(updateMergedValue(partialMergedValue));
-//   }
-
-
-
-
-
-//   return (
-//     <div className={`input-container ${error ? 'error' : ''}`}>
-//       <span className="image">
-//         <img src={img} alt="Icon" />
-//       </span>
-//       <div className="input-and-error">
-//         <input value={value} onChange={handleInputChange}  type={type} id={id} name={name} data-id="myInput" className={error ? 'error-text' : ''} placeholder={placeholder} />
-//         {error && <span className="error-span"> {errorMessage} </span>}
-//       </div>
-//     </div>
-//   );
-// }

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import "./Customize.css";
 import Logo from "../../components/Logo/Logo";
 import Tabs from "../../components/Tabs/Tabs";
@@ -7,10 +7,41 @@ import PhonePreview from "./PhonePreview";
 import CustomeLink from "./CustomeLink";
 import links from "../../assets/images/icon-link.svg";
 import profiledetails from "../../assets/images/icon-profile-details-header.svg";
+import linkImg from "../../assets/images/icon-link.svg";
 
+export interface TCustomize {
+  prompt: string;
+  answer: string;
+  label: string;
+  bgColor: string;
+  image: string;
+  id: string;
+  placeholder: string;
+  urlAddress: string;
+  timestamp: number;
+  isRendable?: boolean;
+};
 
 export default function Customize() {
+  const [selectedImage, setSelectedImage] = useState<string>(linkImg);
+  const [isSaved , setIsSaved] = useState<boolean>(false);
 
+  const [prompts, setPrompts] = useState<TCustomize[]>([
+    {
+      prompt: "",
+      answer: "",
+      label: "Please select a label",
+      bgColor: "",
+      image: selectedImage,
+      id: "",
+      placeholder: "",
+      urlAddress: "",
+      timestamp: new Date().getTime(),
+      isRendable: false,
+    },
+  ]);
+
+  console.log(prompts);
 
   return (
     <div className="customize-container">
@@ -30,17 +61,24 @@ export default function Customize() {
               />
             </div>
             <div>
-              <Button  buttonType="secondary" text="Preview" />
+              <Button buttonType="secondary" text="Preview" />
             </div>
           </div>
         </div>
         <div className="customContainer">
           <div className="phone-prev">
-            <PhonePreview />
+            <PhonePreview prompts={prompts} isSaved={isSaved} />
           </div>
           <div className="custom-links">
-            <CustomeLink />
-           
+            <CustomeLink
+              setSelectedImage={setSelectedImage}
+              prompts={prompts}
+              selectedImage={selectedImage}
+              setPrompts={setPrompts}
+              isSaved={isSaved}
+              setIsSaved={setIsSaved}
+              
+            />
           </div>
         </div>
       </section>
