@@ -252,7 +252,7 @@ export default function CustomeLink(Props: customLink) {
     <div className="customelinkcontainer">
       <div className="edit-links-remove">
         <MHeader className="your-links" text="Customize your links" />
-        <MBody text="Add/edit/remove links below and then share all your profiles with the world!" />
+        <MBody className="add-edit-remove" text="Add/edit/remove links below and then share all your profiles with the world!" />
         <div className="add-new-link">
           <Button
             onClick={isActive ? handleAddPrompt : handleDisplayFirstPrompt}
@@ -260,7 +260,7 @@ export default function CustomeLink(Props: customLink) {
             text="+ Add new link"
           />
         </div>
-        <div>
+        <div className="link-middle-addnewlinkcontainer">
           {!isActive && (
             <div className="link-middle">
               <div className="link-middle-image">
@@ -279,8 +279,9 @@ export default function CustomeLink(Props: customLink) {
           )}
 
           {isActive && (
-            <AddnewLink
-            errorMessage={errorMessage}
+            <div className="addnewlinkcontainer">
+               <AddnewLink
+             errorMessage={errorMessage}
               handleInputChange={handleInputChange}
               prompts={prompts}
               activeIndex={activeIndex}
@@ -291,6 +292,8 @@ export default function CustomeLink(Props: customLink) {
               type="text"
               error={myError}
             />
+            </div>
+           
           )}
         </div>
       </div>

@@ -20,11 +20,11 @@ export interface TCustomize {
   urlAddress: string;
   timestamp: number;
   isRendable?: boolean;
-};
+}
 
 export default function Customize() {
   const [selectedImage, setSelectedImage] = useState<string>(linkImg);
-  const [isSaved , setIsSaved] = useState<boolean>(false);
+  const [isSaved, setIsSaved] = useState<boolean>(false);
 
   const [prompts, setPrompts] = useState<TCustomize[]>([
     {
@@ -41,47 +41,42 @@ export default function Customize() {
     },
   ]);
 
-  console.log(prompts);
-
   return (
-    <div className="customize-container">
-      <section className="customize">
-        <div className="Navbar">
-          <div className="custom-logo-container">
-            <Logo size="large" />
-          </div>
-          <div className="navlinks-button">
-            <div className="navlinks">
-              <Tabs links="/" img={links} text="Links" />
-              <Tabs
-                links="/"
-                img={profiledetails}
-                text="Profile Details"
-                TabsType="default"
-              />
-            </div>
-            <div>
-              <Button buttonType="secondary" text="Preview" />
-            </div>
-          </div>
+    <section className="customize">
+      <div className="Navbar">
+        <div className="custom-logo-container">
+          <Logo size="large" />
         </div>
-        <div className="customContainer">
-          <div className="phone-prev">
-            <PhonePreview prompts={prompts} isSaved={isSaved} />
-          </div>
-          <div className="custom-links">
-            <CustomeLink
-              setSelectedImage={setSelectedImage}
-              prompts={prompts}
-              selectedImage={selectedImage}
-              setPrompts={setPrompts}
-              isSaved={isSaved}
-              setIsSaved={setIsSaved}
-              
+        <div className="navlinks-button">
+          <div className="navlinks">
+            <Tabs links="/" img={links} text="Links" />
+            <Tabs
+              links="/"
+              img={profiledetails}
+              text="Profile Details"
+              TabsType="default"
             />
           </div>
+          <div>
+            <Button buttonType="secondary" text="Preview" />
+          </div>
         </div>
-      </section>
-    </div>
+      </div>
+      <div className="customContainer">
+        <div className="phone-prev">
+          <PhonePreview prompts={prompts} isSaved={isSaved} />
+        </div>
+        <div className="custom-links">
+          <CustomeLink
+            setSelectedImage={setSelectedImage}
+            prompts={prompts}
+            selectedImage={selectedImage}
+            setPrompts={setPrompts}
+            isSaved={isSaved}
+            setIsSaved={setIsSaved}
+          />
+        </div>
+      </div>
+    </section>
   );
 }

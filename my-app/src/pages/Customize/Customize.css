@@ -1,27 +1,25 @@
-.customize-container {
 
-  
-}
 
 .customize {
   background-color: #fafafa;
-  display: flex;
+  display: flex; 
   flex-direction: column;
   justify-content: space-between;
-  height: 100%;
+   height: 100vh; 
 }
 
 .Navbar {
   display: flex;
   justify-content: space-between;
-  padding: 16px 24px;
-  background-color: white;
+  padding:20px; 
+  align-items: center;
+
 }
 
 .navlinks-button {
   display: flex;
   justify-content: space-between;
-  width: 62%;
+  width: 60%;
 }
 
 .navlinks {
@@ -35,21 +33,43 @@
 
 .customContainer {
   display: flex;
-  justify-content: space-between;
-  height: 90%;
-  padding: 16px 24px;
+   justify-content: space-between; 
+  /* height: 90%; */
+  /* padding: 16px 24px; */
+  background-color: rgb(187, 81, 81);
+  height: 90vh;
 }
 
 .phone-prev {
-  width: 45%;
+  width: 40%;
   background-color: white;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: center; 
+ justify-content: center;
+ margin: 20px 10px 20px 20px;
+  /* padding: 100px 0px; */
+}
+
+.phonePreview{
+  /* width: 100%; */
+  background-color: thistle;
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+}
+
+.phonePreview svg{
+  /* width: 80%; */
+  width: 90%;
+  height: 100%;
+
 }
 
 .custom-links {
-  margin-left: 30px;
+  width: 60%;
+  margin: 20px 20px 20px 10px;
+  /* padding: 100px 0px; */
+  
 }
 
 
@@ -60,38 +80,66 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100%;
+  height: 100%; 
   background-color: white;
 }
 
+.edit-links-remove {
+   padding: 50px;  
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between; */
+
+  height: 90%;
+
+ 
+}
+
 .your-links {
-  margin-bottom: 15px;
+  margin-bottom: 10px;
+}
+
+.add-edit-remove{
+ 
+  margin-bottom: 35px;
 }
 
 .add-new-link {
-  margin: 35px 0px;
+  margin-bottom: 20px; 
+
 }
 
-.edit-links-remove {
-  padding: 40px;
+.link-middle-addnewlinkcontainer{
+ margin-top: 20px;
+ height: 100%;
 }
+
 
 .link-middle {
   background-color: #fafafa;
-  padding: 50px 0px;
+  /* padding: 50px 0px; */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   border-radius: 12px;
+  background-color: violet;
+  
+}
+
+.addnewlinkcontainer{
+  
+  overflow-y: scroll;
+  height: 60%;
+  
 }
 
 .link-middle-image {
-  margin-bottom: 40px;
+  /* margin-bottom: 40px; */
 }
 
 .link-middle-header {
-  margin-bottom: 30px;
+  /* margin-bottom: 30px; */
 }
 
 .link-middle-text {
@@ -102,15 +150,16 @@
 
 .link-middle-mbody {
   text-align: center !important;
-  width: 45%;
+  /* width: 45%; */
 }
 
 .custome-save-button {
-  padding: 25px;
+  /* padding: 30px;  */
   background-color: white;
   border-top: 1px solid gainsboro;
   display: flex;
   justify-content: end;
+  height: 10%;
 }
 
 .custom-button {

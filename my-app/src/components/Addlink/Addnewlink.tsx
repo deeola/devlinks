@@ -85,7 +85,7 @@ return (
           </div>
           <div>
             <label className="label">Link</label>
-            <div className="platform-link">
+           
               <div className={`input-container ${error ? "error" : ""}`}>
                 <span className="image">
                   <img src={iconLink} alt="Icon" />
@@ -104,7 +104,7 @@ return (
                  {error && <span className="error-span"> {errorMessage} </span>}
                 </div>
               </div>
-            </div>
+        
           </div>
         </div>
       ))}

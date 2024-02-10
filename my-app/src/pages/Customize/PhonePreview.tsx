@@ -195,7 +195,7 @@ export default function PhonePreview(Props: TPhonePreview) {
   const shouldScroll = arr.length > 5;
 
   return (
-    <div>
+    <div className="phonePreview">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="308"
