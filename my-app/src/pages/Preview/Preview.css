@@ -11,10 +11,12 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px;
+    
 }
 
 .preview-navbar-link{
-    width: 10%;
+    width: 10% !important;
+   
 }
 
 .preview-body{
@@ -30,12 +32,11 @@
 .preview-card-container{
     background-color: white;
     position: absolute;
-    top: -80px;
-    padding: 20px;
+    top: -150px;
+    padding: 40px;
     border-radius: 8px;
     width: 16%;
     min-height: 300px;
-    
 
 }
 
@@ -45,6 +46,7 @@
     border-radius: 50%; 
     overflow: hidden; 
     margin-bottom: 20px;
+    border: 5px solid purple;
 }
 
 .preview-img {
@@ -61,14 +63,28 @@
     margin-bottom: 40px;
 }
 
+.preview-username{
+    font-size: 24px !important;
+    margin-bottom: 10px;
+    color: black !important;
+    font-weight: 700 !important;
+}
+
+.preview-email{
+    font-size: 12px !important;
+
+}
+
 .cards{
    background-color: rgb(39, 121, 52); 
    margin-bottom: 20px;
    display: flex;
    justify-content: space-between;
    align-items: center;
-   padding: 15px;
+   padding: 10px 10px;
    border-radius: 8px;
+   cursor: pointer;
+   text-decoration: none;
 }
 
 .preview-card-icon-name-container{
@@ -89,4 +105,13 @@
 
 .card-name{
     color:white !important;
+}
+
+@media screen and (max-width: 1440px) {
+    .preview-navbar-link{
+        width: 12% !important;
+       
+    }
+
+    
 }

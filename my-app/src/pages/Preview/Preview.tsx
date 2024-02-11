@@ -27,26 +27,26 @@ export default function Preview() {
             <SBody text="ben@example.com" className="preview-email" />
           </div>
           <div className="preview-cards">
-            <div className="cards">
+            <a target="_blank" href="#" className="cards">
               <div className="preview-card-icon-name-container">
                 <img className="preview-card-icon" src={github} alt="card-img" />
                 <MBody text="Github" className="card-name"/>
               </div>
               <img className="card-arrow" src={arrow} alt="card-img" />
-            </div>
-            <div className="cards">
+            </a>
+            <a target="_blank" href="#" className="cards">
               <div className="preview-card-icon-name-container">
                 <img className="preview-card-icon" src={twitter} alt="card-img" />
                 <MBody text="Twitter" className="card-name" />
               </div>
               <img className="card-arrow" src={arrow} alt="card-img" />
-            </div>
-            <div className="cards">
+            </a>
+            <a target="_blank" href="#" className="cards">
               <div className="preview-card-icon-name-container">
                 <img className="preview-card-icon" src={linkedin} alt="card-img" />
                 <MBody text="Linkedin" className="card-name" />
               </div>
-              <img className="card-arrow" src={arrow} alt="card-img" /></div>
+              <img className="card-arrow" src={arrow} alt="card-img" /></a>
           </div>
         </div>
       </div>
