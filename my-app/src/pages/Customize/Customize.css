@@ -1,18 +1,14 @@
-
-
 .customize {
-
-  display: flex; 
-   flex-direction: column;
+  display: flex;
+  flex-direction: column;
   justify-content: space-between;
 }
 
 .Navbar {
   display: flex;
   justify-content: space-between;
-  padding:20px; 
+  padding: 20px;
   align-items: center;
-
   background-color: white;
 }
 
@@ -33,28 +29,27 @@
 
 .customContainer {
   display: flex;
-   justify-content: space-between;
+  justify-content: space-between;
   /* padding: 16px 24px; */
 
-/* background-color: white; */
-
+  /* background-color: white; */
 }
 
 .phone-prev {
   width: 40%;
-  
+
   display: flex;
-  align-items: center; 
- justify-content: center;
- 
+  align-items: center;
+  justify-content: center;
+
   /* padding: 100px 0px; */
 }
 
-.phonePreview{
-  width: 40%; 
-  display: flex; 
-  justify-content: center; 
-  align-items: center; 
+.phonePreview {
+  width: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: white;
   margin: 20px 10px 20px 20px;
 }
@@ -68,13 +63,9 @@
 
 .custom-links {
   /* width: 60%; */
-  
- 
+
   /* padding: 100px 0px; */
-  
 }
-
-
 
 /* customelink.tsx styling*/
 
@@ -86,64 +77,53 @@
   height: 87vh;
   background-color: white;
   margin: 20px 20px 20px 10px;
-
 }
 
 .edit-links-remove {
-   padding: 30px 50px 0px 50px;  
+  padding: 30px 50px 0px 50px;
   display: flex;
   flex-direction: column;
   /* justify-content: space-between; */
 
   /* height: 90%; */
-
- 
 }
 
 .your-links {
   margin-bottom: 10px;
 }
 
-.add-edit-remove{
+.add-edit-remove {
   margin-bottom: 30px;
 }
 
 .add-new-link {
-  margin-bottom: 15px; 
-
+  margin-bottom: 15px;
 }
 
-.link-middle-addnewlinkcontainer{
- margin-top: 20px;
+.link-middle-addnewlinkcontainer {
+  margin-top: 20px;
 }
-
 
 .link-middle {
- 
- padding: 40px 0px;
- display: flex;
+  padding: 40px 0px;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   border-radius: 12px;
-  
 }
 
-
-.addnewlinkcontainer{
-  
-  max-height: 480px; 
+.addnewlinkcontainer {
+  max-height: 480px;
   overflow-y: auto;
- 
 }
-
 
 .link-middle-image {
-   margin-bottom: 40px; 
+  margin-bottom: 40px;
 }
 
 .link-middle-header {
-  margin-bottom: 30px; 
+  margin-bottom: 30px;
 }
 
 .link-middle-text {
@@ -159,7 +139,7 @@
 }
 
 .custome-save-button {
-  padding: 20px;  
+  padding: 20px;
   border-top: 1px solid gainsboro;
   display: flex;
   justify-content: end;
@@ -167,4 +147,44 @@
 
 .custom-button {
   width: 10% !important;
+}
+
+/* Media query for lapptop*/
+
+@media screen and (max-width: 1440px) {
+  .navlinks {
+    width: 35%;
+  }
+
+  .customelinkcontainer {
+    width: 60%;
+    height: 84vh; /* check later*/
+    margin: 20px 20px 20px 10px;
+  }
+
+  .addnewlinkcontainer {
+    max-height: 300px; /* check later*/
+    overflow-y: auto;
+  }
+
+  .phonePreview svg {
+    width: 50%;
+    height: 100%;
+  }
+
+  .link-middle {
+    padding: 0px 0px 20px 0px;
+  }
+
+  .link-middle-image {
+    margin-bottom: 20px;
+  }
+
+  .link-middle-header {
+    margin-bottom: 15px;
+  }
+
+  .link-middle-mbody {
+    width: 70%;
+  }
 }

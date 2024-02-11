@@ -1,0 +1,35 @@
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 60%;
+    height: 87vh;
+    background-color: white;
+    margin: 20px 20px 20px 10px;
+    padding: 50px;
+  }
+
+  .profile-picture-container{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .profile-details{
+    margin-bottom: 20px;
+  }
+
+  .profile-picture-container{
+    background-color: aliceblue;
+    margin: 20px 0px;
+    padding: 20px;
+  }
+
+  .profile-picture-text{
+    width: 30%;
+    background-color: antiquewhite;
+  }
+
+  .upload-image-container{
+    width: 60% ;
+  }

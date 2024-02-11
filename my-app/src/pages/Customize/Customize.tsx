@@ -8,6 +8,7 @@ import CustomeLink from "./CustomeLink";
 import links from "../../assets/images/icon-link.svg";
 import profiledetails from "../../assets/images/icon-profile-details-header.svg";
 import linkImg from "../../assets/images/icon-link.svg";
+import Profile from "../Profile/Profile";
 
 export interface TCustomize {
   prompt: string;
@@ -20,6 +21,16 @@ export interface TCustomize {
   urlAddress: string;
   timestamp: number;
   isRendable?: boolean;
+}
+
+export interface TProfile {
+  id: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  password: string;
+  profile_image: string;
+
 }
 
 export default function Customize() {
@@ -40,6 +51,17 @@ export default function Customize() {
       isRendable: false,
     },
   ]);
+
+  const [user, setUser] = useState<TProfile>(
+    {
+      id: "",
+      first_name: "",
+      last_name: "",
+      email: "",
+      password: "",
+      profile_image: "",
+    },
+  );
 
   return (
     <section className="customize">
@@ -64,14 +86,16 @@ export default function Customize() {
       </div>
       <div className="customContainer">
           <PhonePreview prompts={prompts} isSaved={isSaved} />
-          <CustomeLink
+          {/* <CustomeLink
             setSelectedImage={setSelectedImage}
             prompts={prompts}
             selectedImage={selectedImage}
             setPrompts={setPrompts}
             isSaved={isSaved}
             setIsSaved={setIsSaved}
-          />
+          /> */}
+
+          <Profile  />
      
       </div>
     </section>

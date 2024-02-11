@@ -3,9 +3,13 @@ import uploadimageicon from "../../assets/images/icon-upload-image.svg";
 import "./UploadImage.css";
 import { MBody } from "../Text/Text";
 
+type TUploadImage = {
+  text: string;
+  subtext?: string;
+}
 
-
-export default function UploadImage () {
+export default function UploadImage (Props: TUploadImage) {
+  const { text, subtext } = Props;
   const ref = useRef<HTMLInputElement>(null);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [fileInputStyle, setFileInputStyle] = useState<React.CSSProperties>({});
@@ -50,8 +54,9 @@ export default function UploadImage () {
       </div>
       <div>
         <MBody
-          text={!selectedFiles.length ? "Image not uploaded" : "Image Uploaded"}
+          text={!selectedFiles.length ? text :  selectedFiles[0].name}
         />
+        {(subtext && !selectedFiles.length) && <MBody text={subtext} />}
       </div>
     </div>
   );
