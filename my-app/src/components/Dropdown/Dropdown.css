@@ -10,13 +10,15 @@
     width: 100%;
     font-size: 1.15rem;
     background-color: #fff;
-    padding: 0.675em 1em;
+    padding: 0.675em;
     border: 1px solid #caced1;
-    border-radius: 0.25rem;
+    border-radius: 8px;
     cursor: pointer;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-top: 10px;
+
   }
 
   .select-button:focus-within {
@@ -26,7 +28,7 @@
 
   .dropdown-selected-value{
     display: flex;
-    width: 100%;
+    width: 60%;
   }
 
   .image{
@@ -34,8 +36,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
-   
   }
 
  
@@ -46,6 +46,7 @@
 
   .selected-value {
     text-align: left;
+    font-size: 16px;
   }
   
   .arrow {

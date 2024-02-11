@@ -1,7 +1,7 @@
 
 
 .customize {
-  background-color: #fafafa;
+
   display: flex; 
    flex-direction: column;
   justify-content: space-between;
@@ -12,6 +12,8 @@
   justify-content: space-between;
   padding:20px; 
   align-items: center;
+
+  background-color: white;
 }
 
 .navlinks-button {
@@ -33,28 +35,28 @@
   display: flex;
    justify-content: space-between;
   /* padding: 16px 24px; */
-  background-color: rgb(247, 246, 246);
 
-
+/* background-color: white; */
 
 }
 
 .phone-prev {
   width: 40%;
-  background-color: white;
+  
   display: flex;
   align-items: center; 
  justify-content: center;
- margin: 20px 10px 20px 20px;
+ 
   /* padding: 100px 0px; */
 }
 
 .phonePreview{
   width: 40%; 
-  background-color: thistle;
   display: flex; 
   justify-content: center; 
   align-items: center; 
+  background-color: white;
+  margin: 20px 10px 20px 20px;
 }
 
 /* .phonePreview svg{
@@ -65,8 +67,9 @@
 } */
 
 .custom-links {
-  width: 60%;
-  margin: 20px 20px 20px 10px;
+  /* width: 60%; */
+  
+ 
   /* padding: 100px 0px; */
   
 }
@@ -80,7 +83,9 @@
   flex-direction: column;
   justify-content: space-between;
   width: 60%;
-  height: 90vh;
+  height: 89vh;
+  background-color: white;
+  margin: 20px 20px 20px 10px;
 
 }
 
@@ -100,11 +105,11 @@
 }
 
 .add-edit-remove{
-  margin-bottom: 35px;
+  margin-bottom: 30px;
 }
 
 .add-new-link {
-  margin-bottom: 20px; 
+  margin-bottom: 15px; 
 
 }
 
@@ -114,7 +119,7 @@
 
 
 .link-middle {
-  background-color: #fafafa;
+ 
  padding: 40px 0px;
  display: flex;
   flex-direction: column;
@@ -127,7 +132,7 @@
 
 .addnewlinkcontainer{
   
-  max-height: 440px; 
+  max-height: 480px; 
   overflow-y: auto;
  
 }

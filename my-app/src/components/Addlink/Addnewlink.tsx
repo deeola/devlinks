@@ -49,17 +49,13 @@ export default function AddnewLink(Props: Tdropdown) {
           <div className="addlinknumber-remove">
             <MBody text={`= Link #${prompts.indexOf(prompt) + 1}`} />
             <p className="remove-button" onClick={() => handleDelete(i)}>
-              {" "}
-              Remove{" "}
+              Remove
             </p>
           </div>
 
           <div className="platforms-container">
-
-
-
             <div className="platform-label-container">
-              <label className="label">Platform</label>
+              <label className="plabel">Platform</label>
 
 
               <div className="platform-link">
@@ -126,7 +122,7 @@ export default function AddnewLink(Props: Tdropdown) {
 
 
             <div className="platform-label-container">
-            <label className="label">Link</label>
+            <label className="plabel">Link</label>
             <div className={`input-container ${error ? "error" : ""}`}>
               <span className="image">
                 <img src={iconLink} alt="Icon" />

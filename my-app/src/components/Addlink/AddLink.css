@@ -1,15 +1,25 @@
 .addlink-container{
+    background-color: #fafafa;
+    padding: 20px;
+    margin-bottom: 20px;
+}
 
+.platforms-container{
+    margin-top: 10px;
+    /* margin-bottom: 20px; */
+    
 }
 
 .addlinknumber-remove{
-
+display: flex;
+justify-content: space-between;
+align-items: center;
 }
 
 
 
 .platform-link{
-
+    margin-bottom: 20px;
 }
 
 .remove-button{
@@ -17,10 +27,11 @@
 }
 
 .remove-button:hover{
-   
+  
 }
 
 .input-container{
     /* margin-bottom: 10px; */
 }
+
 
