@@ -17,19 +17,57 @@
 
   .profile-details{
     margin-bottom: 20px;
+    
+  }
+
+  .profile-details-subtext{
+    margin-bottom: 20px;
   }
 
   .profile-picture-container{
-    background-color: aliceblue;
-    margin: 20px 0px;
+    background-color: #fafafa;
+    /* margin: 20px 0px; */
     padding: 20px;
   }
 
   .profile-picture-text{
     width: 30%;
-    background-color: antiquewhite;
+  
+ 
   }
 
   .upload-image-container{
     width: 60% ;
   }
+
+  .form{
+    background-color: #fafafa;
+    padding: 20px;
+  }
+ 
+
+  .form_control{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  
+  }
+
+ .label-container {
+/* width: 30%; */
+
+ }
+
+ .label-container label{
+
+ }
+
+ .label-container span{
+   color: red;
+ }
+  
+
+ .inputfield-container{
+   width: 60%;
+   
+ }
