@@ -1,6 +1,6 @@
 .preview-Header{
-    height: 40vh;
-    background-color: rgb(41, 124, 197);
+    height: 42vh;
+    background-color: #633CFF;
     border-radius: 0px 0px 50px 50px;
     padding: 20px 25px;
 }
@@ -20,8 +20,8 @@
 }
 
 .preview-body{
-    background-color: beige;
-    height: 60vh;
+  
+    height: 58vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -46,7 +46,7 @@
     border-radius: 50%; 
     overflow: hidden; 
     margin-bottom: 20px;
-    border: 5px solid purple;
+    border: 5px solid #633CFF;
 }
 
 .preview-img {
@@ -113,5 +113,11 @@
        
     }
 
+    .preview-card-container{
+        width: 20%;
+       
     
+    }
+
+
 }
