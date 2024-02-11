@@ -83,19 +83,19 @@
   flex-direction: column;
   justify-content: space-between;
   width: 60%;
-  height: 89vh;
+  height: 87vh;
   background-color: white;
   margin: 20px 20px 20px 10px;
 
 }
 
 .edit-links-remove {
-   padding: 50px;  
+   padding: 30px 50px 0px 50px;  
   display: flex;
   flex-direction: column;
   /* justify-content: space-between; */
 
-  height: 90%;
+  /* height: 90%; */
 
  
 }
