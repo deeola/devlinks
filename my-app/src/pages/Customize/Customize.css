@@ -3,9 +3,8 @@
 .customize {
   background-color: #fafafa;
   display: flex; 
-  flex-direction: column;
+   flex-direction: column;
   justify-content: space-between;
-   height: 100vh; 
 }
 
 .Navbar {
@@ -13,7 +12,6 @@
   justify-content: space-between;
   padding:20px; 
   align-items: center;
-
 }
 
 .navlinks-button {
@@ -33,11 +31,12 @@
 
 .customContainer {
   display: flex;
-   justify-content: space-between; 
-  /* height: 90%; */
+   justify-content: space-between;
   /* padding: 16px 24px; */
-  background-color: rgb(187, 81, 81);
-  height: 90vh;
+  background-color: rgb(247, 246, 246);
+
+
+
 }
 
 .phone-prev {
@@ -51,19 +50,19 @@
 }
 
 .phonePreview{
-  /* width: 100%; */
+  width: 40%; 
   background-color: thistle;
   display: flex; 
   justify-content: center; 
   align-items: center; 
 }
 
-.phonePreview svg{
-  /* width: 80%; */
+/* .phonePreview svg{
+  
   width: 90%;
   height: 100%;
 
-}
+} */
 
 .custom-links {
   width: 60%;
@@ -80,8 +79,9 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100%; 
-  background-color: white;
+  width: 60%;
+  height: 90vh;
+
 }
 
 .edit-links-remove {
@@ -100,7 +100,6 @@
 }
 
 .add-edit-remove{
- 
   margin-bottom: 35px;
 }
 
@@ -117,7 +116,7 @@
 .link-middle {
   background-color: #fafafa;
  padding: 40px 0px;
-  display: flex;
+ display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -125,12 +124,14 @@
   
 }
 
+
 .addnewlinkcontainer{
   
-  overflow-y: scroll;
-  height:70%;
+  max-height: 440px; 
+  overflow-y: auto;
  
 }
+
 
 .link-middle-image {
    margin-bottom: 40px; 
@@ -154,7 +155,6 @@
 
 .custome-save-button {
   padding: 20px;  
-  background-color: white;
   border-top: 1px solid gainsboro;
   display: flex;
   justify-content: end;

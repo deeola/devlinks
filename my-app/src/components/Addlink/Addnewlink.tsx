@@ -61,7 +61,7 @@ export default function AddnewLink(Props: Tdropdown) {
             <div className="platform-label-container">
               <label className="label">Platform</label>
 
-              
+
               <div className="platform-link">
                 <div
                   className={`custom-select ${
@@ -79,7 +79,7 @@ export default function AddnewLink(Props: Tdropdown) {
                   >
                     <div className="dropdown-selected-value">
                       <span className="image">
-                        <img src={prompt.image} alt="Icon" />
+                        <img className="prompt-image" src={prompt.image} alt="Icon" />
                       </span>
                       <span className="selected-value">{prompt.label}</span>
                     </div>
@@ -107,14 +107,15 @@ export default function AddnewLink(Props: Tdropdown) {
                         }
                       >
                         <input type="radio" id={list.label} name={list.label} />
-                        <label htmlFor={list.label}>
+                        <div className="linkarraylabel">
                           <img
                             className="bx bxl-github"
                             src={list.image}
                             alt=""
                           />
-                          {list.label}
-                        </label>
+                          <p>{list.label}</p>
+                          
+                        </div>
                       </li>
                     ))}
                   </ul>

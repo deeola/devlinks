@@ -63,10 +63,7 @@ export default function Customize() {
         </div>
       </div>
       <div className="customContainer">
-        <div className="phone-prev">
           <PhonePreview prompts={prompts} isSaved={isSaved} />
-        </div>
-        <div className="custom-links">
           <CustomeLink
             setSelectedImage={setSelectedImage}
             prompts={prompts}
@@ -75,7 +72,7 @@ export default function Customize() {
             isSaved={isSaved}
             setIsSaved={setIsSaved}
           />
-        </div>
+     
       </div>
     </section>
   );

@@ -1,33 +1,26 @@
 .addlink-container{
-    /* background-color: gainsboro; */
-width: 100%;
-margin-bottom: 50px;
-background-color: rgb(237, 240, 242);
+
 }
 
 .addlinknumber-remove{
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 12px;
-    align-items: center;
+
 }
 
 
 
 .platform-link{
-/* margin-bottom: 15px; */
-color: #333;
+
 }
 
 .remove-button{
-    color: grey;
-    cursor: pointer;
+
 }
 
 .remove-button:hover{
-    color: black
+   
 }
 
 .input-container{
     /* margin-bottom: 10px; */
 }
+
