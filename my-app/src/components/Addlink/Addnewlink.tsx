@@ -7,36 +7,67 @@ import { MBody } from "../Text/Text";
 import "../Addlink/AddLink.css";
 
 type Tdropdown = {
- errorMessage:string,
+  errorMessage: string;
   error: boolean;
   type: string;
-  handleOptionClick: (e: any, i: any, label: string, image: string, placeholder: string, bgColor: string, id: string) => void;
+  handleOptionClick: (
+    e: any,
+    i: any,
+    label: string,
+    image: string,
+    placeholder: string,
+    bgColor: string,
+    id: string
+  ) => void;
   prompts: any;
-  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>, i: number) => void;
-handleDelete: (i: any) => void;
-handleButtonClick: (i: number) => void;
-activeIndex: number | null;
+  handleInputChange: (
+    e: React.ChangeEvent<HTMLInputElement>,
+    i: number
+  ) => void;
+  handleDelete: (i: any) => void;
+  handleButtonClick: (i: number) => void;
+  activeIndex: number | null;
 };
 
 export default function AddnewLink(Props: Tdropdown) {
-  const { errorMessage, error, type, handleOptionClick, prompts, handleInputChange, handleDelete, handleButtonClick, activeIndex } = Props;
+  const {
+    errorMessage,
+    error,
+    type,
+    handleOptionClick,
+    prompts,
+    handleInputChange,
+    handleDelete,
+    handleButtonClick,
+    activeIndex,
+  } = Props;
 
-
-return (
+  return (
     <div>
       {prompts.map((prompt: any, i: any) => (
         <div className="addlink-container" key={prompt.timestamp}>
-
           <div className="addlinknumber-remove">
             <MBody text={`= Link #${prompts.indexOf(prompt) + 1}`} />
-            <p className="remove-button" onClick={() => handleDelete(i)}> Remove </p>
+            <p className="remove-button" onClick={() => handleDelete(i)}>
+              {" "}
+              Remove{" "}
+            </p>
           </div>
 
-          <div>
-            <div>
+          <div className="platforms-container">
+
+
+
+            <div className="platform-label-container">
               <label className="label">Platform</label>
+
+              
               <div className="platform-link">
-                <div className={`custom-select ${i === activeIndex ? "active" : ""}`}>
+                <div
+                  className={`custom-select ${
+                    i === activeIndex ? "active" : ""
+                  }`}
+                >
                   <button
                     className="select-button"
                     role="combobox"
@@ -54,7 +85,11 @@ return (
                     </div>
                     <span className="arrow"></span>
                   </button>
-                  <ul className="select-dropdown" role="listbox" id="select-dropdown">
+                  <ul
+                    className="select-dropdown"
+                    role="listbox"
+                    id="select-dropdown"
+                  >
                     {linkArray.map((list, index) => (
                       <li
                         key={index}
@@ -73,7 +108,11 @@ return (
                       >
                         <input type="radio" id={list.label} name={list.label} />
                         <label htmlFor={list.label}>
-                          <img className="bx bxl-github" src={list.image} alt="" />
+                          <img
+                            className="bx bxl-github"
+                            src={list.image}
+                            alt=""
+                          />
                           {list.label}
                         </label>
                       </li>
@@ -82,33 +121,34 @@ return (
                 </div>
               </div>
             </div>
-          </div>
-          <div>
+
+
+
+            <div className="platform-label-container">
             <label className="label">Link</label>
-           
-              <div className={`input-container ${error ? "error" : ""}`}>
-                <span className="image">
-                  <img src={iconLink} alt="Icon" />
-                </span>
-                <div className="input-and-error">
-                  <input
-                    value={prompt.answer}
-                    onChange={(e) => handleInputChange(e, i)}
-                    type={type}
-                    data-id="myInput"
-                    className={`${error ? "error-text" : ""}`}
-                    placeholder={prompt.placeholder}
-                    id={`answer-${i}`}
-                    name={`answer-${i}`}
-                  />
-                 {error && <span className="error-span"> {errorMessage} </span>}
-                </div>
+            <div className={`input-container ${error ? "error" : ""}`}>
+              <span className="image">
+                <img src={iconLink} alt="Icon" />
+              </span>
+              <div className="input-and-error">
+                <input
+                  value={prompt.answer}
+                  onChange={(e) => handleInputChange(e, i)}
+                  type={type}
+                  data-id="myInput"
+                  className={`${error ? "error-text" : ""}`}
+                  placeholder={prompt.placeholder}
+                  id={`answer-${i}`}
+                  name={`answer-${i}`}
+                />
+                {error && <span className="error-span"> {errorMessage} </span>}
               </div>
-        
+            </div>
           </div>
+          </div>
+
         </div>
       ))}
     </div>
   );
-    }
-   
+}

@@ -251,6 +251,7 @@ export default function CustomeLink(Props: customLink) {
   return (
     <div className="customelinkcontainer">
       <div className="edit-links-remove">
+        <div>
         <MHeader className="your-links" text="Customize your links" />
         <MBody className="add-edit-remove" text="Add/edit/remove links below and then share all your profiles with the world!" />
         <div className="add-new-link">
@@ -260,6 +261,8 @@ export default function CustomeLink(Props: customLink) {
             text="+ Add new link"
           />
         </div>
+        </div>
+        
         <div className="link-middle-addnewlinkcontainer">
           {!isActive && (
             <div className="link-middle">

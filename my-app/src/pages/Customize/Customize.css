@@ -111,35 +111,33 @@
 
 .link-middle-addnewlinkcontainer{
  margin-top: 20px;
- height: 100%;
 }
 
 
 .link-middle {
   background-color: #fafafa;
-  /* padding: 50px 0px; */
+ padding: 40px 0px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   border-radius: 12px;
-  background-color: violet;
   
 }
 
 .addnewlinkcontainer{
   
   overflow-y: scroll;
-  height: 60%;
-  
+  height:70%;
+ 
 }
 
 .link-middle-image {
-  /* margin-bottom: 40px; */
+   margin-bottom: 40px; 
 }
 
 .link-middle-header {
-  /* margin-bottom: 30px; */
+  margin-bottom: 30px; 
 }
 
 .link-middle-text {
@@ -150,16 +148,16 @@
 
 .link-middle-mbody {
   text-align: center !important;
-  /* width: 45%; */
+  width: 45%;
+  line-height: 24px;
 }
 
 .custome-save-button {
-  /* padding: 30px;  */
+  padding: 20px;  
   background-color: white;
   border-top: 1px solid gainsboro;
   display: flex;
   justify-content: end;
-  height: 10%;
 }
 
 .custom-button {

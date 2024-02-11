@@ -1,6 +1,8 @@
 .addlink-container{
     /* background-color: gainsboro; */
 width: 100%;
+margin-bottom: 50px;
+background-color: rgb(237, 240, 242);
 }
 
 .addlinknumber-remove{
@@ -13,7 +15,7 @@ width: 100%;
 
 
 .platform-link{
-margin-bottom: 15px;
+/* margin-bottom: 15px; */
 color: #333;
 }
 
