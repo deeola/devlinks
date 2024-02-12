@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState, useRef, SetStateAction} from "react";
 import { MBody, MHeader } from "../../components/Text/Text";
 import UploadImage from "../../components/Uploadimage/UploadImage";
 import InputField from "../../components/Input/InputField";
@@ -6,6 +6,93 @@ import Button from "../../components/Button/Button";
 import "./Profile.css";
 
 export default function Profile() {
+
+  // const ref = useRef<HTMLInputElement>(null);
+  // const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  // const [fileInputStyle, setFileInputStyle] = useState<React.CSSProperties>({});
+
+  // const handleClick = () => {
+  //   ref.current?.click();
+  // };
+
+  // const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  //   const files = Array.from(e.currentTarget.files ?? []) as File[];
+  //   setSelectedFiles(files);
+
+  //   if (files.length > 0) {
+  //     const reader = new FileReader();
+  //     reader.onload = () => {
+  //       if (typeof reader.result === "string") {
+  //         setFileInputStyle({
+  //           backgroundImage: `url(${reader.result})`,
+  //         });
+  //       }
+  //     };
+  //     reader.readAsDataURL(files[0]);
+  //   }
+  // };
+
+
+
+    const ref = useRef<HTMLInputElement>(null);
+    // const [profileImage, setProfileImage] = React.useState<SetStateAction<string>("");
+    const [profileImage, setProfileImage] = React.useState<SetStateAction<string>>("");
+
+    const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+    const [fileInputStyle, setFileInputStyle] = useState<React.CSSProperties>({});
+
+    const handleClick = () => {
+        ref.current?.click();
+      };
+
+    const [userInfo, setUserInfo] = useState({
+        firstName: "",
+        lastName: "",
+        email: ""
+      })
+
+      const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setUserInfo({
+          ...userInfo,
+          [name]: value,
+        })
+
+        console.log(name, value)
+      }
+
+      const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+        const files = Array.from(e.currentTarget.files ?? []) as File[];
+        setSelectedFiles(files);
+        
+    
+        if (files.length > 0) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            if (typeof reader.result === "string") {
+              setFileInputStyle({
+                backgroundImage: `url(${reader.result})`,
+              });
+
+
+              setProfileImage(reader.result as string);
+            }
+          };
+
+          reader.readAsDataURL(files[0]);
+        }
+
+       
+      };
+
+    
+      const handleSave = () => {
+        const userData = { ...userInfo, profileImage};
+        return userData;
+        
+      };
+
   return (
     <div className="profile-container">
       <div>
@@ -22,6 +109,11 @@ export default function Profile() {
             <UploadImage
               text="Image must be below 1024x1024px"
               subtext="Use PNG or JPG format."
+              onChange={handleChange}
+              fileInputStyle={fileInputStyle}
+              handleClick={handleClick}
+              selectedFiles={selectedFiles}
+              inputRef={ref}
             />
           </div>
         </div>
@@ -35,9 +127,12 @@ export default function Profile() {
           <div className="inputfield-container">
           <InputField
             type="text"
-            id="name"
-            name="first_name"
+            id="first_name"
+            name="firstName"
             placeholder="e.g John"
+            onChange={handleInput}
+            value={userInfo.firstName}
+         
           />
           </div>
           
@@ -50,10 +145,12 @@ export default function Profile() {
           </div>
           <div className="inputfield-container">
           <InputField
-            type=""
-            id="name"
-            name="last_name"
+            type="text"
+            id="lastName"
+            name="lastName"
             placeholder="e.g Appleased"
+            onChange={handleInput}
+            value={userInfo.lastName}
           />
           </div>
 
@@ -65,9 +162,12 @@ export default function Profile() {
           </div>
           <div className="inputfield-container">
           <InputField
+          type="email"
             id="email"
             name="email"
             placeholder="e.g email@example.com"
+            onChange={handleInput}
+            value={userInfo.email}
           />
           </div>
          
@@ -76,7 +176,7 @@ export default function Profile() {
 
       <div>
         <div className="custome-save-button">
-          <Button classname="custom-button" text="Save" />
+          <Button classname="custom-button" text="Save" onClick={handleSave} />
         </div>
       </div>
     </div>

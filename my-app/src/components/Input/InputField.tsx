@@ -12,6 +12,8 @@ interface UInputs {
   img?: string;
   placeholder?: string;
   type?: string;
+  onChange:(e:any) => void,
+  value: string|number
 }
 
 export default function InputField(Props: UInputs) {
@@ -21,8 +23,8 @@ export default function InputField(Props: UInputs) {
   const [localValue, setLocalValue] = React.useState("");
 
   const inputState = useSelector((state: RootState) => state.input);
-  const { id, name, img, placeholder, type } = Props;
-  const {  errorMessage, error, value, touched } = inputState;
+  const { id, name, img, placeholder, type , onChange, value} = Props;
+  const {  errorMessage, error, touched } = inputState;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const updatedValue = e.target.value;
@@ -49,8 +51,8 @@ export default function InputField(Props: UInputs) {
 
       <div className="input-and-error">
         <input
-          value={localValue}
-          onChange={handleInputChange}
+          value={value}
+          onChange={onChange}
           onBlur={handleBlur}
           type={type}
           id={id}

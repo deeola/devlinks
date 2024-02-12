@@ -9,6 +9,8 @@ import linkedin from "../../assets/images/icon-linkedin.svg";
 import profileimage from "../../assets/images/mann.jpeg";
 
 export default function Preview() {
+
+    
   return (
     <div className="preview-container">
       <div className="preview-Header">

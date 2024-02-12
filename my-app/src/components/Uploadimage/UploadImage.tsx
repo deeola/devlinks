@@ -6,49 +6,32 @@ import { MBody } from "../Text/Text";
 type TUploadImage = {
   text: string;
   subtext?: string;
+  onChange: (e:any) => void;
+  selectedFiles: any,
+  handleClick: () => void,
+  inputRef: React.RefObject<HTMLInputElement>;
+  fileInputStyle: React.CSSProperties
+
 }
 
 export default function UploadImage (Props: TUploadImage) {
-  const { text, subtext } = Props;
-  const ref = useRef<HTMLInputElement>(null);
-  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
-  const [fileInputStyle, setFileInputStyle] = useState<React.CSSProperties>({});
 
-  const handleClick = () => {
-    ref.current?.click();
-  };
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.currentTarget.files ?? []) as File[];
-    setSelectedFiles(files);
-
-    if (files.length > 0) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (typeof reader.result === "string") {
-          setFileInputStyle({
-            backgroundImage: `url(${reader.result})`,
-          });
-        }
-      };
-      reader.readAsDataURL(files[0]);
-    }
-  };
-
+  const { text, subtext, onChange, selectedFiles, fileInputStyle, handleClick, inputRef } = Props;
+  
   return (
     <div className="upload-image-container">
       <div onClick={handleClick} className={`file-input ${selectedFiles.length ? "uploaded" : ""}`} style={fileInputStyle}>
         <div  className={`overlay ${selectedFiles.length ? "uploaded" : ""}`} ></div>
         <div className="upload-image-text">
-          <img src={uploadimageicon} className={`upload-icon ${selectedFiles.length ? "uploaded" : ""}`}  />
+          <img alt="profile" src={uploadimageicon} className={`upload-icon ${selectedFiles.length ? "uploaded" : ""}`}  />
           <span  className={`upload-text ${selectedFiles.length ? "uploaded" : ""}`} >{!selectedFiles.length ? "+Upload Image" : "Change Image"}</span>
         </div>
 
         <input
           type="file"
-          ref={ref}
+          ref={inputRef}
           className="hidden"
-          onChange={handleChange}
+          onChange={onChange}
           accept="image/*"
         />
       </div>
