@@ -16,7 +16,6 @@ import { TCustomize } from "./Customize";
 import { isReadable } from "stream";
 
 type TPhonePreview = {
-  prompts: TCustomize[],
   isSaved: boolean
 }
 
@@ -26,13 +25,7 @@ export default function PhonePreview(Props: TPhonePreview) {
   const users = useSelector((state:RootState ) => state.user)
   const myPrompts = useSelector((state:RootState) => state.link.links)
 
-  const arr = [
-    { color: "#000000", image: gitlab, text: "Gitlab", link: "http://www.gitlab.com" },
-    { color: "#4C4C4C", image: facebook, text: "Facebook", link: "http://facebook.com" },
-    { color: "#818181", image: x, text: "X", link: "http://x.com" },
-    { color: "#000000", image: gitlab, text: "Gitlab", link: "http://www.gitlab.com" },
-    { color: "#4C4C4C", image: facebook, text: "Facebook", link: "http://facebook.com" },
-  ];
+ 
 
   const {firstName, lastName, email, profileImage} = users.users
 
@@ -40,7 +33,7 @@ export default function PhonePreview(Props: TPhonePreview) {
  
   let isImage: string | boolean = profileImage;
 
-  const shouldScroll = arr.length > 5;
+  const shouldScroll = myPrompts.length > 5;
 
   return (
     <div className="phonePreview">

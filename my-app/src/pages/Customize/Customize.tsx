@@ -85,7 +85,7 @@ export default function Customize() {
         </div>
       </div>
       <div className="customContainer">
-          <PhonePreview prompts={prompts} isSaved={isSaved} />
+          <PhonePreview  isSaved={isSaved} />
           <CustomeLink
             setSelectedImage={setSelectedImage}
             prompts={prompts}

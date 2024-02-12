@@ -1,0 +1,20 @@
+.notication-container{
+    background-color: black;
+    display: flex;
+    width: 400px;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 8px;
+
+
+}
+
+.notication-container img{
+    width: 5%;
+}
+
+.notification-text{
+    color: white !important;
+    margin-left: 10px;
+}
