@@ -4,6 +4,8 @@ import UploadImage from "../../components/Uploadimage/UploadImage";
 import InputField from "../../components/Input/InputField";
 import Button from "../../components/Button/Button";
 import "./Profile.css";
+import {  useDispatch } from "react-redux";
+import { setUserInformation  } from "../../state/user/userSlice";
 
 export default function Profile() {
 
@@ -33,9 +35,9 @@ export default function Profile() {
   // };
 
 
-
+  const dispatch = useDispatch();
     const ref = useRef<HTMLInputElement>(null);
-    // const [profileImage, setProfileImage] = React.useState<SetStateAction<string>("");
+   
     const [profileImage, setProfileImage] = React.useState<SetStateAction<string>>("");
 
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
@@ -89,6 +91,7 @@ export default function Profile() {
     
       const handleSave = () => {
         const userData = { ...userInfo, profileImage};
+        dispatch(setUserInformation (userData))
         return userData;
         
       };
