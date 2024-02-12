@@ -86,16 +86,16 @@ export default function Customize() {
       </div>
       <div className="customContainer">
           <PhonePreview prompts={prompts} isSaved={isSaved} />
-          {/* <CustomeLink
+          <CustomeLink
             setSelectedImage={setSelectedImage}
             prompts={prompts}
             selectedImage={selectedImage}
             setPrompts={setPrompts}
             isSaved={isSaved}
             setIsSaved={setIsSaved}
-          /> */}
+          />
 
-          <Profile  />
+          {/* <Profile  /> */}
      
       </div>
     </section>

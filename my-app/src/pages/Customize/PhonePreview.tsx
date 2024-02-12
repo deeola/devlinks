@@ -21,18 +21,10 @@ type TPhonePreview = {
 }
 
 export default function PhonePreview(Props: TPhonePreview) {
-  const { prompts, isSaved } = Props;
-  const links = useSelector((state: RootState) => state.promptSlice);
+  const {  isSaved } = Props;
+
   const users = useSelector((state:RootState ) => state.user)
-
-  console.log(users)
-  console.log(links, "linksed");
-
-  useEffect(() => {
-    console.log(links, "links updated");
-  }, [links]);
-
-  console.log(prompts, "mynewprompts");
+  const myPrompts = useSelector((state:RootState) => state.link.links)
 
   const arr = [
     { color: "#000000", image: gitlab, text: "Gitlab", link: "http://www.gitlab.com" },
@@ -40,9 +32,6 @@ export default function PhonePreview(Props: TPhonePreview) {
     { color: "#818181", image: x, text: "X", link: "http://x.com" },
     { color: "#000000", image: gitlab, text: "Gitlab", link: "http://www.gitlab.com" },
     { color: "#4C4C4C", image: facebook, text: "Facebook", link: "http://facebook.com" },
-
-
-   
   ];
 
   const {firstName, lastName, email, profileImage} = users.users
@@ -91,7 +80,7 @@ export default function PhonePreview(Props: TPhonePreview) {
           </foreignObject>
         }
 
-        {prompts.length === 0 ? (
+        {myPrompts.length === 0 ? (
           <>
             <rect width="237" height="44" x="35" y="278" fill="#EEE" rx="8" />
             <rect width="237" height="44" x="35" y="342" fill="#EEE" rx="8" />
@@ -101,7 +90,7 @@ export default function PhonePreview(Props: TPhonePreview) {
           </>
         ) : (
           <>
-            {prompts.slice(0, shouldScroll ? 5 : undefined).map((myarray, index) => (
+            {myPrompts.slice(0, shouldScroll ? 5 : undefined).map((myarray, index) => (
               myarray.label !== "Please select a label" && myarray.answer !== "" && (
                 <foreignObject
                   key={index}

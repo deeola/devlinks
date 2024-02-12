@@ -5,8 +5,8 @@ import Preview from "./pages/Preview/Preview";
 function App() {
   return (
     <div className="App">
-       <Customize />
-      {/* <Preview /> */}
+       {/* <Customize /> */}
+     <Preview /> 
     </div>
   );
 }

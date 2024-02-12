@@ -7,7 +7,6 @@ import dropdownSlice from "./inputs/dropdownSlice";
 import mergedValuesSlice from "./inputs/mergedValuesSlice";
 import errorSlice from "./inputs/errorSlice";
 import promptSlice from "./link/promptSlice";
-import userDetails from "./user/userDetails";
 
 export const store = configureStore({
     reducer: {
@@ -18,8 +17,7 @@ export const store = configureStore({
         dropdown: dropdownSlice,
         mergedValuesSlice: mergedValuesSlice,
         error: errorSlice,
-        promptSlice: promptSlice,
-        
+        promptSlice: promptSlice
     }
 });
 

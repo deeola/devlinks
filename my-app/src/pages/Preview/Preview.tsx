@@ -7,10 +7,20 @@ import github from "../../assets/images/icon-github.svg";
 import twitter from "../../assets/images/icon-twitter.svg";
 import linkedin from "../../assets/images/icon-linkedin.svg";
 import profileimage from "../../assets/images/mann.jpeg";
+import { useSelector } from "react-redux";
+import { RootState } from "../../state/store";
+
 
 export default function Preview() {
+    const myPrompts = useSelector((state:RootState) => state.link.links)
+    const users = useSelector((state:RootState) => state.user.users )
 
-    
+    const {firstName, lastName, email, profileImage} = users;
+
+    let profileName:string = `${firstName}${lastName}`;
+
+
+
   return (
     <div className="preview-container">
       <div className="preview-Header">
@@ -23,32 +33,23 @@ export default function Preview() {
         <div className="preview-card-container">
           <div className="preview-card-user-details">
             <div className="profile-image-container">
-            <img className="preview-img" src={profileimage} alt="display-img" />
+            <img className="preview-img" src={profileImage ? profileImage : profileimage} alt="display-img" />
             </div>
-            <MBody text="Ben Wright" className="preview-username" />
-            <SBody text="ben@example.com" className="preview-email" />
+            <MBody text={profileName ? profileName : "Adeola Bamigboye"} className="preview-username" />
+            <SBody text={email ? email : "ben@example.com"} className="preview-email" />
           </div>
           <div className="preview-cards">
-            <a target="_blank" href="#" className="cards">
-              <div className="preview-card-icon-name-container">
-                <img className="preview-card-icon" src={github} alt="card-img" />
-                <MBody text="Github" className="card-name"/>
-              </div>
-              <img className="card-arrow" src={arrow} alt="card-img" />
-            </a>
-            <a target="_blank" href="#" className="cards">
-              <div className="preview-card-icon-name-container">
-                <img className="preview-card-icon" src={twitter} alt="card-img" />
-                <MBody text="Twitter" className="card-name" />
-              </div>
-              <img className="card-arrow" src={arrow} alt="card-img" />
-            </a>
-            <a target="_blank" href="#" className="cards">
-              <div className="preview-card-icon-name-container">
-                <img className="preview-card-icon" src={linkedin} alt="card-img" />
-                <MBody text="Linkedin" className="card-name" />
-              </div>
-              <img className="card-arrow" src={arrow} alt="card-img" /></a>
+            {
+                myPrompts.map(prompt => (
+                    <a target="_blank" href={prompt.answer} className="cards" style={{ backgroundColor: prompt.bgColor }}>
+                    <div className="preview-card-icon-name-container">
+                      <img className="preview-card-icon" src={prompt.image} alt="card-img" />
+                      <MBody text={prompt.label} className="card-name"/>
+                    </div>
+                    <img className="card-arrow" src={arrow} alt="card-img" />
+                  </a>
+                ))
+            }
           </div>
         </div>
       </div>

@@ -15,6 +15,10 @@ const linkSlice = createSlice({
     name:"link",
     initialState,
     reducers:{
+
+        setAllPrompts: (state, action) => {
+state.links = action.payload
+        },
         addNewLink: (state, action) => {
             const { payload } = action;
             payload.forEach((prompt: any) => {
@@ -43,7 +47,7 @@ const linkSlice = createSlice({
     },
 });
 
-export const { addNewLink, removeLink } = linkSlice.actions;
+export const {  setAllPrompts, addNewLink, removeLink } = linkSlice.actions;
 
 export default linkSlice.reducer;
 

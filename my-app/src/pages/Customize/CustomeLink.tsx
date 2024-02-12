@@ -7,7 +7,7 @@ import linkImg from "../../assets/images/icon-link.svg";
 import { linkArray } from "../../linkArray";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../state/store";
-import { addNewLink } from "../../state/link/linkSlice";
+import { addNewLink, setAllPrompts } from "../../state/link/linkSlice";
 import { addComponent } from "../../state/link/linkComponentSlice";
 import {
   MergedValues,
@@ -244,6 +244,8 @@ export default function CustomeLink(Props: customLink) {
 
  
     dispatch(setPrompt(prompts));
+    dispatch(setAllPrompts(prompts))
+    console.log(prompts)
     setMyError(false)
 
   };
