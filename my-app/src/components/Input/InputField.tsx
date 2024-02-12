@@ -13,7 +13,12 @@ interface UInputs {
   placeholder?: string;
   type?: string;
   onChange:(e:any) => void,
-  value: string|number
+  value: string|number,
+  onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  required?: boolean,
+  inputRef?: any,
+  autoComplete?: string
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
 }
 
 export default function InputField(Props: UInputs) {
@@ -23,7 +28,7 @@ export default function InputField(Props: UInputs) {
   const [localValue, setLocalValue] = React.useState("");
 
   const inputState = useSelector((state: RootState) => state.input);
-  const { id, name, img, placeholder, type , onChange, value} = Props;
+  const { id, name, img, placeholder, type , onChange, value, required, onFocus,inputRef, autoComplete, onBlur } = Props;
   const {  errorMessage, error, touched } = inputState;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,13 +58,17 @@ export default function InputField(Props: UInputs) {
         <input
           value={value}
           onChange={onChange}
-          onBlur={handleBlur}
+          onBlur={onBlur}
           type={type}
           id={id}
           name={name}
           data-id="myInput"
           className={`${error ? "error-text" : ""}`}
           placeholder={placeholder}
+          onFocus={onFocus}
+          required={required}
+          ref={inputRef}
+          autoComplete={autoComplete}
         />
         {touched && error && (
           <span className="error-span"> {errorMessage} </span>
