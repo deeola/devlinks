@@ -4,6 +4,8 @@ const usersDB = {
 }
 const bcrypt = require('bcrypt');
 
+
+
 const handleLogin = async (req, res) => {
     const { email, pwd } = req.body;
     if (!email || !pwd) return res.status(400).json({ 'message': 'Email and password are required.' });
@@ -18,5 +20,6 @@ const handleLogin = async (req, res) => {
         res.sendStatus(401);
     }
 }
+
 
 module.exports = { handleLogin };

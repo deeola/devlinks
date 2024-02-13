@@ -3,7 +3,6 @@ const data = {
     setLinks: function (data) { this.links = data }
 }
 
-console.log(data)
 
 const getAllLinks = (req, res) => {
     res.json(data.links);

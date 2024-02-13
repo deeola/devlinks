@@ -6,11 +6,13 @@ const fsPromises = require('fs').promises;
 const path = require('path');
 const bcrypt = require('bcrypt');
 
+
+
 const handleNewUser = async (req, res) => {
     const { email, pwd } = req.body;
     if (!email || !pwd) return res.status(400).json({ 'message': 'Email and password are required.' });
     // check for duplicate usernames in the db
-    const duplicate = usersDB.users.find(person => person.email === user);
+    const duplicate = usersDB.users.find(person => person.email === email);
     if (duplicate) return res.sendStatus(409); //Conflict 
     try {
         //encrypt the password
