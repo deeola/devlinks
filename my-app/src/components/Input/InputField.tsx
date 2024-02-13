@@ -12,13 +12,15 @@ interface UInputs {
   img?: string;
   placeholder?: string;
   type?: string;
-  onChange:(e:any) => void,
-  value: string|number,
+  onChange:(e:any) => void;
+  value: string|number;
   onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
-  required?: boolean,
-  inputRef?: any,
-  autoComplete?: string
+  required?: boolean;
+  inputRef?: any;
+  autoComplete?: string;
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  error?:boolean |string;
+  errorMessage?:string;
 }
 
 export default function InputField(Props: UInputs) {
@@ -28,8 +30,8 @@ export default function InputField(Props: UInputs) {
   const [localValue, setLocalValue] = React.useState("");
 
   const inputState = useSelector((state: RootState) => state.input);
-  const { id, name, img, placeholder, type , onChange, value, required, onFocus,inputRef, autoComplete, onBlur } = Props;
-  const {  errorMessage, error, touched } = inputState;
+  const { id, name, img, placeholder, type , onChange, value, required, onFocus,inputRef, autoComplete, onBlur, error, errorMessage } = Props;
+  const {  touched } = inputState;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const updatedValue = e.target.value;

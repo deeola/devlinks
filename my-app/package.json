@@ -14,6 +14,7 @@
     "@types/react-redux": "^7.1.33",
     "@types/redux": "^3.6.0",
     "@types/redux-thunk": "^2.1.0",
+    "axios": "^1.6.7",
     "formik": "^2.4.5",
     "lodash": "^4.17.21",
     "lodash-fp": "^0.10.4",

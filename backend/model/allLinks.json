@@ -1,0 +1,106 @@
+[
+    {
+        "id": "0",
+        "image": "../src/assets/images/icon-github.svg",
+        "label": "GitLab",
+        "selected": false,
+        "placeholder": "https://www.gitlab.com/benwright",
+        "bgColor": "#554488"
+    },
+    {
+        "id": "1",
+        "image": "../src/assets/images/icon-facebook.svg",
+        "label": "Facebook",
+        "selected": false,
+        "placeholder": "https://www.facebook.com/benwright",
+        "bgColor": "#316FF6"
+    },
+    {
+        "id": "2",
+        "image": "../src/assets/images/icon-youtube.svg",
+        "label": "Youtube",
+        "selected": false,
+        "placeholder": "https://www.youtube.com/benwright",
+        "bgColor": "#FF0000"
+    },
+    {
+        "id": "3",
+        "image": "../src/assets/images/icon-codepen.svg",
+        "label": "CodePen",
+        "selected": false,
+        "placeholder": "https://www.codepen.com/benwright",
+        "bgColor": "#000000"
+    },
+    {
+        "id": "4",
+        "image": "../src/assets/images/icon-codewars.svg",
+        "label": "Code Wars",
+        "selected": false,
+        "placeholder": "https://www.codewars.com/benwright",
+        "bgColor": "#AD2C27"
+    },
+    {
+        "id": "5",
+        "image": "../src/assets/images/icon-devto.svg",
+        "label": "Devto",
+        "selected": false,
+        "placeholder": "https://www.devto.com/benwright",
+        "bgColor": "#000000"
+    },
+    {
+        "id": "6",
+        "image": "../src/assets/images/icon-email.svg",
+        "label": "Email",
+        "selected": false,
+        "placeholder": "adeola@gmail.com",
+        "bgColor": "#000000"
+    },
+    {
+        "id": "7",
+        "image": "../src/assets/images/icon-freecodecamp.svg",
+        "label": "Freecodecamp",
+        "selected": false,
+        "placeholder": "https://www.freecodecamp.com/benwright",
+        "bgColor": "#0A0A23"
+    },
+    {
+        "id": "8",
+        "image": "../src/assets/images/icon-linkedin.svg",
+        "label": "Linkedin",
+        "selected": false,
+        "placeholder": "https://www.linkedin.com/benwright",
+        "bgColor": "#0077B5"
+    },
+    {
+        "id": "9",
+        "image": "../src/assets/images/icon-twitch.svg",
+        "label": "Twitch",
+        "selected": false,
+        "placeholder": "https://www.twitch.com/benwright",
+        "bgColor": "#6441A5"
+    },
+    {
+        "id": "10",
+        "image": "../src/assets/images/icon-twitter.svg",
+        "label": "Twitter",
+        "selected": false,
+        "placeholder": "https://www.X.com/benwright",
+        "bgColor": "#1DA1F2"
+    },
+    {
+        "id": "11",
+        "image": "../src/assets/images/icon-hashnode.svg",
+        "label": "Hashnode",
+        "selected": false,
+        "placeholder": "https://www.hashnode.com/benwright",
+        "bgColor": "#2962FF"
+    },
+    {
+        "id": "12",
+        "image": "../src/assets/images/icon-github.svg",
+        "label": "GitHub",
+        "selected": false,
+        "placeholder": "https://www.github.com/benwright",
+        "bgColor": "#000000"
+    }
+]
