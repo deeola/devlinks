@@ -82,7 +82,7 @@ export default function Auth() {
         const response = await axios.post(REGISTER_URL,
             JSON.stringify({ email, pwd }),
             {
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json'},
                 withCredentials: true
             })
 
