@@ -49,14 +49,14 @@ export default function Login() {
             JSON.stringify({ email, pwd }),
             {
                 headers: { 'Content-Type': 'application/json' },
-                withCredentials: true
+                withCredentials: true,
             }
         );
         console.log(JSON.stringify(response?.data));
         //console.log(JSON.stringify(response));
-        const accessToken = response?.data?.accessToken;
+         const accessToken = response?.data?.accessToken;
         const roles = response?.data?.roles;
-        setAuth({ email, pwd, roles, accessToken });
+        setAuth({ email, pwd, accessToken, roles });
         setEmail('');
         setPwd('');
         setSuccess(true);
