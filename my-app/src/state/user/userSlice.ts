@@ -6,6 +6,7 @@ type User = {
     lastName: string;
     email: string;
     profileImage: string;
+    pwd: string;
 }
 
 
@@ -19,6 +20,7 @@ const initialState: UserState = {
       lastName: '',
       email: '',
       profileImage: '',
+      pwd: '',
     },
   };
 
