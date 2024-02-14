@@ -7,10 +7,8 @@ import Button from "../components/Button/Button";
 import mailbox from "../assets/images/icon-email.svg";
 import password from "../assets/images/icon-password.svg";
 import axios from "../api/axios";
-import { head } from "lodash";
 
-// const EMAIL_REGEX = /^[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,}$/;
-// const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+
 const LOGIN_URL = '/auth';
 
 export default function Login() {
@@ -54,12 +52,13 @@ export default function Login() {
         );
         console.log(JSON.stringify(response?.data));
         //console.log(JSON.stringify(response));
-        //  const accessToken = response?.data?.accessToken;
-        // const roles = response?.data?.roles;
-        // setAuth({ user, pwd, accessToken, roles });
+         const accessToken = response?.data?.accessToken;
+        const roles = response?.data?.roles;
+        setAuth({ user, pwd, accessToken, roles });
         setEmail('');
         setPwd('');
         setSuccess(true);
+        
     } catch (err:any) {
         if (!err?.response) {
             setErrMsg('No Server Response');
