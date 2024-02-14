@@ -13,8 +13,8 @@ function App() {
      {/* <Preview /> 
      <Notification text="The link has been copied to your clipboard!" img={linkImage} /> */}
 
-     {/* <Auth /> */}
-     <Login />
+      {/* <Auth /> */}
+     <Login /> 
     </div>
   );
 }

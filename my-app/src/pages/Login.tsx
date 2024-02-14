@@ -17,7 +17,7 @@ export default function Login() {
   const emailRef: MutableRefObject<HTMLInputElement | null> = useRef(null);
   const errRef: MutableRefObject<HTMLInputElement | null>  = useRef(null);
 
-  const [email, setEmail] = useState("");
+  const [user, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
@@ -36,7 +36,7 @@ export default function Login() {
 
   useEffect(() => {
     setErrMsg("");
-  }, [email, pwd]);
+  }, [user, pwd]);
 
 
 
@@ -46,7 +46,7 @@ export default function Login() {
 
     try {
         const response = await axios.post(LOGIN_URL,
-            JSON.stringify({ email, pwd }),
+            JSON.stringify({ user, pwd }),
             {
                 headers: { 'Content-Type': 'application/json' },
                 withCredentials: true,
@@ -54,9 +54,9 @@ export default function Login() {
         );
         console.log(JSON.stringify(response?.data));
         //console.log(JSON.stringify(response));
-         const accessToken = response?.data?.accessToken;
-        const roles = response?.data?.roles;
-        setAuth({ email, pwd, accessToken, roles });
+        //  const accessToken = response?.data?.accessToken;
+        // const roles = response?.data?.roles;
+        // setAuth({ user, pwd, accessToken, roles });
         setEmail('');
         setPwd('');
         setSuccess(true);
@@ -100,7 +100,7 @@ export default function Login() {
                   id="email"
                   name="email"
                   placeholder="e.g. alex@email.com"
-                  value={email}
+                  value={user}
                   onChange={(e) => setEmail(e.target.value)}
         
                   required
@@ -137,7 +137,7 @@ export default function Login() {
               <Button
                 text="Login"
                 disabled={
-                  !email || !pwd ? true : false
+                  !user || !pwd ? true : false
                 }
               />
             </div>

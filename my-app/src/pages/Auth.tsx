@@ -8,6 +8,7 @@ import mailbox from "../assets/images/icon-email.svg";
 import password from "../assets/images/icon-password.svg";
 import axios from "../api/axios";
 import { head } from "lodash";
+import Login from "./Login";
 
 const EMAIL_REGEX = /^[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -17,7 +18,7 @@ export default function Auth() {
   const emailRef: MutableRefObject<HTMLInputElement | null> = useRef(null);
   const errRef: MutableRefObject<HTMLInputElement | null>  = useRef(null);
 
-  const [email, setEmail] = useState("");
+  const [user, setEmail] = useState("");
   const [validEmail, setValidEmail] = useState(false);
   const [emailFocus, setEmailFocus] = useState(false);
 
@@ -30,7 +31,7 @@ export default function Auth() {
   const [matchFocus, setMatchFocus] = useState(false);
 
   const [errMsg, setErrMsg] = useState({
-    email: "",
+    user: "",
     pwd: "",
     matchPwd: "",
   });
@@ -42,8 +43,8 @@ export default function Auth() {
   }, []);
 
   useEffect(() => {
-    setValidEmail(EMAIL_REGEX.test(email));
-  }, [email]);
+    setValidEmail(EMAIL_REGEX.test(user));
+  }, [user]);
 
   useEffect(() => {
     setValidPwd(PWD_REGEX.test(pwd));
@@ -52,13 +53,13 @@ export default function Auth() {
 
   useEffect(() => {
     setErrMsg({
-      email: "",
+      user: "",
       pwd: "",
       matchPwd: "",
     });
-  }, [email, pwd, matchPwd]);
+  }, [user, pwd, matchPwd]);
 
-  const emailError = emailFocus && email && !validEmail;
+  const emailError = emailFocus && user && !validEmail;
   const passwordError = pwdFocus && !validPwd;
   const matchError = matchFocus && !validMatch;
 
@@ -66,12 +67,12 @@ export default function Auth() {
 
     e.preventDefault();
     
-    const v1 = EMAIL_REGEX.test(email);
+    const v1 = EMAIL_REGEX.test(user);
     const v2 = PWD_REGEX.test(pwd);
     const v3 = pwd === matchPwd;
     if (!v1 || !v2) {
       setErrMsg({
-        email: !v1 ? "Please enter a valid email address." : "",
+        user: !v1 ? "Please enter a valid email address." : "",
         pwd: !v2 ? "Please enter a valid password." : "",
         matchPwd: !v3 ? "Passwords do not match." : "",
       });
@@ -80,7 +81,7 @@ export default function Auth() {
 
     try {
         const response = await axios.post(REGISTER_URL,
-            JSON.stringify({ email, pwd }),
+            JSON.stringify({ user, pwd }),
             {
                 headers: { 'Content-Type': 'application/json'},
                 withCredentials: true
@@ -95,7 +96,7 @@ export default function Auth() {
     } catch (err:any) {
        if (err.response?.status === 409) {
             setErrMsg({
-                email: "Email already exists",
+                user: "Email already exists",
                 pwd: "",
                 matchPwd: ""
             });
@@ -113,8 +114,9 @@ export default function Auth() {
 
   return (
     <section className="authSection">
+     
         <>
-        {success && (<h1>Success</h1>)}
+        {success && <h1>Success</h1> }
         </>
       <form className="authContainer" onSubmit={handleSubmit}>
         <div>
@@ -136,7 +138,7 @@ export default function Auth() {
                   id="email"
                   name="email"
                   placeholder="e.g. alex@email.com"
-                  value={email}
+                  value={user}
                   onChange={(e) => setEmail(e.target.value)}
                   onFocus={() => setEmailFocus(true)}
                   required
@@ -145,7 +147,7 @@ export default function Auth() {
                   inputRef={emailRef}
                   autoComplete="off"
                   error={emailError}
-                  errorMessage={errMsg.email}
+                  errorMessage={errMsg.user}
                 />
               </div>
 
