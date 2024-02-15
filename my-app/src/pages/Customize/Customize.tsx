@@ -12,15 +12,6 @@ import Profile from "../Profile/Profile";
 
 
 
-export interface TProfile {
-  id: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-  password: string;
-  profile_image: string;
-
-}
 
 export default function Customize() {
   const [selectedImage, setSelectedImage] = useState<string>(linkImg);

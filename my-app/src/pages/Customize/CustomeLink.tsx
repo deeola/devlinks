@@ -20,17 +20,27 @@ import AddnewLink from "../../components/Addlink/Addnewlink";
 import { setPrompt } from "../../state/link/promptSlice";
 
 export interface TCustomize {
-  prompt: string;
+  id: string;
   answer: string;
   label: string;
   bgColor: string;
   image: string;
-  id: string;
   placeholder: string;
-  urlAddress: string;
-  timestamp: number;
   isEditable: boolean;
 }
+
+
+export interface TLinks {
+  id: string;
+  label: string;
+  answer: string;
+  image: string;
+  bgColor: string;
+}
+
+
+
+
 
 type customLink = {
   selectedImage:string,
@@ -44,18 +54,17 @@ export default function CustomeLink(Props: customLink) {
 
   const [prompts, setPrompts] = useState<TCustomize[]>([
     {
-      prompt: "",
+      id: "",
       answer: "",
       label: "Please select a label",
       bgColor: "",
       image: selectedImage,
-      id: "",
       placeholder: "",
-      urlAddress: "",
-      timestamp: new Date().getTime(),
       isEditable: false,
     },
   ]);
+
+
 
 
   const dispatch = useDispatch();
@@ -169,15 +178,12 @@ export default function CustomeLink(Props: customLink) {
     setPrompts([
       ...prompts,
       {
-        prompt: "",
         answer: "",
         label: selectedlabel,
         bgColor: "",
         image: selectedImage,
         id: "",
         placeholder: "",
-        urlAddress: "",
-        timestamp: new Date().getTime(),
         isEditable: false,
       },
     ]);
