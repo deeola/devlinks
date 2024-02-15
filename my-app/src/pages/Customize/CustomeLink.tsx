@@ -40,17 +40,9 @@ export interface TLinks {
 
 
 
+export default function CustomeLink() {
+  const [selectedImage, setSelectedImage] = useState<string>(linkImg);
 
-
-type customLink = {
-  selectedImage:string,
-  setSelectedImage:any,
-  isSaved:boolean,
-  setIsSaved:(value: boolean) => void,
-}
-
-export default function CustomeLink(Props: customLink) {
-  const {  selectedImage,  setSelectedImage, isSaved, setIsSaved } = Props;
 
   const [prompts, setPrompts] = useState<TCustomize[]>([
     {

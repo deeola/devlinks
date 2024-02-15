@@ -14,7 +14,7 @@ import Profile from "../Profile/Profile";
 
 
 export default function Customize() {
-  const [selectedImage, setSelectedImage] = useState<string>(linkImg);
+  
   const [isSaved, setIsSaved] = useState<boolean>(false);
 
 
@@ -44,12 +44,7 @@ export default function Customize() {
       <div className="customContainer">
           <PhonePreview  isSaved={isSaved} />
           <CustomeLink
-            setSelectedImage={setSelectedImage}
-   
-            selectedImage={selectedImage}
-       
-            isSaved={isSaved}
-            setIsSaved={setIsSaved}
+
           />
 
           {/* <Profile  /> */}
