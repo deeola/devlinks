@@ -19,23 +19,49 @@ import { v4 as uuidv4 } from "uuid";
 import AddnewLink from "../../components/Addlink/Addnewlink";
 import { setPrompt } from "../../state/link/promptSlice";
 
-import { TCustomize } from "./Customize";
+export interface TCustomize {
+  prompt: string;
+  answer: string;
+  label: string;
+  bgColor: string;
+  image: string;
+  id: string;
+  placeholder: string;
+  urlAddress: string;
+  timestamp: number;
+  isEditable: boolean;
+}
 
 type customLink = {
-  prompts: TCustomize[],
   selectedImage:string,
-  setPrompts:(value: any) => void,
   setSelectedImage:any,
   isSaved:boolean,
   setIsSaved:(value: boolean) => void,
 }
 
 export default function CustomeLink(Props: customLink) {
+  const {  selectedImage,  setSelectedImage, isSaved, setIsSaved } = Props;
+
+  const [prompts, setPrompts] = useState<TCustomize[]>([
+    {
+      prompt: "",
+      answer: "",
+      label: "Please select a label",
+      bgColor: "",
+      image: selectedImage,
+      id: "",
+      placeholder: "",
+      urlAddress: "",
+      timestamp: new Date().getTime(),
+      isEditable: false,
+    },
+  ]);
+
+
   const dispatch = useDispatch();
 
-  const { prompts, selectedImage, setPrompts, setSelectedImage, isSaved, setIsSaved } = Props;
+  
 
-  const [isEditable, setIsEditable] = useState<boolean>(false);
 
   //   // selectors
   const links = useSelector((state: RootState) => state.link.links);
@@ -152,6 +178,7 @@ export default function CustomeLink(Props: customLink) {
         placeholder: "",
         urlAddress: "",
         timestamp: new Date().getTime(),
+        isEditable: false,
       },
     ]);
   } else {
@@ -189,7 +216,7 @@ export default function CustomeLink(Props: customLink) {
           placeholder: placeholder,
           id: id,
           label: label,
-          isRendable: true
+          isEditable: true
         };
       }
       return prompt;
@@ -252,9 +279,11 @@ export default function CustomeLink(Props: customLink) {
 
   };
 
+
   const handleEdit = (i: string) => {
     console.log(i)
   }
+
 
   return (
     <div className="customelinkcontainer">
@@ -302,7 +331,6 @@ export default function CustomeLink(Props: customLink) {
          
               type="text"
               error={myError}
-              isEditable={isEditable}
               handleEdit={handleEdit}
               
             />

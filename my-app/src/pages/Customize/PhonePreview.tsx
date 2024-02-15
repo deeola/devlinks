@@ -12,7 +12,7 @@ import gitlab from "../../assets/images/icon-github.svg";
 import x from "../../assets/images/icon-twitter.svg";
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from "../../state/store";
-import { TCustomize } from "./Customize";
+
 import { isReadable } from "stream";
 
 type TPhonePreview = {

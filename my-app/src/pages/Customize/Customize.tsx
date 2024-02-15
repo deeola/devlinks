@@ -10,18 +10,7 @@ import profiledetails from "../../assets/images/icon-profile-details-header.svg"
 import linkImg from "../../assets/images/icon-link.svg";
 import Profile from "../Profile/Profile";
 
-export interface TCustomize {
-  prompt: string;
-  answer: string;
-  label: string;
-  bgColor: string;
-  image: string;
-  id: string;
-  placeholder: string;
-  urlAddress: string;
-  timestamp: number;
-  isRendable?: boolean;
-}
+
 
 export interface TProfile {
   id: string;
@@ -37,31 +26,8 @@ export default function Customize() {
   const [selectedImage, setSelectedImage] = useState<string>(linkImg);
   const [isSaved, setIsSaved] = useState<boolean>(false);
 
-  const [prompts, setPrompts] = useState<TCustomize[]>([
-    {
-      prompt: "",
-      answer: "",
-      label: "Please select a label",
-      bgColor: "",
-      image: selectedImage,
-      id: "",
-      placeholder: "",
-      urlAddress: "",
-      timestamp: new Date().getTime(),
-      isRendable: false,
-    },
-  ]);
 
-  const [user, setUser] = useState<TProfile>(
-    {
-      id: "",
-      first_name: "",
-      last_name: "",
-      email: "",
-      password: "",
-      profile_image: "",
-    },
-  );
+
 
   return (
     <section className="customize">
@@ -88,9 +54,9 @@ export default function Customize() {
           <PhonePreview  isSaved={isSaved} />
           <CustomeLink
             setSelectedImage={setSelectedImage}
-            prompts={prompts}
+   
             selectedImage={selectedImage}
-            setPrompts={setPrompts}
+       
             isSaved={isSaved}
             setIsSaved={setIsSaved}
           />

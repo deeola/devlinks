@@ -27,7 +27,7 @@ type Tdropdown = {
   handleDelete: (i: any) => void;
   handleButtonClick: (i: number) => void;
   activeIndex: number | null;
-  isEditable: boolean;
+ 
   handleEdit: (i: string) => void;
 };
 
@@ -42,7 +42,7 @@ export default function AddnewLink(Props: Tdropdown) {
     handleDelete,
     handleButtonClick,
     activeIndex,
-    isEditable,
+
     handleEdit
   } = Props;
 
@@ -53,7 +53,7 @@ export default function AddnewLink(Props: Tdropdown) {
           <div className="addlinknumber-remove">
             <MBody text={`= Link #${prompts.indexOf(prompt) + 1}`} />
             <div className="edit-remove">
-              {isEditable && <p onClick={() => handleEdit(i)} className="edit-button">Edit</p>}
+              {prompt.isEditable && <p onClick={() => handleEdit(i)} className="edit-button">Edit</p>}
             <p className="remove-button" onClick={() => handleDelete(i)}>
               Remove
             </p>
