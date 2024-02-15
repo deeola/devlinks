@@ -35,6 +35,8 @@ export default function CustomeLink(Props: customLink) {
 
   const { prompts, selectedImage, setPrompts, setSelectedImage, isSaved, setIsSaved } = Props;
 
+  const [isEditable, setIsEditable] = useState<boolean>(false);
+
   //   // selectors
   const links = useSelector((state: RootState) => state.link.links);
   const linksComponents = useSelector((state: RootState) => state.link.links);
@@ -250,6 +252,10 @@ export default function CustomeLink(Props: customLink) {
 
   };
 
+  const handleEdit = (i: string) => {
+    console.log(i)
+  }
+
   return (
     <div className="customelinkcontainer">
       <div className="edit-links-remove">
@@ -296,6 +302,9 @@ export default function CustomeLink(Props: customLink) {
          
               type="text"
               error={myError}
+              isEditable={isEditable}
+              handleEdit={handleEdit}
+              
             />
             </div>
            
