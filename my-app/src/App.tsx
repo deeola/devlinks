@@ -9,12 +9,12 @@ import Login from "./pages/Login";
 function App() {
   return (
     <div className="App">
-       {/* <Customize /> */}
+       <Customize /> 
      {/* <Preview /> 
      <Notification text="The link has been copied to your clipboard!" img={linkImage} /> */}
 
       {/* <Auth /> */}
-     <Login /> 
+     {/* <Login />  */}
     </div>
   );
 }

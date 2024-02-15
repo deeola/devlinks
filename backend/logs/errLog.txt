@@ -1,1 +1,4 @@
 20240213	21:27:34	ccdd198a-5208-46b8-a406-c2c38ce22194	Error: Not allowed by CORS
+20240215	10:54:56	17904506-cfee-4ee5-8ad9-d3c516ea8a30	ReferenceError: json is not defined
+20240215	11:19:53	721a5594-b0d9-40b4-aeba-6061bd3985da	ReferenceError: fs is not defined
+20240215	11:25:11	a496d423-fc21-4efb-98d2-b30baef810ac	SyntaxError: Expected double-quoted property name in JSON at position 25
