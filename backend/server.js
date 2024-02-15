@@ -40,7 +40,7 @@ app.use('/register', require('./routes/register'));
 app.use('/refresh', require('./routes/refresh'));
 app.use('/logout', require('./routes/logout'));
 
-app.use(verifyJWT);
+// app.use(verifyJWT);
 app.use('/links', require('./routes/api/links'));
 
 app.all('*', (req, res) => {

@@ -11,6 +11,6 @@ router.route('/')
     .delete(linksController.deleteLinks);
 
 router.route('/:id')
-    .get(linksController.getLinks);
+    .get(linksController.getLink);
 
 module.exports = router;

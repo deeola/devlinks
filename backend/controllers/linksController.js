@@ -4,9 +4,12 @@ const data = {
 }
 
 
+
 const getAllLinks = (req, res) => {
+   
     res.json(data.links);
 }
+
 
 const createNewLinks = (req, res) => {
     const newLink = {
@@ -62,7 +65,7 @@ const deleteLinks = (req, res) => {
     res.json(data.links);
 }
 
-const getLinks = (req, res) => {
+const getLink = (req, res) => {
     const link = data.links.find(link => link.id === parseInt(req.params.id));
     if (!link) {
         return res.status(400).json({ "message": `Link ID ${req.params.id} not found` });
@@ -75,5 +78,5 @@ module.exports = {
     createNewLinks,
     updateLinks,
     deleteLinks,
-    getLinks
+    getLink
 }

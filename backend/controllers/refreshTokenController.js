@@ -5,8 +5,10 @@ const usersDB = {
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
+
 const handleRefreshToken = (req, res) => {
     const cookies = req.cookies;
+
     if (!cookies?.jwt) return res.sendStatus(401);
     const refreshToken = cookies.jwt;
 
@@ -21,7 +23,7 @@ const handleRefreshToken = (req, res) => {
             const accessToken = jwt.sign(
                 { "username": decoded.username },
                 process.env.ACCESS_TOKEN_SECRET,
-                { expiresIn: '30s' }
+                { expiresIn: '15m' }
             );
             res.json({ accessToken })
         }
