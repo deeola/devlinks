@@ -18,6 +18,8 @@ import { validateField } from "../../state/inputs/inputSlice";
 import { v4 as uuidv4 } from "uuid";
 import AddnewLink from "../../components/Addlink/Addnewlink";
 import { setPrompt } from "../../state/link/promptSlice";
+import axios from "../../api/axios";
+import { json } from "stream/consumers";
 
 export interface TCustomize {
   id: string;
@@ -41,59 +43,36 @@ export interface TLinks {
 
 
 export default function CustomeLink() {
-  const [selectedImage, setSelectedImage] = useState<string>(linkImg);
-
+  const dispatch = useDispatch();
 
   const [prompts, setPrompts] = useState<TCustomize[]>([
     {
-      id: "",
+      id: uuidv4(),
       answer: "",
-      label: "Please select a label",
+      label: "",
       bgColor: "",
-      image: selectedImage,
+      image: "",
       placeholder: "",
       isEditable: false,
     },
   ]);
 
+  
 
 
+ const [isActive, setIsActive] = useState<boolean>(false);
+ const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
-  const dispatch = useDispatch();
+ const [myError, setMyError] = useState<boolean>(false);
+ const [errorMessage, setErrorMessage] = useState<string>("");
 
   
 
 
   //   // selectors
-  const links = useSelector((state: RootState) => state.link.links);
   const linksComponents = useSelector((state: RootState) => state.link.links);
 
-  const [isActive, setIsActive] = useState<boolean>(false);
-  const [selectedlabel, setSelectedLabel] = useState<string>(
-    "Please select a label"
-  );
-  
-  const [selectedPlaceholder, setSelectedPlaceholder] = useState<string>(
-    "Enter a link"
-  );
-
  
-
-
-  const [selectedBgColor, setSelectedBgColor] = useState<string>(
-    linkArray[0].bgColor
-  );
-  const [selectedId, setSelectedId] = useState<string>(linkArray[0].id);
-
-  const [selectedUrl, setSelectedSelectedUrl] = useState<string>("");
-
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
-
-  const [myError, setMyError] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string>("");
-
-  const finalValue: any = []
-
  
  
 
@@ -103,61 +82,8 @@ export default function CustomeLink() {
     setActiveIndex(i === activeIndex ? null : i);
   };
 
-  const handleDelete = (i: any) => {
-    let deletePrompts = [...prompts];
-    deletePrompts.splice(i, 1);
-    setPrompts(deletePrompts);
-  };
-
-  useEffect(() => {
-    setPrompts((prevPrompts: any) => {
-      const updatedPrompts = [...prevPrompts];
-      updatedPrompts[0] = {
-        ...updatedPrompts[0],
-        label: selectedlabel,
-        bgColor: selectedBgColor,
-        placeholder: selectedPlaceholder,
-        image: selectedImage,
-        id: selectedId,
-        urlAddress: selectedUrl,
-      };
-      return updatedPrompts;
-    });
-  }, [
-    selectedlabel,
-    selectedBgColor,
-    selectedPlaceholder,
-    selectedImage,
-    selectedId,
-    selectedUrl
-  ]);
 
 
-  const handlePrompt = (
-    e:
-      | React.ChangeEvent<HTMLTextAreaElement>
-      | React.ChangeEvent<HTMLSelectElement>
-      | React.ChangeEvent<HTMLInputElement>,
-
-    i: number
-  ) => {
-    const { name, value } = e.target;
-
-    setPrompts((prevPrompts: any) => {
-      const updatedPrompts = [...prevPrompts];
-      updatedPrompts[i] = {
-        ...updatedPrompts[i],
-        [name]: value,
-        label: selectedlabel,
-        bgColor: selectedBgColor,
-        placeholder: selectedPlaceholder,
-        image: selectedImage,
-        id: selectedId,
-        urlAddress: selectedUrl,
-      };
-      return updatedPrompts;
-    });
-  };
 
   const handleAddPrompt = () => {
 
@@ -170,11 +96,11 @@ export default function CustomeLink() {
     setPrompts([
       ...prompts,
       {
+        id: uuidv4(),
         answer: "",
-        label: selectedlabel,
+        label: "",
         bgColor: "",
-        image: selectedImage,
-        id: "",
+        image: "",
         placeholder: "",
         isEditable: false,
       },
@@ -186,6 +112,8 @@ export default function CustomeLink() {
   }
   };
 
+
+
   const handleOptionClick = (
     e: any,
     i: any,
@@ -193,7 +121,6 @@ export default function CustomeLink() {
     image: string,
     placeholder: string,
     bgColor: string,
-    id: string
   ) => {
 
     const hasEmptyAnswer = prompts.some(prompt => prompt.label === label);
@@ -205,24 +132,26 @@ export default function CustomeLink() {
 
 
     const updatedPrompts = prompts.map((prompt, index) => {
+
+      console.log(prompt)
       if (index === i) {
         return {
           ...prompt,
-          selectedlabel: label,
           bgColor: bgColor,
           image: image,
           placeholder: placeholder,
-          id: id,
           label: label,
           isEditable: true
         };
       }
       return prompt;
     });
-
     setPrompts(updatedPrompts);
     setActiveIndex(null);
   };
+
+
+
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -240,16 +169,21 @@ export default function CustomeLink() {
     });
   };
 
-
  
 
   const handleDisplayFirstPrompt = () => {
     setIsActive(true);
   };
 
-  const handleSave = () => {
+  const handleDelete = (i: any) => {
+    let deletePrompts = [...prompts];
+    deletePrompts.splice(i, 1);
+    setPrompts(deletePrompts);
+  };
 
+  const handleSave = async(e: any) => {
 
+e.preventDefault()
   
   const hasEmptyAnswer = prompts.some(prompt => prompt.answer === "");
 
@@ -261,7 +195,7 @@ export default function CustomeLink() {
   }
 
   // Check if any prompt has the same selectedlabel as the one being added
-  const hasDuplicateLabel = prompts.some(prompt => prompt.label === selectedlabel && prompt.label !== "GitLab");
+  const hasDuplicateLabel = prompts.some(prompt => prompt.label === "");
 
   // If any prompt has the same selectedlabel, display an error or handle as needed
   if (hasDuplicateLabel) {
@@ -269,9 +203,36 @@ export default function CustomeLink() {
     return; 
   }
 
- 
+  const newPromptsArray = prompts.map(({ answer, label, bgColor, image, id }) => ({
+    id,
+    answer,
+    label,
+    bgColor,
+    image,
+  }));
+
+  console.log(newPromptsArray, "newPromptsArray")
+
+  try {
+    const response = await axios.post("/links",
+        JSON.stringify(newPromptsArray),
+        {
+            headers: { 'Content-Type': 'application/json' },
+            withCredentials: true,
+        }
+    );
+    console.log(response);
+    //console.log(JSON.stringify(response));
+     const accessToken = response?.data?.accessToken;
+    const roles = response?.data?.roles;
+  
+    
+} catch (err:any) {
+   console.log(err)
+}
+
     dispatch(setPrompt(prompts));
-    dispatch(setAllPrompts(prompts))
+    dispatch(setAllPrompts(newPromptsArray))
     console.log(prompts)
     setMyError(false)
 
@@ -285,6 +246,7 @@ export default function CustomeLink() {
 
   return (
     <div className="customelinkcontainer">
+      <form onClick={handleSave}>
       <div className="edit-links-remove">
         <div>
         <MHeader className="your-links" text="Customize your links" />
@@ -343,9 +305,10 @@ export default function CustomeLink() {
           backgroundSubtype={linksComponents.length === 0 && "active"}
           classname="custom-button"
           text="Save"
-          onClick={handleSave}
+ 
         />
       </div>
+      </form>
     </div>
   );
 }

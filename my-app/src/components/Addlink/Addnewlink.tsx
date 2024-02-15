@@ -72,7 +72,7 @@ export default function AddnewLink(Props: Tdropdown) {
                     i === activeIndex ? "active" : ""
                   }`}
                 >
-                  <button
+                  <div
                     className="select-button"
                     role="combobox"
                     aria-labelledby="select button"
@@ -83,12 +83,12 @@ export default function AddnewLink(Props: Tdropdown) {
                   >
                     <div className="dropdown-selected-value">
                       <span className="image">
-                        <img className="prompt-image" src={prompt.image} alt="Icon" />
+                        <img className="prompt-image" src={!prompt.image ? iconLink : prompt.image } alt="Icon" />
                       </span>
-                      <span className="selected-value">{prompt.label}</span>
+                      <span className="selected-value">{!prompt.label ? "Please select a platform" : prompt.label}</span>
                     </div>
                     <span className="arrow"></span>
-                  </button>
+                  </div>
                   <ul
                     className="select-dropdown"
                     role="listbox"

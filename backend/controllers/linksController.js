@@ -1,4 +1,5 @@
 const fs = require('fs');
+
 const data = {
     links: require('../model/links.json'),
     setLinks: function (data) {
@@ -21,22 +22,45 @@ const getAllLinks = (req, res) => {
 
 
 const createNewLinks = (req, res) => {
-    const newLink = {
-        id: req.body.id,
-        label: req.body.label,
-        answer: req.body.answer,    
-        image: req.body.image,
-        bgColor: req.body.bgColor,
+    const newLinks = req.body; // Assuming req.body is an array of newLink objects
+
+    if (!Array.isArray(newLinks) || newLinks.length === 0) {
+        return res.status(400).json({ 'message': 'Request payload should contain an array with at least one object.' });
     }
 
-    if (!newLink.answer || !newLink.label || !newLink.image || !newLink.bgColor || !newLink.id) {
-        return res.status(400).json({ 'message': 'Answer,Label, image, bgcolor and id are all required.' });
+    for (const newLink of newLinks) {
+        // Check if any of the required fields are missing
+        if (!newLink.answer || !newLink.label || !newLink.image || !newLink.bgColor || !newLink.id) {
+            return res.status(400).json({ 'message': 'Answer, Label, image, bgcolor, and id are all required.' });
+        }
+
+        // Check if a link with the same ID already exists
+        const existingLinkIndex = data.links.findIndex(link => link.id === newLink.id);
+        if (existingLinkIndex !== -1) {
+            // A link with the same ID exists, check if it's the same link
+            const existingLink = data.links[existingLinkIndex];
+            if (existingLink.label === newLink.label && existingLink.image === newLink.image && existingLink.bgColor === newLink.bgColor) {
+                // Same link, skip adding
+                continue;
+            } else {
+                // Different link, replace the existing one with the new link
+                data.links[existingLinkIndex] = newLink;
+            }
+        } else {
+            // Check if a link with the same label already exists
+            const linkWithLabelExists = data.links.some(link => link.label === newLink.label);
+            if (linkWithLabelExists) {
+                return res.status(400).json({ 'message': 'A link with the provided label already exists.' });
+            }
+            
+            // If the new link doesn't exist, add it to the data.links array
+            data.links.push(newLink);
+        }
     }
 
-
-    data.setLinks([...data.links, newLink]);
     res.status(201).json(data.links);
 }
+
 
 const updateLinks = (req, res) => {
     const link = data.links.find(link => link.id === req.body.id);
@@ -84,3 +108,4 @@ module.exports = {
     deleteLinks,
     getLink
 }
+
