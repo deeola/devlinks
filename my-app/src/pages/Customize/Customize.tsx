@@ -43,9 +43,9 @@ export default function Customize() {
       </div>
       <div className="customContainer">
           <PhonePreview  isSaved={isSaved} />
-          {/* <CustomeLink /> */}
+          <CustomeLink />
 
-           <Profile  /> 
+           {/* <Profile  />  */}
      
       </div>
     </section>

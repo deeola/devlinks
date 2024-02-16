@@ -1,32 +1,3 @@
 [
-  {
-    "id": "id-0",
-    "label": "facebook",
-    "answer": "https://chat.openai.com/",
-    "bgColor": "#316FF6",
-    "image": "../src/assets/images/icon-facebook.svg",
-    "userID": "adeola@gmail.com"
-  },
-  {
-    "id": "id-1",
-    "label": "Github",
-    "answer": "https://www.figma.com/",
-    "bgColor": "#000000",
-    "image": "../src/assets/images/icon-github.svg",
-    "userID": "adeola@gmail.com"
-  },
-  {
-    "id": "id-3",
-    "label": "Twitter",
-    "answer": "https://www.twitter.com/",
-    "image": "../src/assets/images/icon-twitter.svg",
-    "bgColor": "#003300"
-  },
-  {
-    "id": "38f4bc66-75ab-4dcd-b716-05c5968f2fcb",
-    "answer": " bb b ",
-    "label": "GitLab",
-    "bgColor": "#554488",
-    "image": "/static/media/icon-gitlab.f8573dc15b5cc7cd2b5f77c1b385d10a.svg"
-  }
+    
 ]

@@ -29,6 +29,7 @@ export interface TCustomize {
   image: string;
   placeholder: string;
   isEditable: boolean;
+  userId: string;
 }
 
 
@@ -38,12 +39,15 @@ export interface TLinks {
   answer: string;
   image: string;
   bgColor: string;
+
 }
 
 
 
 export default function CustomeLink() {
   const dispatch = useDispatch();
+
+  const userId = "adeola@gmail.com";
 
   const [prompts, setPrompts] = useState<TCustomize[]>([
     {
@@ -54,9 +58,12 @@ export default function CustomeLink() {
       image: "",
       placeholder: "",
       isEditable: false,
+      userId: userId,
     },
   ]);
 
+
+ 
   
 
 
@@ -103,6 +110,7 @@ export default function CustomeLink() {
         image: "",
         placeholder: "",
         isEditable: false,
+        userId: userId,
       },
     ]);
   } else {
@@ -141,7 +149,8 @@ export default function CustomeLink() {
           image: image,
           placeholder: placeholder,
           label: label,
-          isEditable: true
+          isEditable: true,
+          userId: userId
         };
       }
       return prompt;
@@ -203,12 +212,13 @@ e.preventDefault()
     return; 
   }
 
-  const newPromptsArray = prompts.map(({ answer, label, bgColor, image, id }) => ({
+  const newPromptsArray = prompts.map(({ answer, label, bgColor, image, id, userId }) => ({
     id,
     answer,
     label,
     bgColor,
     image,
+    userId
   }));
 
   console.log(newPromptsArray, "newPromptsArray")

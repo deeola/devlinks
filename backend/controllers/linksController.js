@@ -16,6 +16,7 @@ const data = {
 
 
 
+
 const getAllLinks = (req, res) => {
     res.json(data.links);
 }
@@ -38,30 +39,30 @@ const createNewLinks = (req, res) => {
 
     for (const newLink of newLinks) {
         // Check if any of the required fields are missing
-        if (!newLink.answer || !newLink.label || !newLink.image || !newLink.bgColor || !newLink.id) {
-            return res.status(400).json({ 'message': 'Answer, Label, image, bgcolor, and id are all required.' });
+        if (!newLink.answer || !newLink.label || !newLink.image || !newLink.bgColor || !newLink.id || !newLink.userId) {
+            return res.status(400).json({ 'message': 'Answer, Label, image, bgcolor, id and userID are all required.' });
         }
 
         // Check if a link with the same ID already exists
         const existingLinkIndex = data.links.findIndex(link => link.id === newLink.id);
+
         if (existingLinkIndex !== -1) {
             // A link with the same ID exists, check if it's the same link
             const existingLink = data.links[existingLinkIndex];
-            if (existingLink.label === newLink.label && existingLink.image === newLink.image && existingLink.bgColor === newLink.bgColor) {
-                // Same link, skip adding
+            if (existingLink.label === newLink.label && existingLink.image === newLink.image && existingLink.bgColor === newLink.bgColor && existingLink.userID === newLink.userId) {
                 continue;
             } else {
                 // Different link, replace the existing one with the new link
                 data.links[existingLinkIndex] = newLink;
             }
         } else {
-            // Check if a link with the same label already exists
+  
             const linkWithLabelExists = data.links.some(link => link.label === newLink.label);
             if (linkWithLabelExists) {
                 return res.status(400).json({ 'message': 'A link with the provided label already exists.' });
             }
-            
-            // If the new link doesn't exist, add it to the data.links array
+
+            console.log(newLink);
             data.links.push(newLink);
         }
     }
