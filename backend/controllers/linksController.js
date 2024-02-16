@@ -63,7 +63,9 @@ const createNewLinks = (req, res) => {
             }
 
             console.log(newLink);
+           data.setLinks([...data.links, newLink]);
             data.links.push(newLink);
+
         }
     }
 
