@@ -248,3 +248,17 @@
 20240215	15:24:46	279a2d30-1447-465a-8fbd-ca869f114a2e	POST	http://localhost:3000	/links
 20240215	15:24:58	705abf4f-127f-4a7f-b18f-61a578eab66c	POST	http://localhost:3000	/links
 20240215	15:24:58	49c32ac9-87ff-4414-90c0-b354525ff3a2	OPTIONS	http://localhost:3000	/links
+20240215	15:48:54	b273183a-598d-4ea9-bade-370777f89861	POST	undefined	/info
+20240215	15:49:04	20aaa020-7401-4c83-8ce8-334aea76867e	POST	undefined	/info
+20240215	15:49:43	29b2be84-8072-4164-b3b3-688c76f09bfc	POST	undefined	/info
+20240215	15:50:10	a7a2d4ca-eae1-49e8-a647-ccb1b5bfc459	POST	undefined	/info
+20240215	15:53:37	8457b6fb-e31c-43a6-b666-0fbca70a728a	POST	undefined	/info
+20240215	15:53:53	57e18eb9-a9eb-43f2-84a0-b5cb04e6115f	POST	undefined	/info
+20240216	21:14:42	3eec6474-924f-423d-b1c4-fd6841dfa4e0	GET	undefined	/links/Adeola@gmail.com
+20240216	21:17:26	5e89a6e5-8399-4908-9fbf-e12207e09d4d	GET	undefined	/links/Adeola@gmail.com
+20240216	21:17:56	6ad0ed96-60be-4d35-8d14-6577c846bc23	GET	undefined	/links/adeola@gmail.com
+20240216	21:21:08	c5155580-b71b-4ea3-af6e-a6b9ccf33c21	GET	undefined	/links/getlinks/adeola@gmail.com
+20240216	21:21:43	6401d3b2-6986-496c-996a-ee1f2317f41e	GET	undefined	/links/getlinks/adeola@gmail.com
+20240216	21:21:55	10622e0b-82fe-4529-928b-a9a9d0d9cbbd	GET	undefined	/links/getlinks/%22adeola@gmail.com%22
+20240216	21:22:00	4d1161d5-03fc-4ee1-a0b2-193b59a113bb	GET	undefined	/links/getlinks/adeola@gmail.com
+20240216	21:23:37	c4805a5b-a9a0-4544-9047-ed4adb40ece2	GET	undefined	/links/getlinks/adeola@gmail.com

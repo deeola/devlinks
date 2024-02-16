@@ -10,13 +10,14 @@ type TUploadImage = {
   selectedFiles: any,
   handleClick: () => void,
   inputRef: React.RefObject<HTMLInputElement>;
-  fileInputStyle: React.CSSProperties
+  fileInputStyle: React.CSSProperties,
+  
 
 }
 
 export default function UploadImage (Props: TUploadImage) {
 
-  const { text, subtext, onChange, selectedFiles, fileInputStyle, handleClick, inputRef } = Props;
+  const { text, subtext, onChange, selectedFiles, fileInputStyle, handleClick, inputRef} = Props;
   
   return (
     <div className="upload-image-container">

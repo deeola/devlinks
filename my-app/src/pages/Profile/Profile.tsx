@@ -9,31 +9,6 @@ import { setUserInformation  } from "../../state/user/userSlice";
 
 export default function Profile() {
 
-  // const ref = useRef<HTMLInputElement>(null);
-  // const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
-  // const [fileInputStyle, setFileInputStyle] = useState<React.CSSProperties>({});
-
-  // const handleClick = () => {
-  //   ref.current?.click();
-  // };
-
-  // const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-  //   const files = Array.from(e.currentTarget.files ?? []) as File[];
-  //   setSelectedFiles(files);
-
-  //   if (files.length > 0) {
-  //     const reader = new FileReader();
-  //     reader.onload = () => {
-  //       if (typeof reader.result === "string") {
-  //         setFileInputStyle({
-  //           backgroundImage: `url(${reader.result})`,
-  //         });
-  //       }
-  //     };
-  //     reader.readAsDataURL(files[0]);
-  //   }
-  // };
-
 
   const dispatch = useDispatch();
     const ref = useRef<HTMLInputElement>(null);
@@ -50,7 +25,8 @@ export default function Profile() {
     const [userInfo, setUserInfo] = useState({
         firstName: "",
         lastName: "",
-        email: ""
+        email: "",
+        profilePicture:""
       })
 
       const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {

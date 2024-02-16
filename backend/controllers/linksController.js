@@ -20,6 +20,14 @@ const getAllLinks = (req, res) => {
     res.json(data.links);
 }
 
+const getAllSpecificLinks = (req, res) => {
+    const userId = req.params.userId;
+    if(!userId) return res.status(400).json({ "message": "User ID is required." });
+    const userLinks = data.links.filter(link => link.userID === userId);
+    if(!userLinks) return res.status(400).json({ "message": `There is no links found for ${userId}.`});
+    res.json(userLinks);
+}
+
 
 const createNewLinks = (req, res) => {
     const newLinks = req.body; // Assuming req.body is an array of newLink objects
@@ -94,7 +102,6 @@ const deleteLinks = (req, res) => {
 
 const getLink = (req, res) => {
     const link = data.links.find(link => link.id === req.params.id);
-
     if (!link) {
         return res.status(400).json({ "message": `Link ID ${req.params.id} not found` });
     }
@@ -106,6 +113,7 @@ module.exports = {
     createNewLinks,
     updateLinks,
     deleteLinks,
-    getLink
+    getLink,
+    getAllSpecificLinks
 }
 

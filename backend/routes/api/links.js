@@ -13,4 +13,6 @@ router.route('/')
 router.route('/:id')
     .get(linksController.getLink);
 
+router.route("/getlinks/:userId").get(linksController.getAllSpecificLinks);
+
 module.exports = router;

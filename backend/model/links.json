@@ -4,14 +4,16 @@
     "label": "facebook",
     "answer": "https://chat.openai.com/",
     "bgColor": "#316FF6",
-    "image": "../src/assets/images/icon-facebook.svg"
+    "image": "../src/assets/images/icon-facebook.svg",
+    "userID": "adeola@gmail.com"
   },
   {
     "id": "id-1",
     "label": "Github",
     "answer": "https://www.figma.com/",
     "bgColor": "#000000",
-    "image": "../src/assets/images/icon-github.svg"
+    "image": "../src/assets/images/icon-github.svg",
+    "userID": "adeola@gmail.com"
   },
   {
     "id": "id-3",
