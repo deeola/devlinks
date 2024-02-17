@@ -332,3 +332,7 @@
 20240217	11:11:11	872e68ab-90c9-43a9-9b8e-a2d10788e505	POST	http://localhost:3000	/auth
 20240217	11:16:07	c3572465-0e6e-4164-98cb-56128a0aa37f	OPTIONS	http://localhost:3000	/auth
 20240217	11:16:07	c0292e17-7408-439f-b13a-c8e39efadffb	POST	http://localhost:3000	/auth
+20240217	11:40:15	96cff6a8-54dc-49ce-a910-0157d562aa03	OPTIONS	http://localhost:3000	/register
+20240217	11:40:15	9aa20bee-9a69-480f-a11a-e48f8a66ef8e	POST	http://localhost:3000	/register
+20240217	11:41:35	31169109-e212-4508-9e3b-b5b2c1c01803	OPTIONS	http://localhost:3000	/register
+20240217	11:41:35	36dd48b6-e345-402a-9726-098f5f4e50f0	POST	http://localhost:3000	/register

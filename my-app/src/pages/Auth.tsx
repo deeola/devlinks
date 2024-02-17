@@ -10,12 +10,17 @@ import axios from "../api/axios";
 import { head } from "lodash";
 import Login from "./Login";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../state/store";
+import { register } from "../state/user/authSlice";
 
 const EMAIL_REGEX = /^[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const REGISTER_URL = "/register";
+// const REGISTER_URL = "/register";
 
 export default function Auth() {
+
+  const dispatch = useDispatch<AppDispatch>();
   const emailRef: MutableRefObject<HTMLInputElement | null> = useRef(null);
   const errRef: MutableRefObject<HTMLInputElement | null>  = useRef(null);
 
@@ -37,7 +42,6 @@ export default function Auth() {
     matchPwd: "",
   });
 
-  const [success, setSuccess] = useState(false);
 
   useEffect(() => {
     emailRef.current?.focus();
@@ -81,15 +85,8 @@ export default function Auth() {
     }
 
     try {
-        const response = await axios.post(REGISTER_URL,
-            JSON.stringify({ user, pwd }),
-            {
-                headers: { 'Content-Type': 'application/json'},
-                withCredentials: true
-            })
-
-            console.log(response?.data);
-            setSuccess(true);
+      dispatch(register({ user, pwd }));
+   
             setEmail('');
             setPwd('');
             setMatchPwd('');
@@ -116,13 +113,11 @@ export default function Auth() {
   return (
     <section className="authSection">
      
-        <>
-        {success && <h1>Success</h1> }
-        </>
+
       <form className="authContainer" onSubmit={handleSubmit}>
         <div>
           <div className="logoContainer">
-            {/* Assuming Logo component is used here */}
+ 
             <Logo size="large" />
           </div>
           <div className="devAuthContainer">

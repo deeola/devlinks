@@ -1,19 +1,20 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../../api/axios';
 
-// Define types for user and password
+
 interface LoginCredentials {
     user: string;
     pwd: string;
 }
 
-// Define types for user data
+
 interface UserData {
     accessToken: string;
     roles: string[];
 }
 
-const LOGIN_URL = '/auth'; // Update with your actual login URL
+const LOGIN_URL = '/auth'; 
+const REGISTER_URL = '/register';
 
 // Create the login async thunk
 export const login = createAsyncThunk<UserData, LoginCredentials>(
@@ -21,6 +22,18 @@ export const login = createAsyncThunk<UserData, LoginCredentials>(
     async ({ user, pwd }, { rejectWithValue }) => {
         try {
             const response = await axios.post(LOGIN_URL, { user, pwd });
+            return response.data;
+        } catch (error: any) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
+
+export const register = createAsyncThunk<UserData, LoginCredentials>(
+    REGISTER_URL,
+    async ({ user, pwd }, { rejectWithValue }) => {
+        try {
+            const response = await axios.post(REGISTER_URL, { user, pwd });
             return response.data;
         } catch (error: any) {
             return rejectWithValue(error.response.data);
@@ -60,6 +73,17 @@ const authSlice = createSlice({
             .addCase(login.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message ?? 'Login failed';
+            })
+            .addCase(register.pending, (state) => {
+                state.status = 'loading';
+
+            }).addCase(register.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                state.user = action.payload;
+                state.accessToken = action.payload.accessToken;
+            }).addCase(register.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message ?? 'Register failed';
             });
     },
 });
