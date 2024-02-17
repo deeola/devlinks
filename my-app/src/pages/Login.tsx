@@ -7,6 +7,7 @@ import Button from "../components/Button/Button";
 import mailbox from "../assets/images/icon-email.svg";
 import password from "../assets/images/icon-password.svg";
 import axios from "../api/axios";
+import { Link } from "react-router-dom";
 
 
 const LOGIN_URL = '/auth';
@@ -143,7 +144,10 @@ export default function Login() {
 
             <div className="questioncontainer">
               <MBody text={"Don't have an account?"} />
+              <Link className="link-to" to={"/register"}>
               <MBody className="loginQuestion" text={"Create account"} />
+              </Link>
+             
             </div>
           </div>
         </div>

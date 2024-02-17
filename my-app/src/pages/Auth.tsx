@@ -9,6 +9,7 @@ import password from "../assets/images/icon-password.svg";
 import axios from "../api/axios";
 import { head } from "lodash";
 import Login from "./Login";
+import { Link } from "react-router-dom";
 
 const EMAIL_REGEX = /^[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -206,7 +207,11 @@ export default function Auth() {
 
             <div className="questioncontainer">
               <MBody text={"Already have an account?"} />
+              <Link className="link-to" to="/">
+
               <MBody className="loginQuestion" text={"Login"} />
+              </Link>
+             
             </div>
           </div>
         </div>
@@ -214,3 +219,4 @@ export default function Auth() {
     </section>
   );
 }
+

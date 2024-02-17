@@ -106,3 +106,7 @@
     flex-direction: column;
   }
 }
+
+.link-to{
+  text-decoration: none;
+}
