@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import "./App.css";
+
 // import Notification from "./components/notification/Notification";
 import Customize from "./pages/Customize/Customize";
 import Preview from "./pages/Preview/Preview";
@@ -6,13 +8,32 @@ import linkImage from "./assets/images/icon-link-copied-to-clipboard.svg"
 import Auth from "./pages/Auth";
 import Login from "./pages/Login";
 
-import { Routes, Route, Outlet } from "react-router-dom";
+import { Routes, Route, Outlet, useNavigate } from "react-router-dom";
 import PrivateRoute from "./private/PrivateRoute";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../src/state/store";
+
 
 function App() {
 
-  
-const isAuthenticated = true;
+const navigate = useNavigate();
+ const authState = useSelector((state: RootState) => state.auth);
+
+const loggedInSuccess = authState.status === "succeeded";
+
+
+
+useEffect(() => {
+
+  if (loggedInSuccess) {
+    console.log(authState)
+    navigate("/customize");
+
+  }
+
+},[loggedInSuccess, navigate, authState])
+
+   
 
   return (
     <div className="App">
@@ -21,7 +42,7 @@ const isAuthenticated = true;
 <Route  path="/" element={<Login/>} />
 
  <Route path="/customize" element={
-  <PrivateRoute isAuthenticated={isAuthenticated}>
+  <PrivateRoute isAuthenticated={loggedInSuccess}>
     <Customize />
   </PrivateRoute>
  } />

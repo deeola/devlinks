@@ -8,11 +8,15 @@ import mailbox from "../assets/images/icon-email.svg";
 import password from "../assets/images/icon-password.svg";
 import axios from "../api/axios";
 import { Link } from "react-router-dom";
-
+import { useDispatch } from "react-redux";
+import { login } from "../state/user/authSlice";
+import { AppDispatch } from "../state/store";
 
 const LOGIN_URL = '/auth';
 
 export default function Login() {
+
+  const dispatch = useDispatch<AppDispatch>();
   const emailRef: MutableRefObject<HTMLInputElement | null> = useRef(null);
   const errRef: MutableRefObject<HTMLInputElement | null>  = useRef(null);
 
@@ -43,19 +47,11 @@ export default function Login() {
   const handleSubmit = async (e:any) => {
     e.preventDefault();
 
+   
+
     try {
-        const response = await axios.post(LOGIN_URL,
-            JSON.stringify({ user, pwd }),
-            {
-                headers: { 'Content-Type': 'application/json' },
-                withCredentials: true,
-            }
-        );
-        console.log(JSON.stringify(response?.data));
-        //console.log(JSON.stringify(response));
-         const accessToken = response?.data?.accessToken;
-        const roles = response?.data?.roles;
-        setAuth({ user, pwd, accessToken, roles });
+         dispatch(login({user, pwd}))
+        // setAuth({ user, pwd, accessToken, roles });
         setEmail('');
         setPwd('');
         setSuccess(true);
@@ -77,9 +73,6 @@ export default function Login() {
 
   return (
     <section className="authSection">
-        <>
-        {success && (<h1>Success</h1>)}
-        </>
       <form className="authContainer" onSubmit={handleSubmit}>
         <div>
           <div className="logoContainer">
