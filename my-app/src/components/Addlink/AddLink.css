@@ -34,14 +34,3 @@ align-items: center;
     /* margin-bottom: 10px; */
 }
 
-.edit-remove{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 15%;
-}
-
-.edit-button{
-    cursor: pointer;
-    color: green;
-}

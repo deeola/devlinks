@@ -16,7 +16,7 @@ import { register } from "../state/user/authSlice";
 
 const EMAIL_REGEX = /^[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-// const REGISTER_URL = "/register";
+
 
 export default function Auth() {
 
@@ -112,12 +112,10 @@ export default function Auth() {
 
   return (
     <section className="authSection">
-     
 
       <form className="authContainer" onSubmit={handleSubmit}>
         <div>
           <div className="logoContainer">
- 
             <Logo size="large" />
           </div>
           <div className="devAuthContainer">

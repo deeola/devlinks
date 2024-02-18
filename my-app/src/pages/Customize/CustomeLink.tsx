@@ -6,7 +6,7 @@ import linkImg from "../../assets/images/icon-link.svg";
 // import AddLink from "../../components/Addlink/AddLink";
 import { linkArray } from "../../linkArray";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../state/store";
+import { AppDispatch, RootState } from "../../state/store";
 import { addNewLink, setAllPrompts } from "../../state/link/linkSlice";
 import { addComponent } from "../../state/link/linkComponentSlice";
 import {
@@ -17,9 +17,11 @@ import {
 import { validateField } from "../../state/inputs/inputSlice";
 import { v4 as uuidv4 } from "uuid";
 import AddnewLink from "../../components/Addlink/Addnewlink";
-import { setPrompt } from "../../state/link/promptSlice";
+import { getlinks, setPrompt } from "../../state/link/promptSlice";
 import axios from "../../api/axios";
 import { json } from "stream/consumers";
+import { set } from "lodash";
+
 
 export interface TCustomize {
   id: string;
@@ -29,7 +31,7 @@ export interface TCustomize {
   image: string;
   placeholder: string;
   isEditable: boolean;
-  userId: string;
+  userId: string | undefined;
 }
 
 
@@ -44,10 +46,17 @@ export interface TLinks {
 
 
 
-export default function CustomeLink() {
-  const dispatch = useDispatch();
 
-  const userId = "adeola@gmail.com";
+export default function CustomeLink() {
+  const dispatch = useDispatch<AppDispatch>();
+
+  const username = useSelector((state:RootState) => state.auth.user)
+
+  const [getUpdatedLinks, setGetUpdatedLinks] = useState(false);
+
+  // const userId = username?.username;
+
+  const userId = "my@test.com";
 
   const [prompts, setPrompts] = useState<TCustomize[]>([
     {
@@ -62,9 +71,31 @@ export default function CustomeLink() {
     },
   ]);
 
-
- 
+  useEffect(() => {
+    dispatch(getlinks({ user: userId })).then((action: any) => {
+      if (getlinks.fulfilled.match(action)) {
+        // Assuming LinkData and TCustomize have similar structures
+        const convertedData: TCustomize[] = action.payload.map((link: any) => ({
+          id: link.id,
+          answer: link.answer,
+          label: link.label,
+          bgColor: link.bgColor,
+          image: link.image,
+          placeholder: "", // Assuming this property is not available in LinkData
+          isEditable: false, // Assuming this property is not available in LinkData
+          userId: link.userId
+        }));
   
+        console.log(convertedData, "convertedData")
+        setGetUpdatedLinks(true);
+        setPrompts(convertedData);
+      }
+    });
+  }, [dispatch]);
+  
+  useEffect(() => {
+    console.log(prompts, "prompts");
+  }, [prompts]);
 
 
  const [isActive, setIsActive] = useState<boolean>(false);
@@ -114,7 +145,7 @@ export default function CustomeLink() {
       },
     ]);
   } else {
-   
+    // setIsActive(true);
     console.error("Cannot add additional link without entering a value for the existing link.");
 
   }
@@ -271,7 +302,7 @@ e.preventDefault()
         </div>
         
         <div className="link-middle-addnewlinkcontainer">
-          {!isActive && (
+          {!isActive  && !getUpdatedLinks && (
             <div className="link-middle">
               <div className="link-middle-image">
                 <img src={picture} alt="get-started-icon" />
@@ -288,7 +319,7 @@ e.preventDefault()
             </div>
           )}
 
-          {isActive && (
+          {(isActive || getUpdatedLinks) && (
             <div className="addnewlinkcontainer">
                <AddnewLink
              errorMessage={errorMessage}

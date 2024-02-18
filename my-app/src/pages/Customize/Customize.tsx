@@ -9,6 +9,7 @@ import links from "../../assets/images/icon-link.svg";
 import profiledetails from "../../assets/images/icon-profile-details-header.svg";
 import linkImg from "../../assets/images/icon-link.svg";
 import Profile from "../Profile/Profile";
+import useRefreshToken from "../../hooks/useRefreshToken";
 
 
 
@@ -16,6 +17,7 @@ import Profile from "../Profile/Profile";
 export default function Customize() {
   
   const [isSaved, setIsSaved] = useState<boolean>(false);
+  const refresh = useRefreshToken()
 
 
 
@@ -35,6 +37,8 @@ export default function Customize() {
               text="Profile Details"
               TabsType="default"
             />
+
+<button onClick={() => refresh()}>Refresh</button>
           </div>
           <div>
             <Button buttonType="secondary" text="Preview" />
@@ -42,7 +46,7 @@ export default function Customize() {
         </div>
       </div>
       <div className="customContainer">
-          <PhonePreview  isSaved={isSaved} />
+          <PhonePreview   />
           <CustomeLink />
 
            {/* <Profile  />  */}

@@ -10,7 +10,7 @@ interface LoginCredentials {
 
 interface UserData {
     accessToken: string;
-    roles: string[];
+    username: string;
 }
 
 const LOGIN_URL = '/auth'; 
@@ -22,6 +22,7 @@ export const login = createAsyncThunk<UserData, LoginCredentials>(
     async ({ user, pwd }, { rejectWithValue }) => {
         try {
             const response = await axios.post(LOGIN_URL, { user, pwd });
+  
             return response.data;
         } catch (error: any) {
             return rejectWithValue(error.response.data);
@@ -29,14 +30,24 @@ export const login = createAsyncThunk<UserData, LoginCredentials>(
     }
 );
 
+
+
 export const register = createAsyncThunk<UserData, LoginCredentials>(
-    REGISTER_URL,
+    'user/register',
     async ({ user, pwd }, { rejectWithValue }) => {
         try {
             const response = await axios.post(REGISTER_URL, { user, pwd });
             return response.data;
         } catch (error: any) {
-            return rejectWithValue(error.response.data);
+            if (error.response && error.response.data && error.response.data.message) {
+                // If the server returned an error message, return it
+                console.log(error.response.data.message, "error.response.data.message")
+                return rejectWithValue(error.response.data.message);
+            } else {
+                console.log("there is an errorß")
+                // If no specific error message is available, return a generic error
+                return rejectWithValue('An error occurred during registration.');
+            }
         }
     }
 );
@@ -46,6 +57,7 @@ interface AuthState {
     status: 'idle' | 'loading' | 'succeeded' | 'failed';
     error: string | null;
     accessToken: string | null;
+    username: string ;
 }
 
 const initialState: AuthState = {
@@ -53,12 +65,17 @@ const initialState: AuthState = {
     status: 'idle',
     error: null,
     accessToken: null,
+    username: "",
 };
 
 const authSlice = createSlice({
     name: 'auth',
     initialState,
-    reducers: {},
+    reducers: {
+        setUser: (state, action) => {
+            state.username = action.payload;
+          },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(login.pending, (state) => {
@@ -69,6 +86,8 @@ const authSlice = createSlice({
                 state.status = 'succeeded';
                 state.user = action.payload;
                 state.accessToken = action.payload.accessToken;
+                state.username = action.payload.username;
+              
             })
             .addCase(login.rejected, (state, action) => {
                 state.status = 'failed';
@@ -83,9 +102,12 @@ const authSlice = createSlice({
                 state.accessToken = action.payload.accessToken;
             }).addCase(register.rejected, (state, action) => {
                 state.status = 'failed';
-                state.error = action.error.message ?? 'Register failed';
+                console.log(state)
+                state.error = action.error.message ?? 'Registration failed';
             });
     },
 });
+
+export const { setUser } = authSlice.actions;
 
 export default authSlice.reducer;

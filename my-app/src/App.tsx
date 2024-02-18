@@ -20,10 +20,10 @@ const navigate = useNavigate();
  const authState = useSelector((state: RootState) => state.auth);
 //  const registerState = useSelector((state: RootState) => state.register);
 
-const loggedInSuccess = authState.status === "succeeded" 
+// const loggedInSuccess = authState.status === "succeeded" 
 
 
-
+ const loggedInSuccess = true
 
 useEffect(() => {
 

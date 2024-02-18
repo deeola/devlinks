@@ -32,6 +32,9 @@ type Tdropdown = {
 };
 
 export default function AddnewLink(Props: Tdropdown) {
+
+  
+
   const {
     errorMessage,
     error,
@@ -53,7 +56,6 @@ export default function AddnewLink(Props: Tdropdown) {
           <div className="addlinknumber-remove">
             <MBody text={`= Link #${prompts.indexOf(prompt) + 1}`} />
             <div className="edit-remove">
-              {prompt.isEditable && <p onClick={() => handleEdit(i)} className="edit-button">Edit</p>}
             <p className="remove-button" onClick={() => handleDelete(i)}>
               Remove
             </p>

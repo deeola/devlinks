@@ -1,6 +1,6 @@
 
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import bwImage from "../../assets/images/mann.jpeg";
 import "./PhonePreview.css";
 import { linkArray } from "../../linkArray";
@@ -11,21 +11,35 @@ import facebook from "../../assets/images/icon-facebook.svg";
 import gitlab from "../../assets/images/icon-github.svg";
 import x from "../../assets/images/icon-twitter.svg";
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from "../../state/store";
+import { AppDispatch, RootState } from "../../state/store";
 
 import { isReadable } from "stream";
+import { getlinks } from "../../state/link/promptSlice";
 
-type TPhonePreview = {
-  isSaved: boolean
-}
 
-export default function PhonePreview(Props: TPhonePreview) {
-  const {  isSaved } = Props;
 
+export default function PhonePreview() {
+
+
+  const dispatch = useDispatch<AppDispatch>();
   const users = useSelector((state:RootState ) => state.user)
   const myPrompts = useSelector((state:RootState) => state.link.links)
+  const username = useSelector((state:RootState) => state.auth.user)
 
- 
+  console.log(username?.username)
+  const [linksArray, setLinksArray] = useState<any[]>([])
+  
+const firstname = "my@test.com"
+
+  useEffect(() => {
+dispatch(getlinks({ user: firstname})).then((action: any) => {
+  if (getlinks.fulfilled.match(action)) {
+    setLinksArray(action.payload)
+  }
+});
+
+  }, [dispatch]);
+
 
   const {firstName, lastName, email, profileImage} = users.users
 
@@ -34,6 +48,8 @@ export default function PhonePreview(Props: TPhonePreview) {
   let isImage: string | boolean = profileImage;
 
   const shouldScroll = myPrompts.length > 5;
+
+
 
   return (
     <div className="phonePreview">
@@ -63,17 +79,17 @@ export default function PhonePreview(Props: TPhonePreview) {
 
         {!name ? <rect width="160" height="16" x="73.5" y="185" fill="#EEE" rx="8" /> :
           <foreignObject x="0" y="180" className="nameEmailForeignObject">
-            <MBody className="textFONAME" text={name} />
+            <MBody className="textFONAME" text={name } />
           </foreignObject>
         }
 
         {!email ? <rect width="160" height="16" x="73.5" y="207" fill="#EEE" rx="8" /> :
           <foreignObject x="0" y="220" className="nameEmailForeignObject">
-            <SBody className="textFO" text={email} />
+            <SBody className="textFO" text={email } />
           </foreignObject>
         }
 
-        {myPrompts.length === 0 ? (
+        {linksArray.length === 0 ? (
           <>
             <rect width="237" height="44" x="35" y="278" fill="#EEE" rx="8" />
             <rect width="237" height="44" x="35" y="342" fill="#EEE" rx="8" />
@@ -83,7 +99,7 @@ export default function PhonePreview(Props: TPhonePreview) {
           </>
         ) : (
           <>
-            {myPrompts.slice(0, shouldScroll ? 5 : undefined).map((myarray, index) => (
+            {linksArray.slice(0, shouldScroll ? 5 : undefined).map((myarray, index) => (
               myarray.label !== "Please select a label" && myarray.answer !== "" && (
                 <foreignObject
                   key={index}
