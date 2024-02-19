@@ -1142,3 +1142,6 @@
 20240218	21:05:10	13e6b58e-f2cc-490a-a358-63f32c0bb75b	GET	http://localhost:3000	/links/getlinks/my@test.com
 20240218	21:05:10	c229761b-6f0d-45fb-85d0-2760769ff38c	GET	http://localhost:3000	/links/getlinks/my@test.com
 20240218	21:05:10	6d837f27-ae7e-45e7-acc8-041431a6ad01	GET	http://localhost:3000	/links/getlinks/my@test.com
+20240219	22:18:57	2cf80f12-8126-4cee-bc7e-67b149981359	GET	undefined	/Info
+20240219	22:19:02	06dbdf2d-234f-4d2e-bc73-e419a85d13bb	GET	undefined	/info
+20240219	22:20:37	15bca4d1-94a1-47ec-8295-68ff8eba1298	GET	undefined	/info

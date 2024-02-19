@@ -1,28 +1,33 @@
-const usersDB = {
-    userInfo: require('../model/userInfo.json'),
-    setUserInfo: function (data) { this.users = data }
-}
+const userInfoDB = require("../model/UserInfo");
 
-const fsPromises = require('fs').promises;
-const path = require('path');
+const getAllUserInfo = async (req, res) => {
+  const userInfo = await userInfoDB.find();
+  if (!userInfo)
+    return res.status(204).json({ message: "No user information  found." });
+  res.json(userInfo);
+};
 
 const handleNewUserInfo = async (req, res) => {
-    const { firstName, lastName, email, profilePicture } = req.body;
-    if (!firstName || !lastName ) return res.status(400).json({ 'message': 'First name and last name are required.' });
+  const { firstName, lastName, email, profilePicture } = req.body;
+  if (!firstName || !lastName)
+    return res
+      .status(400)
+      .json({ message: "First name and last name are required." });
 
-    try {
+  try {
+    const result = await userInfoDB.create({
+      firstName: firstName,
+      lastName: lastName,
+      profileImage: profilePicture,
+      email: email,
+    });
 
-        const newUserInfo = {"firstName": firstName, "lastName": lastName, "email": email, "profilePicture": profilePicture };
-        usersDB.setUserInfo([...usersDB.userInfo, newUserInfo]);
+    console.log(result);
 
-        await fsPromises.writeFile(
-            path.join(__dirname, '..', 'model', 'userInfo.json'),
-            JSON.stringify(usersDB.userInfo)
-        );
-        res.status(201).json({ 'success': `New user info ${firstName} created!` });
-    } catch (err) {
-        res.status(500).json({ 'message': err.message });
-    }
-}
+    res.status(201).json({ success: `New user info ${firstName} created!` });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
 
-module.exports = { handleNewUserInfo };
+module.exports = { getAllUserInfo, handleNewUserInfo };
