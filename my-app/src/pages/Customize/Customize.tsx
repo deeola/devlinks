@@ -46,10 +46,10 @@ export default function Customize() {
         </div>
       </div>
       <div className="customContainer">
-          <PhonePreview   />
-          <CustomeLink />
+           <PhonePreview   />
+        {/*  <CustomeLink />  */}
 
-           {/* <Profile  />  */}
+            <Profile  />  
      
       </div>
     </section>

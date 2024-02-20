@@ -41,7 +41,12 @@ dispatch(getlinks({ user: firstname})).then((action: any) => {
   }, [dispatch]);
 
 
-  const {firstName, lastName, email, profileImage} = users.users
+  // const {firstName, lastName, email, profileImage} = users.users
+
+const firstName = "Mann"
+const lastName = "Mann"
+const email = "adeola@gmail.com"
+const profileImage = "https://res.cloudinary.com/djvjxp2am/image/upload/v1631530733/Profile%20Pictures/IMG_20210913_123456"
 
   let name: string | boolean = `${firstName} ${lastName}`;
  

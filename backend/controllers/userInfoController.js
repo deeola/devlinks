@@ -16,10 +16,10 @@ const handleNewUserInfo = async (req, res) => {
 
   try {
     const result = await userInfoDB.create({
-      firstName: firstName,
-      lastName: lastName,
-      profileImage: profilePicture,
-      email: email,
+     "firstName": firstName,
+      "lastName": lastName,
+      "profileImage": profilePicture,
+      "email": email,
     });
 
     console.log(result);

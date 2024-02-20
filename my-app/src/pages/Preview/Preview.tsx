@@ -15,7 +15,12 @@ export default function Preview() {
     const myPrompts = useSelector((state:RootState) => state.link.links)
     const users = useSelector((state:RootState) => state.user.users )
 
-    const {firstName, lastName, email, profileImage} = users;
+    // const {firstName, lastName, email, profileImage} = users;
+
+    const firstName = "Mann"
+    const lastName = "Mann"
+    const email = "adeola@gmail.com"
+    const profileImage = "https://res.cloudinary.com/djvjxp2am/image/upload/v1631530733/Profile%20Pictures/IMG_20210913_123456"
 
     let profileName:string = `${firstName}${lastName}`;
 

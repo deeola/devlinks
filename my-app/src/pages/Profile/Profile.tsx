@@ -5,12 +5,14 @@ import InputField from "../../components/Input/InputField";
 import Button from "../../components/Button/Button";
 import "./Profile.css";
 import {  useDispatch } from "react-redux";
-import { setUserInformation  } from "../../state/user/userSlice";
+import { setUserInformation, userInfoThunk  } from "../../state/user/userSlice";
+import { AppDispatch } from "../../state/store";
+
 
 export default function Profile() {
 
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
     const ref = useRef<HTMLInputElement>(null);
    
     const [profileImage, setProfileImage] = React.useState<SetStateAction<string>>("");
@@ -22,11 +24,17 @@ export default function Profile() {
         ref.current?.click();
       };
 
-    const [userInfo, setUserInfo] = useState({
+    const [userInfo, setUserInfo] = useState<{
+        firstName: string;
+        lastName: string;
+        email: string;
+        profileImage: SetStateAction<string>;
+      
+    }>({
         firstName: "",
         lastName: "",
         email: "",
-        profilePicture:""
+        profileImage: "",
       })
 
       const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,15 +73,17 @@ export default function Profile() {
       };
 
     
-      const handleSave = () => {
+      const handleSave = (e: any) => {
+        e.preventDefault();
         const userData = { ...userInfo, profileImage};
-        dispatch(setUserInformation (userData))
+        dispatch(userInfoThunk(userData))
         return userData;
         
       };
 
   return (
     <div className="profile-container">
+      <form className="form" onSubmit={handleSave} >
       <div>
         <div>
           <MHeader className="profile-details" text="Profile Details" />
@@ -97,7 +107,6 @@ export default function Profile() {
           </div>
         </div>
       </div>
-      <form className="form">
         <div className="form_control">
           <div className="label-container">
             <label>First Name</label>
@@ -151,13 +160,15 @@ export default function Profile() {
           </div>
          
         </div>
-      </form>
 
-      <div>
+        <div>
         <div className="custome-save-button">
-          <Button classname="custom-button" text="Save" onClick={handleSave} />
+          <Button classname="custom-button" text="Save"  />
         </div>
       </div>
+      </form>
+
+     
     </div>
   );
 }
