@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import { useState } from "react";
 import "./Customize.css";
 import Logo from "../../components/Logo/Logo";
 import Tabs from "../../components/Tabs/Tabs";
@@ -8,14 +8,10 @@ import CustomeLink from "./CustomeLink";
 import links from "../../assets/images/icon-link.svg";
 import profiledetails from "../../assets/images/icon-profile-details-header.svg";
 import Profile from "../Profile/Profile";
-import useRefreshToken from "../../hooks/useRefreshToken";
 import { Link } from "react-router-dom";
 
 export default function Customize() {
-  const [isSaved, setIsSaved] = useState<boolean>(false);
   const [isShowProfile, setIsShowProfile] = useState<boolean>(false);
-
-  const refresh = useRefreshToken();
 
   return (
     <section className="customize">
@@ -41,10 +37,10 @@ export default function Customize() {
           </div>
           <div className="preview-sign">
             <Link to={"/preview"}>
-               <Button disabled={false} buttonType="secondary" text="Preview" />
+              <Button disabled={false} buttonType="secondary" text="Preview" />
             </Link>
             <Link to={"/preview"}>
-               <Button disabled={false} buttonType="secondary" text="Sign Out" />
+              <Button disabled={false} buttonType="secondary" text="Sign Out" />
             </Link>
           </div>
         </div>

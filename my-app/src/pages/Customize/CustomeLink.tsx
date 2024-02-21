@@ -2,52 +2,19 @@ import { useState, useEffect } from "react";
 import { MBody, MHeader } from "../../components/Text/Text";
 import Button from "../../components/Button/Button";
 import picture from "../../assets/images/illustration-empty.svg";
-import linkImg from "../../assets/images/icon-link.svg";
-// import AddLink from "../../components/Addlink/AddLink";
-import { linkArray } from "../../linkArray";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../state/store";
-import { addNewLink, setAllPrompts } from "../../state/link/linkSlice";
-import { addComponent } from "../../state/link/linkComponentSlice";
-import {
-  MergedValues,
-  updateMergedValue,
-} from "../../state/inputs/mergedValuesSlice";
-
-import { validateField } from "../../state/inputs/inputSlice";
+import {  setAllPrompts } from "../../state/link/linkSlice";
 import { v4 as uuidv4 } from "uuid";
 import AddnewLink from "../../components/Addlink/Addnewlink";
 import { getlinks, setPrompt } from "../../state/link/promptSlice";
 import axios from "../../api/axios";
-import { json } from "stream/consumers";
-import { set } from "lodash";
-
-
-export interface TCustomize {
-  id: string;
-  answer: string;
-  label: string;
-  bgColor: string;
-  image: string;
-  placeholder: string;
-  isEditable: boolean;
-  userId: string | undefined;
-}
-
-
-export interface TLinks {
-  id: string;
-  label: string;
-  answer: string;
-  image: string;
-  bgColor: string;
-
-}
-
+import { TCustomize, TLinks } from "../../types";
 
 
 
 export default function CustomeLink() {
+
   const dispatch = useDispatch<AppDispatch>();
 
   const username = useSelector((state:RootState) => state.auth.user)
@@ -218,8 +185,13 @@ export default function CustomeLink() {
   const handleDelete = (i: any) => {
     let deletePrompts = [...prompts];
     deletePrompts.splice(i, 1);
+
     setPrompts(deletePrompts);
+
+    console.log(prompts.length)
   };
+
+
 
   const handleSave = async(e: any) => {
 
@@ -280,9 +252,8 @@ e.preventDefault()
   };
 
 
-  const handleEdit = (i: string) => {
-    console.log(i)
-  }
+  
+
 
 
   return (
@@ -302,7 +273,7 @@ e.preventDefault()
         </div>
         
         <div className="link-middle-addnewlinkcontainer">
-          {!isActive  && !getUpdatedLinks && (
+          {(!isActive  && !getUpdatedLinks) || (prompts.length <= 1) && (
             <div className="link-middle">
               <div className="link-middle-image">
                 <img src={picture} alt="get-started-icon" />
@@ -329,10 +300,9 @@ e.preventDefault()
               handleDelete={handleDelete}
               handleButtonClick={handleButtonClick}
               handleOptionClick={handleOptionClick}
-         
               type="text"
               error={myError}
-              handleEdit={handleEdit}
+
               
             />
             </div>
@@ -346,7 +316,6 @@ e.preventDefault()
           backgroundSubtype={linksComponents.length === 0 && "active"}
           classname="custom-button"
           text="Save"
- 
         />
       </div>
       </form>

@@ -28,7 +28,7 @@ type Tdropdown = {
   handleButtonClick: (i: number) => void;
   activeIndex: number | null;
  
-  handleEdit: (i: string) => void;
+
 };
 
 export default function AddnewLink(Props: Tdropdown) {
@@ -46,7 +46,7 @@ export default function AddnewLink(Props: Tdropdown) {
     handleButtonClick,
     activeIndex,
 
-    handleEdit
+
   } = Props;
 
   return (
