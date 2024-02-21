@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Preview.css";
 import Button from "../../components/Button/Button";
 import { MBody, SBody } from "../../components/Text/Text";
@@ -8,12 +8,34 @@ import twitter from "../../assets/images/icon-twitter.svg";
 import linkedin from "../../assets/images/icon-linkedin.svg";
 import profileimage from "../../assets/images/mann.jpeg";
 import { useSelector } from "react-redux";
-import { RootState } from "../../state/store";
+import { AppDispatch, RootState } from "../../state/store";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { getlinks } from "../../state/link/promptSlice";
+
+
 
 
 export default function Preview() {
     const myPrompts = useSelector((state:RootState) => state.link.links)
+    const dispatch = useDispatch<AppDispatch>();
     const users = useSelector((state:RootState) => state.user.users )
+    const [linksArray, setLinksArray] = useState<any[]>([])
+
+
+    const firstname = "my@test.com"
+
+  useEffect(() => {
+dispatch(getlinks({ user: firstname})).then((action: any) => {
+  if (getlinks.fulfilled.match(action)) {
+    setLinksArray(action.payload)
+  }
+});
+
+  }, [dispatch]);
+
+
+    console.log(myPrompts)
 
     // const {firstName, lastName, email, profileImage} = users;
 
@@ -30,7 +52,9 @@ export default function Preview() {
     <div className="preview-container">
       <div className="preview-Header">
         <div className="preview-navbar-container">
-          <Button text="Back to Editor" classname="preview-navbar-link" />
+          <Link to={"/customize"} className="preview-navbar-link" >
+          <Button text="Back to Editor" />
+          </Link>
           <Button text="Share Link" classname="preview-navbar-link"  />
         </div>
       </div>
@@ -45,8 +69,8 @@ export default function Preview() {
           </div>
           <div className="preview-cards">
             {
-                myPrompts.map(prompt => (
-                    <a target="_blank" href={prompt.answer} className="cards" style={{ backgroundColor: prompt.bgColor }}>
+                linksArray.map(prompt => (
+                    <a target="_blank" href={prompt.answer} rel="noreferrer" className="cards" style={{ backgroundColor: prompt.bgColor }}>
                     <div className="preview-card-icon-name-container">
                       <img className="preview-card-icon" src={prompt.image} alt="card-img" />
                       <MBody text={prompt.label} className="card-name"/>

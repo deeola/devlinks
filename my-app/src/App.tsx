@@ -14,9 +14,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../src/state/store";
 import Profile from "./pages/Profile/Profile";
 
-
-
-
 function App() {
   const navigate = useNavigate();
   const authState = useSelector((state: RootState) => state.auth);
@@ -24,22 +21,21 @@ function App() {
 
   // const loggedInSuccess = authState.status === "succeeded"
 
-  const loggedInSuccess = true;
+   const loggedInSuccess = true;
 
-  useEffect(() => {
-    if (loggedInSuccess) {
-      console.log(authState);
-      navigate("/customize");
-    }
-  }, [loggedInSuccess, navigate, authState]);
+  // useEffect(() => {
+  //   if (loggedInSuccess) {
+  //     console.log(authState);
+  //     navigate("/customize");
+  //   }
+  // }, [loggedInSuccess, navigate, authState]);
 
   return (
     <div className="App">
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/profile" element={<Profile />} />
-
-        <Route
+        <Route path="/register" element={<Auth />} />
+         <Route
           path="/customize"
           element={
             <PrivateRoute isAuthenticated={loggedInSuccess}>
@@ -47,9 +43,14 @@ function App() {
             </PrivateRoute>
           }
         />
-
-        <Route path="/preview" element={<Preview />} />
-        <Route path="/register" element={<Auth />} />
+        <Route
+          path="/preview"
+          element={
+            <PrivateRoute isAuthenticated={loggedInSuccess}>
+              <Preview />
+            </PrivateRoute>
+          }
+        />
       </Routes>
     </div>
   );

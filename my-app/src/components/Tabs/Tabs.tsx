@@ -12,15 +12,16 @@ type Tabs = {
     default?: boolean,
     img?: string,
     links?: string
+    onClick?: () => void    
 }
 
 
 export default function Tabs(Props: Tabs) {
 
-    const { text, TabsType, img, links} = Props;
+    const { text, TabsType, img, links, onClick} = Props;
 
     return (
-        <button className="tabs" data-tabstype={TabsType}> <span><img src={img} alt="Icon" /></span>  { text } </button>
+        <button onClick={onClick} className="tabs" data-tabstype={TabsType}> <span><img src={img} alt="Icon" /></span>  { text } </button>
     
     )
 }

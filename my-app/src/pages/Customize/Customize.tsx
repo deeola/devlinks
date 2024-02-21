@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import "./Customize.css";
 import Logo from "../../components/Logo/Logo";
 import Tabs from "../../components/Tabs/Tabs";
@@ -7,20 +7,15 @@ import PhonePreview from "./PhonePreview";
 import CustomeLink from "./CustomeLink";
 import links from "../../assets/images/icon-link.svg";
 import profiledetails from "../../assets/images/icon-profile-details-header.svg";
-import linkImg from "../../assets/images/icon-link.svg";
 import Profile from "../Profile/Profile";
 import useRefreshToken from "../../hooks/useRefreshToken";
-
-
-
+import { Link } from "react-router-dom";
 
 export default function Customize() {
-  
   const [isSaved, setIsSaved] = useState<boolean>(false);
-  const refresh = useRefreshToken()
+  const [isShowProfile, setIsShowProfile] = useState<boolean>(false);
 
-
-
+  const refresh = useRefreshToken();
 
   return (
     <section className="customize">
@@ -30,27 +25,33 @@ export default function Customize() {
         </div>
         <div className="navlinks-button">
           <div className="navlinks">
-            <Tabs links="/" img={links} text="Links" />
+            <Tabs
+              links="/"
+              img={links}
+              text="Links"
+              onClick={() => setIsShowProfile(false)}
+            />
             <Tabs
               links="/"
               img={profiledetails}
               text="Profile Details"
               TabsType="default"
+              onClick={() => setIsShowProfile(true)}
             />
-
-<button onClick={() => refresh()}>Refresh</button>
           </div>
-          <div>
-            <Button buttonType="secondary" text="Preview" />
+          <div className="preview-sign">
+            <Link to={"/preview"}>
+               <Button disabled={false} buttonType="secondary" text="Preview" />
+            </Link>
+            <Link to={"/preview"}>
+               <Button disabled={false} buttonType="secondary" text="Sign Out" />
+            </Link>
           </div>
         </div>
       </div>
       <div className="customContainer">
-           <PhonePreview   />
-        {/*  <CustomeLink />  */}
-
-            <Profile  />  
-     
+        <PhonePreview />
+        {isShowProfile ? <Profile /> : <CustomeLink />}
       </div>
     </section>
   );

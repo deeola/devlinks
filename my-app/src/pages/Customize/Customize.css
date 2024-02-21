@@ -149,6 +149,12 @@
   width: 10% !important;
 }
 
+.preview-sign{
+  display: flex;
+  justify-content: space-between;
+  width: 23%;
+}
+
 /* Media query for lapptop*/
 
 @media screen and (max-width: 1440px) {
