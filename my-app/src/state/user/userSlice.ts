@@ -31,7 +31,7 @@ const initialState: UserState = {
 };
 
 // API endpoint URL
-const USER_URL = "http://localhost:5000/info";
+const USER_URL = "http://localhost:3500/info";
 
 // Define async thunk for fetching user info
 export const userInfoThunk = createAsyncThunk<User, UserInfoCredentials >(
