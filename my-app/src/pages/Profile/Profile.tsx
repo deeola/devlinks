@@ -5,7 +5,7 @@ import InputField from "../../components/Input/InputField";
 import Button from "../../components/Button/Button";
 import "./Profile.css";
 import {  useDispatch } from "react-redux";
-import { setUserInformation, userInfoThunk  } from "../../state/user/userSlice";
+import { setUserInformation, userInfoThunk, userImageURLThunk  } from "../../state/user/userSlice";
 import { AppDispatch } from "../../state/store";
 
 
@@ -73,10 +73,12 @@ export default function Profile() {
       };
 
     
-      const handleSave = (e: any) => {
+      const handleSave = async(e: any) => {
         e.preventDefault();
         const userData = { ...userInfo, profileImage};
+        const response = {email: "my@test.com", profileImage: profileImage}
         dispatch(userInfoThunk(userData))
+        await dispatch(userImageURLThunk(response));
         return userData;
         
       };
