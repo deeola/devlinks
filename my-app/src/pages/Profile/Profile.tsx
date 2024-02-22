@@ -78,7 +78,7 @@ export default function Profile() {
         const userData = { ...userInfo, profileImage};
         const response = {email: "my@test.com", profileImage: profileImage}
         dispatch(userInfoThunk(userData))
-        await dispatch(userImageURLThunk(response));
+        // await dispatch(userImageURLThunk(response));
         return userData;
         
       };

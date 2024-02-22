@@ -58,6 +58,9 @@ export default function Login() {
          dispatch(login({ user, pwd })).then((action) => {
           if (login.fulfilled.match(action)) {
             setUser({user})
+            localStorage.setItem('isLoggedIn', "true");
+          } else{
+            localStorage.setItem('isLoggedIn', "false");
           }});
 
         
