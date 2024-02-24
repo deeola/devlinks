@@ -1,7 +1,6 @@
 
-import axios, { axiosPrivate } from '../api/axios';
+import axios from '../api/axios';
 import { RootState } from '../state/store';
-import { setUser } from '../state/user/authSlice';
 import { useSelector } from 'react-redux';
 
 

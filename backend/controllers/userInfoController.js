@@ -7,6 +7,9 @@ const getAllUserInfo = async (req, res) => {
   res.json(userInfo);
 };
 
+
+
+
 const handleNewUserInfo = async (req, res) => {
   const { firstName, lastName, email, profilePicture } = req.body;
   if (!firstName || !lastName)
@@ -30,4 +33,22 @@ const handleNewUserInfo = async (req, res) => {
   }
 };
 
-module.exports = { getAllUserInfo, handleNewUserInfo };
+
+const getSpecificUserInfo = async (req, res) => {
+  const userEmail = req.query.email;
+  try {
+    const userInfo = await userInfoDB.findOne({ email: userEmail });
+    
+    if (!userInfo) {
+      return res.status(400).json({ message: "User not found." });
+    }
+
+    res.json(userInfo);
+  } catch (error) {
+    console.error("Error retrieving user information:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+
+module.exports = { getAllUserInfo, handleNewUserInfo, getSpecificUserInfo };

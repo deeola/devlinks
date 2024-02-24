@@ -52,11 +52,11 @@ export default function AddnewLink(Props: Tdropdown) {
   return (
     <div>
       {prompts.map((prompt: any, i: any) => (
-        <div className="addlink-container" key={prompt.timestamp}>
+        <div className="addlink-container" key={prompts.indexOf(prompt) + 1}>
           <div className="addlinknumber-remove">
             <MBody text={`= Link #${prompts.indexOf(prompt) + 1}`} />
             <div className="edit-remove">
-            <p className="remove-button" onClick={() => handleDelete(i)}>
+            <p className="remove-button" onClick={() => handleDelete(prompt.id)}>
               Remove
             </p>
             </div>

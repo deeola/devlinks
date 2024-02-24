@@ -1,22 +1,35 @@
-import React,{useState, useRef, SetStateAction} from "react";
+import React,{useState, useRef, SetStateAction, useEffect} from "react";
 import { MBody, MHeader } from "../../components/Text/Text";
 import UploadImage from "../../components/Uploadimage/UploadImage";
 import InputField from "../../components/Input/InputField";
 import Button from "../../components/Button/Button";
 import "./Profile.css";
-import {  useDispatch } from "react-redux";
-import { setUserInformation, userInfoThunk, userImageURLThunk  } from "../../state/user/userSlice";
+import {  useDispatch, useSelector } from "react-redux";
+import {  postUserInfo, getSpecificUserInfo } from "../../state/user/userSlice";
 import { AppDispatch } from "../../state/store";
 
 
-export default function Profile() {
+
+type TProps = {
+  isPrompts:  object[];
+  userId: string;
+  userInformation: any;
+  }
 
 
-  const dispatch = useDispatch<AppDispatch>();
+
+export default function Profile(Props: TProps ) {
+
+  const { isPrompts, userId, userInformation} = Props;
+
+const dispatch = useDispatch<AppDispatch>();
+
+
+ 
+ 
+
     const ref = useRef<HTMLInputElement>(null);
-   
     const [profileImage, setProfileImage] = React.useState<SetStateAction<string>>("");
-
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
     const [fileInputStyle, setFileInputStyle] = useState<React.CSSProperties>({});
 
@@ -60,8 +73,6 @@ export default function Profile() {
               setFileInputStyle({
                 backgroundImage: `url(${reader.result})`,
               });
-
-
               setProfileImage(reader.result as string);
             }
           };
@@ -76,12 +87,14 @@ export default function Profile() {
       const handleSave = async(e: any) => {
         e.preventDefault();
         const userData = { ...userInfo, profileImage};
-        const response = {email: "my@test.com", profileImage: profileImage}
-        dispatch(userInfoThunk(userData))
-        // await dispatch(userImageURLThunk(response));
+        const response = {email: userId, profileImage: profileImage}
+         dispatch(postUserInfo(userData))
+        //  await dispatch(userImageURLThunk(response));
         return userData;
         
       };
+
+    
 
   return (
     <div className="profile-container">

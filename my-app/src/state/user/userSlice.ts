@@ -1,9 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { profile } from "console";
 
 
-// Define types for user data and login credentials
 interface User {
   firstName: string;
   lastName: string;
@@ -31,7 +29,7 @@ email: ""
 // Define initial state
 interface UserState {
   users: User | null; 
-  status: 'idle' | 'loading' | 'succeeded' | 'failed';
+  status: 'idle' | 'succeeded' | 'failed';
   error: string | null;
 }
 
@@ -43,10 +41,11 @@ const initialState: UserState = {
 
 // API endpoint URL
 const USER_URL = "http://localhost:3500/info";
+const GET_USER_URL = "http://localhost:3500/info/specific";
  const IMAGE_URL = "http://localhost:3500/s3upload";
 
-// Define async thunk for fetching user info
-export const userInfoThunk = createAsyncThunk<User, UserInfoCredentials >(
+// Define async thunk for posting user info
+export const postUserInfo = createAsyncThunk<User, UserInfoCredentials >(
   "fetchUserInfo",
   async (loginCredentials, { rejectWithValue }) => {
     try {
@@ -58,28 +57,27 @@ export const userInfoThunk = createAsyncThunk<User, UserInfoCredentials >(
   }
 );
 
+// Define async thunk for fetching user info
+// export const getSpecificUserInfo = createAsyncThunk<User, string>(
+//   "fetchUserInfo",
+//   async (email) => {
+//     try {
+//       const response = await axios.get(GET_USER_URL, { email});
+//       return response.data;
+//     } catch (error: any) {
+//       return error.response.data;
+//     }
+//   }
+// );
 
-
-export const userImageURLThunk = createAsyncThunk(
-  'fetchUserImage',
-  async (_, { rejectWithValue }) => { // Removed `imageCredentials` argument
+export const getSpecificUserInfo = createAsyncThunk(
+  'userInfo/fetchUserInfo',
+  async (email: string) => {
     try {
-      // Make a request to your backend endpoint to get the signed URL
-      const response = await axios.get(IMAGE_URL);
-
-      // Use the signed URL to upload the image directly to S3
-      const postImage = await axios.put(response.data.uploadURL, UserImage.profileImage, {
-        headers: { 'Content-Type': 'image/jpeg' }, 
-      });
-
-      // Assuming your backend also returns the user data after uploading the image
-
-      console.log(postImage.data.user, "postImage.data.user")
-      return postImage.data.user;
-
-    } catch (error: any) {
-      // Handle errors
-      return rejectWithValue(error.response.data);
+      const response = await axios.get(`${GET_USER_URL}?email=${email}`);
+      return response.data;
+    } catch (error) {
+      throw error;
     }
   }
 );
@@ -88,35 +86,54 @@ export const userImageURLThunk = createAsyncThunk(
 
 
 
+// export const userImageURLThunk = createAsyncThunk(
+//   'fetchUserImage',
+//   async (_, { rejectWithValue }) => { // Removed `imageCredentials` argument
+//     try {
+//       // Make a request to your backend endpoint to get the signed URL
+//       const response = await axios.get(IMAGE_URL);
+
+//       // Use the signed URL to upload the image directly to S3
+//       const postImage = await axios.put(response.data.uploadURL, UserImage.profileImage, {
+//         headers: { 'Content-Type': 'image/jpeg' }, 
+//       });
+
+//       // Assuming your backend also returns the user data after uploading the image
+
+//       console.log(postImage.data.user, "postImage.data.user")
+//       return postImage.data.user;
+
+//     } catch (error: any) {
+//       // Handle errors
+//       return rejectWithValue(error.response.data);
+//     }
+//   }
+// );
 
 
 
-// Create user slice
+
+
 const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {
-    // Reducer to update user information
-    setUserInformation: (state, action) => {
-      state.users = action.payload;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(userInfoThunk.pending, (state) => {
-      state.status = 'loading';
-    });
-    builder.addCase(userInfoThunk.fulfilled, (state, action) => {
-      state.status = 'succeeded';
+    builder.addCase(postUserInfo.fulfilled, (state, action) => {
       state.users = action.payload;
-      state.error = null;
     });
-    builder.addCase(userInfoThunk.rejected, (state, action) => {
-      state.status = 'failed';
-      state.error = "There is an error fetching the links";
+    builder.addCase(getSpecificUserInfo.pending, (state, action) => {
+      state.users = {firstName: "", lastName: "", email: ""};
     });
+    builder.addCase(getSpecificUserInfo.fulfilled, (state, action) => {
+      state.users = action.payload;
+    });
+
   },
 });
 
-export const { setUserInformation } = userSlice.actions;
+
+
+export const selectUser = (state: { user: { users: User; }; }) => state.user.users;
 
 export default userSlice.reducer;

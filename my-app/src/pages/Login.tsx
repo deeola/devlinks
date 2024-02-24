@@ -9,7 +9,7 @@ import password from "../assets/images/icon-password.svg";
 import axios from "../api/axios";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { login, setUser } from "../state/user/authSlice";
+import { login} from "../state/user/authSlice";
 import { AppDispatch } from "../state/store";
 
 const LOGIN_URL = '/auth';
@@ -26,9 +26,6 @@ export default function Login() {
   const [success, setSuccess] = useState(false);
   const [auth, setAuth] = useState({});
 
-
-
-  
 
  
 
@@ -50,18 +47,18 @@ export default function Login() {
    
 
     try {
-        //  dispatch(login({user, pwd}))
-   
+          dispatch(login({user, pwd}))
+          
+
         //  setUser({ user });
 
 
-         dispatch(login({ user, pwd })).then((action) => {
-          if (login.fulfilled.match(action)) {
-            setUser({user})
-            localStorage.setItem('isLoggedIn', "true");
-          } else{
-            localStorage.setItem('isLoggedIn', "false");
-          }});
+        //  dispatch(login({ user, pwd })).then((action) => {
+        //   if (login.fulfilled.match(action)) {
+        //     setUser({user})
+        //     localStorage.setItem('isLoggedIn', "true");
+        //   } else{
+        //   }});
 
         
         setEmail('');

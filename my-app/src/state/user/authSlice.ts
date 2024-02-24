@@ -22,6 +22,7 @@ export const login = createAsyncThunk<UserData, LoginCredentials>(
     async ({ user, pwd }, { rejectWithValue }) => {
         try {
             const response = await axios.post(LOGIN_URL, { user, pwd });
+            localStorage.setItem('isLoggedIn', "true");
             return response.data;
         } catch (error: any) {
             return rejectWithValue(error.response.data);
@@ -56,7 +57,6 @@ interface AuthState {
     status: 'idle' | 'loading' | 'succeeded' | 'failed';
     error: string | null;
     accessToken: string | null;
-    username: string ;
 }
 
 const initialState: AuthState = {
@@ -64,17 +64,13 @@ const initialState: AuthState = {
     status: 'idle',
     error: null,
     accessToken: null,
-    username: "",
+
 };
 
 const authSlice = createSlice({
     name: 'auth',
     initialState,
-    reducers: {
-        setUser: (state, action) => {
-            state.username = action.payload;
-          },
-    },
+    reducers: {},
     extraReducers: (builder) => {
         builder
             .addCase(login.pending, (state) => {
@@ -85,7 +81,6 @@ const authSlice = createSlice({
                 state.status = 'succeeded';
                 state.user = action.payload;
                 state.accessToken = action.payload.accessToken;
-                state.username = action.payload.username;
               
             })
             .addCase(login.rejected, (state, action) => {
@@ -107,6 +102,11 @@ const authSlice = createSlice({
     },
 });
 
-export const { setUser } = authSlice.actions;
+
+
+export const selectAuthenticatedUser = (state: any) => state.auth.user;
+export const selectAuthStatus = (state: any) => state.auth.status;
+export const selectAuthError = (state: any) => state.auth.error;
+
 
 export default authSlice.reducer;

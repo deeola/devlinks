@@ -8,4 +8,7 @@ router.route('/')
     .get(userInfoController.getAllUserInfo)
     .post(userInfoController.handleNewUserInfo)
 
+router.route('/specific')
+    .get(userInfoController.getSpecificUserInfo)
+
 module.exports = router;

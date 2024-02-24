@@ -2,7 +2,7 @@ import React from "react"
 import "./Text.css"
 
 type TText = {
-    text: string,
+    text: string | undefined,
     className?:string
 }
 

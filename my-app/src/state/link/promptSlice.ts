@@ -1,69 +1,115 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "../../api/axios";
+import { LinksState, TLinks } from "../../types";
+import { first } from "lodash";
+import { RootState } from "../store";
+import { error } from "console";
 
-
-export interface LinkData {
- 
+interface LinkedState {
+  links: object[];
+  status: 'idle' | 'loading' | 'succeeded' | 'failed',
+  error: string | undefined;
 }
 
-interface LinksCredentials {
-  user: string | undefined;
-}
+const initialState: LinkedState = {
+  links: [],
+  status: 'idle',
+  error: undefined
+};
 
-export const getlinks = createAsyncThunk<LinkData[], LinksCredentials>(
+const PROMPT_URL = "http://localhost:3500/links";
+
+export const getlinks = createAsyncThunk(
   "link/getlinks",
-  async ({ user }, { rejectWithValue }) => {
+  async (user: string ) => {
     try {
       const response = await axios.get(`links/getlinks/${user}`);
-
-      console.log(response.data, "response.data")
       return response.data;
     } catch (error: any) {
-      return rejectWithValue(error.response.data);
+      return error.response.data;
     }
   }
 );
 
-interface LinksState {
-  links: LinkData[]; // Update the type definition of links
-  status: 'idle' | 'loading' | 'succeeded' | 'failed';
-  error: string | null;
-}
+//delete thunk
 
-const initialState: LinksState = {
-  links: [], // Update initial state to match the new type definition
-  status: 'idle',
-  error: null
-};
+export const deletePrompt = createAsyncThunk(
+  "prompt/deletePrompt",
+  async (promptId: string) => {
+    try {
+      const response = await axios.delete(PROMPT_URL, { data: { promptId } });
+      return response.data;
+    } catch (error: any) {
+      return error.response.data;
+    }
+  }
+);
+
+//add thunk
+
+export const addPrompt = createAsyncThunk(
+  "prompt/addPrompt",
+  async (prompt: any) => {
+    try {
+      console.log(prompt, "prompt")
+      const response = await axios.post(PROMPT_URL, prompt);
+      return response.data;
+    } catch (error: any) {
+      return error.response.data;
+    }
+  }
+);
+
+
 
 const promptSlice = createSlice({
   name: "prompts",
   initialState,
-  reducers: {
-    setPrompt: (state, action: PayloadAction<LinkData[]>) => {
-      state.links = action.payload;
-      state.status = "succeeded";
-      state.error = null;
-    }
-  },
+  reducers: {},
   extraReducers: (builder) => {
-    builder
-      .addCase(getlinks.pending, (state, action) => {
-        state.status = 'loading';
-      })
-      .addCase(getlinks.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.links = action.payload;
-        state.error = null;
-      })
-      .addCase(getlinks.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = "There is an error fetching the links";
+    builder.addCase(getlinks.pending, (state, action) => {
+      state.status = "loading";
+    });
+    builder.addCase(getlinks.fulfilled, (state, action) => {
+      return (state = {
+        ...state,
+        links: action.payload,
+        status: "succeeded",
+        error: undefined,
       });
-  }
+    });
+
+    builder.addCase(getlinks.rejected, (state, action) => {
+    state.status = "failed";
+    state.error = action.error.message;
+    console.log(state.error, "action");
+    });
+
+    builder.addCase(deletePrompt.fulfilled, (state, action) => {
+      return (state = {
+        ...state,
+        links: action.payload,
+        status: "succeeded",
+        error: undefined,
+      });
+      });
+
+      builder.addCase(addPrompt.fulfilled, (state, action) => {
+        return (state = {
+          ...state,
+          links: action.payload,
+          status: "succeeded",
+          error: undefined,
+        });
+        });
+
+
+  },
 });
 
-export const { setPrompt } = promptSlice.actions;
+
+
+export const selectAllPrompts = (state: RootState) => state.promptSlice.links;
 
 
 export default promptSlice.reducer;

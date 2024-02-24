@@ -5,7 +5,6 @@ export interface TCustomize {
     bgColor: string;
     image: string;
     placeholder: string;
-    isEditable: boolean;
     userId: string | undefined;
   }
   
@@ -16,6 +15,26 @@ export interface TCustomize {
     answer: string;
     image: string;
     bgColor: string;
-  
   }
+
+  export type MergedValues = { 
+    prompt: string,
+    answer: string,
+    label: string,
+    bgColor: string,
+    image: string,
+    id: string,
+    placeholder: string,
+    urlAddress: string,
+    timestamp: number,
+}
   
+
+export interface LinksState {
+  links:TLinks[];
+}
+
+export type TLinkState = {
+  links: MergedValues[];
+}
+

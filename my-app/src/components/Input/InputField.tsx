@@ -3,8 +3,10 @@ import "./InputField.css";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../state/store";
 import { updateMergedValue } from "../../state/inputs/mergedValuesSlice";
-import { MergedValues } from "../../state/inputs/mergedValuesSlice";
-import { updateValue, validateField } from "../../state/inputs/inputSlice";
+import { MergedValues } from "../../types";
+// import { updateValue, validateField } from "../../state/inputs/inputSlice";
+
+
 
 interface UInputs {
   id: string;
@@ -24,29 +26,9 @@ interface UInputs {
 }
 
 export default function InputField(Props: UInputs) {
-  const dispatch = useDispatch();
 
-  // Local state for managing the input field value
-  const [localValue, setLocalValue] = React.useState("");
-
-  const inputState = useSelector((state: RootState) => state.input);
   const { id, name, img, placeholder, type , onChange, value, required, onFocus,inputRef, autoComplete, onBlur, error, errorMessage } = Props;
-  const {  touched } = inputState;
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const updatedValue = e.target.value;
-    setLocalValue(updatedValue);
-    const partialMergedValue: Partial<MergedValues> = {
-      // value:updatedValue
-    };
-
-    dispatch(updateValue(updatedValue));
-    dispatch(updateMergedValue(partialMergedValue));
-  };
-
-  const handleBlur = () => {
-    dispatch(validateField());
-  };
+ 
 
   return (
     <div className={`input-container ${error ? "error" : ""}`}>
@@ -72,7 +54,7 @@ export default function InputField(Props: UInputs) {
           ref={inputRef}
           autoComplete={autoComplete}
         />
-        {touched && error && (
+        {error && (
           <span className="error-span"> {errorMessage} </span>
         )}
       </div>

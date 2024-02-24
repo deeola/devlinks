@@ -14,5 +14,6 @@ router.route('/:id')
     .get(linksController.getLink);
 
 router.route("/getlinks/:userId").get(linksController.getAllSpecificLinks);
+router.route("/deleteall").delete(linksController.deleteAllLinks);
 
 module.exports = router;

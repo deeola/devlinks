@@ -1,54 +1,44 @@
-import {createSlice} from "@reduxjs/toolkit";
-import { MergedValues } from "../inputs/mergedValuesSlice";
+import { createSlice } from "@reduxjs/toolkit";
+import { MergedValues,  TLinkState  } from "../../types";
 
 
-interface LinkState {
-    links: MergedValues[];
-}
 
-const initialState: LinkState = {
-    links: []
-}
+const initialState: TLinkState = {
+  links: [],
+};
+
+
 
 
 const linkSlice = createSlice({
-    name:"link",
-    initialState,
-    reducers:{
-
-        setAllPrompts: (state, action) => {
-state.links = action.payload
-        },
-        addNewLink: (state, action) => {
-            const { payload } = action;
-            payload.forEach((prompt: any) => {
-                // const linkExists = state.links.some(link => link.id === prompt.id);
-                // if (!linkExists) {
-                //   state.links.push(prompt);
-                // } else {
-                //   // dispatch(showDuplicateLinkNotification()); 
-                // }
-
-                const existingIndex = state.links.findIndex(link => link.id === prompt.id);
-    if (existingIndex !== -1) {
-        // Replace the existing item with the updated one
-        state.links[existingIndex] = prompt;
-        // Optionally dispatch a notification for a duplicate link
-        // dispatch(showDuplicateLinkNotification());
-    } else {
-        // Item doesn't exist, so add it to state.links
-        state.links.push(prompt);
-    }
-              });
-        },
-        removeLink: (state, action) => {
-            state.links = state.links.filter(link => link.id !== action.payload);        
-        }
+  name: "link",
+  initialState,
+  reducers: {
+    setAllPrompts: (state, action) => {
+      state.links = action.payload;
     },
+    addNewLink: (state, action) => {
+      const { payload } = action;
+      payload.forEach((prompt: any) => {
+        const existingIndex = state.links.findIndex(
+          (link) => link.id === prompt.id
+        );
+        if (existingIndex !== -1) {
+          state.links[existingIndex] = prompt;
+
+        } else {
+          state.links.push(prompt);
+        }
+      });
+    },
+    removeLink: (state, action) => {
+      state.links = state.links.filter((link) => link.id !== action.payload);
+    },
+  },
 });
 
-export const {  setAllPrompts, addNewLink, removeLink } = linkSlice.actions;
+export const { setAllPrompts, addNewLink, removeLink } = linkSlice.actions;
+
+export const selectAllLinks = (state: { link: { links: MergedValues[] } }) => state.link.links;
 
 export default linkSlice.reducer;
-
-

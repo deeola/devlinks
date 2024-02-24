@@ -4,26 +4,37 @@ import Button from "../../components/Button/Button";
 import picture from "../../assets/images/illustration-empty.svg";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../state/store";
-import {  setAllPrompts } from "../../state/link/linkSlice";
+import {  setAllPrompts, removeLink, addNewLink, selectAllLinks } from "../../state/link/linkSlice";
 import { v4 as uuidv4 } from "uuid";
 import AddnewLink from "../../components/Addlink/Addnewlink";
-import { getlinks, setPrompt } from "../../state/link/promptSlice";
+import { addPrompt, deletePrompt, getlinks, selectAllPrompts } from "../../state/link/promptSlice";
 import axios from "../../api/axios";
 import { TCustomize, TLinks } from "../../types";
 
+type TProps = {
+  isPrompts:  object[];
+   userId: string;
+   userInformation: any;
+  }
 
+export default function CustomeLink(Props: TProps) {
 
-export default function CustomeLink() {
+  const { isPrompts, userId, userInformation} = Props;
+
 
   const dispatch = useDispatch<AppDispatch>();
 
-  const username = useSelector((state:RootState) => state.auth.user)
+
+
 
   const [getUpdatedLinks, setGetUpdatedLinks] = useState(false);
 
+
   // const userId = username?.username;
 
-  const userId = "my@test.com";
+  // const userId = "my@test.coms";
+
+  //initial value of new prompt
 
   const [prompts, setPrompts] = useState<TCustomize[]>([
     {
@@ -33,36 +44,40 @@ export default function CustomeLink() {
       bgColor: "",
       image: "",
       placeholder: "",
-      isEditable: false,
       userId: userId,
     },
   ]);
 
+  // useEffect(() => {
+  //   dispatch(getlinks(userId));
+  // },[])
+
+
+
+  // const isPrompts = useSelector(selectAllPrompts);
+
+  // console.log(isPrompts, "isPrompts")
+
+  // Populate the prompts array with the items in the promptSlice (isPrompts) if there is any
   useEffect(() => {
-    dispatch(getlinks({ user: userId })).then((action: any) => {
-      if (getlinks.fulfilled.match(action)) {
-        // Assuming LinkData and TCustomize have similar structures
-        const convertedData: TCustomize[] = action.payload.map((link: any) => ({
-          id: link.id,
-          answer: link.answer,
-          label: link.label,
-          bgColor: link.bgColor,
-          image: link.image,
-          placeholder: "", // Assuming this property is not available in LinkData
-          isEditable: false, // Assuming this property is not available in LinkData
-          userId: link.userId
-        }));
-  
-        console.log(convertedData, "convertedData")
-        setGetUpdatedLinks(true);
-        setPrompts(convertedData);
-      }
-    });
-  }, [dispatch]);
-  
-  useEffect(() => {
-    console.log(prompts, "prompts");
-  }, [prompts]);
+
+    if (isPrompts.length > 0) {
+      const convertedData: TCustomize[] = isPrompts.map((link: any) => ({
+        id: link.id,
+        answer: link.answer,
+        label: link.label,
+        bgColor: link.bgColor,
+        image: link.image,
+        placeholder: "",
+        userId: link.userId,
+      }));
+
+      setPrompts(convertedData);
+      setGetUpdatedLinks(true);
+    }
+
+  }, []);
+
 
 
  const [isActive, setIsActive] = useState<boolean>(false);
@@ -75,7 +90,7 @@ export default function CustomeLink() {
 
 
   //   // selectors
-  const linksComponents = useSelector((state: RootState) => state.link.links);
+  // const linksComponents = useSelector((state: RootState) => state.link.links);
 
  
  
@@ -86,8 +101,6 @@ export default function CustomeLink() {
   const handleButtonClick = (i: number) => {
     setActiveIndex(i === activeIndex ? null : i);
   };
-
-
 
 
   const handleAddPrompt = () => {
@@ -107,18 +120,15 @@ export default function CustomeLink() {
         bgColor: "",
         image: "",
         placeholder: "",
-        isEditable: false,
         userId: userId,
       },
     ]);
-  } else {
-    // setIsActive(true);
-    console.error("Cannot add additional link without entering a value for the existing link.");
-
   }
   };
 
 
+
+  // Option click handler to handle the platform selection
 
   const handleOptionClick = (
     e: any,
@@ -130,12 +140,7 @@ export default function CustomeLink() {
   ) => {
 
     const hasEmptyAnswer = prompts.some(prompt => prompt.label === label);
-
-    if (hasEmptyAnswer) {
-      console.error("Cannot select a label that already exists.");
-      return;
-    }
-
+    if (hasEmptyAnswer) return;
 
     const updatedPrompts = prompts.map((prompt, index) => {
 
@@ -147,7 +152,6 @@ export default function CustomeLink() {
           image: image,
           placeholder: placeholder,
           label: label,
-          isEditable: true,
           userId: userId
         };
       }
@@ -182,20 +186,27 @@ export default function CustomeLink() {
     setIsActive(true);
   };
 
-  const handleDelete = (i: any) => {
-    let deletePrompts = [...prompts];
-    deletePrompts.splice(i, 1);
 
-    setPrompts(deletePrompts);
 
+ // Remove a prompt from the prompts array and also from the promptSlice 
+
+  const handleDelete = (i: string) => {
+    // let deletePrompts = [...prompts];
+    // deletePrompts.splice(i, 1);
+
+    // dispatch(removeLink(prompts[i].id));
+    dispatch(deletePrompt(i));
+
+    // setPrompts(deletePrompts);
     console.log(prompts.length)
   };
 
 
+  // save the prompts to the promptSlice
 
-  const handleSave = async(e: any) => {
+ const handleSave = async(e: any) => {
 
-e.preventDefault()
+ e.preventDefault()
   
   const hasEmptyAnswer = prompts.some(prompt => prompt.answer === "");
 
@@ -223,36 +234,16 @@ e.preventDefault()
     image,
     userId
   }));
-
-  console.log(newPromptsArray, "newPromptsArray")
-
-  try {
-    const response = await axios.post("/links",
-        JSON.stringify(newPromptsArray),
-        {
-            headers: { 'Content-Type': 'application/json' },
-            withCredentials: true,
-        }
-    );
-    console.log(response);
-    //console.log(JSON.stringify(response));
-     const accessToken = response?.data?.accessToken;
-    const roles = response?.data?.roles;
   
-    
-} catch (err:any) {
-   console.log(err)
-}
-
-    dispatch(setPrompt(prompts));
-    dispatch(setAllPrompts(newPromptsArray))
+    dispatch(addPrompt(newPromptsArray));
+    // dispatch(setPrompt(prompts));
+    // dispatch(setAllPrompts(newPromptsArray))
     console.log(prompts)
     setMyError(false)
 
   };
 
 
-  
 
 
 
@@ -293,7 +284,7 @@ e.preventDefault()
           {(isActive || getUpdatedLinks) && (
             <div className="addnewlinkcontainer">
                <AddnewLink
-             errorMessage={errorMessage}
+               errorMessage={errorMessage}
               handleInputChange={handleInputChange}
               prompts={prompts}
               activeIndex={activeIndex}
@@ -313,7 +304,7 @@ e.preventDefault()
 
       <div className="custome-save-button">
         <Button
-          backgroundSubtype={linksComponents.length === 0 && "active"}
+          backgroundSubtype={"active"}
           classname="custom-button"
           text="Save"
         />

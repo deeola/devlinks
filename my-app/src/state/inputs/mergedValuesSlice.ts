@@ -1,20 +1,8 @@
 
 import { createSlice } from "@reduxjs/toolkit";
-import { StringIterator } from "lodash";
 
 
-
-export type MergedValues = { 
-    prompt: string,
-    answer: string,
-    label: string,
-    bgColor: string,
-    image: string,
-    id: string,
-    placeholder: string,
-    urlAddress: string,
-    timestamp: number,
-}
+import { MergedValues } from "../../types";
 
 const initialState = {
   mergedValue:{  prompt: "",
