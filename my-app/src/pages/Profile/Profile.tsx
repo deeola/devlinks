@@ -13,14 +13,16 @@ import { AppDispatch } from "../../state/store";
 type TProps = {
   isPrompts:  object[];
   userId: string;
-  userInformation: any;
+
   }
 
 
 
 export default function Profile(Props: TProps ) {
 
-  const { isPrompts, userId, userInformation} = Props;
+  const { isPrompts, userId} = Props;
+
+  console.log(userId, "userId inside profile page")
 
 const dispatch = useDispatch<AppDispatch>();
 
@@ -163,6 +165,7 @@ const dispatch = useDispatch<AppDispatch>();
           <div className="label-container">
             <label>Email</label>
           </div>
+          <MBody text={userId} />
           <div className="inputfield-container">
           <InputField
           type="email"

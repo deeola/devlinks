@@ -17,31 +17,28 @@ import { getSpecificUserInfo, selectUser } from "../../state/user/userSlice";
 
 export default function Customize() {
   const [isShowProfile, setIsShowProfile] = useState<boolean>(false);
-  const username =  useSelector(selectAuthenticatedUser);
+  const username = useSelector(selectAuthenticatedUser);
 
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     dispatch(getSpecificUserInfo(username?.username));
-  }, [dispatch, username?.username]);
-
-  
+    
+  }, []);
 
   useEffect(() => {
-
     dispatch(getlinks(username?.username));
 
   }, []);
-  
 
   const linksArray = useSelector(selectAllPrompts);
   const UserInformation = useSelector(selectUser);
 
-  console.log(UserInformation, "UserInformation inside customize page")
+  console.log(UserInformation, "UserInformation inside customize page");
 
-  console.log(linksArray, "linksArray inside customize page")
+  console.log(linksArray, "linksArray inside customize page");
 
-
+  console.log(username?.username, "username inside customize page");
 
   return (
     <section className="customize">
@@ -76,8 +73,20 @@ export default function Customize() {
         </div>
       </div>
       <div className="customContainer">
-        <PhonePreview isPrompts={linksArray} userId={username?.username} userInformation={UserInformation} />
-        {isShowProfile ? <Profile isPrompts={linksArray} userId={username?.username} userInformation={UserInformation}  /> : <CustomeLink isPrompts={linksArray} userId={username?.username} userInformation={UserInformation} />}
+        <PhonePreview
+          isPrompts={linksArray}
+          userId={username !== undefined && username?.username}
+          userInformation={UserInformation}
+        />
+        {isShowProfile ? (
+          <Profile isPrompts={linksArray} userId={username?.username} />
+        ) : (
+          <CustomeLink
+            isPrompts={linksArray}
+            userId={username?.username}
+            userInformation={UserInformation}
+          />
+        )}
       </div>
     </section>
   );

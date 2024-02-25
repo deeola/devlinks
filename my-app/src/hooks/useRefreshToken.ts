@@ -1,31 +1,29 @@
-
-import axios from '../api/axios';
-import { RootState } from '../state/store';
-import { useSelector } from 'react-redux';
-
-
-
-
+import axios from "../api/axios";
+import useAuth from "./useAuth";
 
 const useRefreshToken = () => {
-    // const { setAuth } = useAuth();
+  const { setAuth } = useAuth();
 
-     const myAccessToken = useSelector((state: RootState) => state.auth.accessToken);
+  const refresh = async () => {
 
-    const refresh = async () => {
-        try {
-            const response = await axios.get('/refresh', {
-                withCredentials: true,
-            });
+    const response = await axios.get("/refresh", {
+      withCredentials: true,
+    });
 
-            console.log(response.data.accessToken, "response.data.accessToken");
-            return response.data.accessToken;
-        } catch (error) {
-            console.error('Error refreshing token:', error);
-            throw error; // Rethrow the error to be handled by the caller
-        }
-    }
-    return refresh;
+    setAuth((prev: any) => {
+      return {
+        ...prev,
+        accessToken: response.data.accessToken,
+        user: response.data.username,
+      };
+    });
+
+
+
+    return response.data.accessToken;
+  };
+  console.log("refresh", refresh);
+  return refresh;
 };
 
 export default useRefreshToken;

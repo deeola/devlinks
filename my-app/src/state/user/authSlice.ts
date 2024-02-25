@@ -1,5 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../../api/axios';
+import { useDispatch } from 'react-redux';
+import { getSpecificUserInfo } from './userSlice';
 
 
 interface LoginCredentials {
@@ -16,19 +18,23 @@ interface UserData {
 const LOGIN_URL = '/auth'; 
 const REGISTER_URL = '/register';
 
+
+
 // Create the login async thunk
 export const login = createAsyncThunk<UserData, LoginCredentials>(
     LOGIN_URL,
     async ({ user, pwd }, { rejectWithValue }) => {
         try {
-            const response = await axios.post(LOGIN_URL, { user, pwd });
+            const response = await axios.post(LOGIN_URL, { user, pwd }, { withCredentials: true });
             localStorage.setItem('isLoggedIn', "true");
+         
             return response.data;
         } catch (error: any) {
             return rejectWithValue(error.response.data);
         }
     }
 );
+
 
 
 
