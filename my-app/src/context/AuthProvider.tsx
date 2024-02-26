@@ -28,8 +28,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [auth, setAuth] = useState({});
   const persistValue = localStorage.getItem("persist");
 
-  console.log(persistValue, "persistValue")
-  console.log(auth, "authircular" )
   const [persist, setPersist] = useState<boolean>(persistValue ? persistValue === "true" : false);
   
 
