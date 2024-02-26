@@ -7,78 +7,89 @@ import Button from "../components/Button/Button";
 import mailbox from "../assets/images/icon-email.svg";
 import password from "../assets/images/icon-password.svg";
 import axios from "../api/axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { login} from "../state/user/authSlice";
+import { login } from "../state/user/authSlice";
 import { AppDispatch } from "../state/store";
+import { getSpecificUserInfo } from "../state/user/userSlice";
+import useAuth from "../hooks/useAuth";
 
-const LOGIN_URL = '/auth';
+const LOGIN_URL = "/auth";
 
 export default function Login() {
+  const { setAuth, persist, setPersist } = useAuth();
+
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const dispatch = useDispatch<AppDispatch>();
   const emailRef: MutableRefObject<HTMLInputElement | null> = useRef(null);
-  const errRef: MutableRefObject<HTMLInputElement | null>  = useRef(null);
+  const errRef: MutableRefObject<HTMLInputElement | null> = useRef(null);
 
   const [user, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
-  const [auth, setAuth] = useState({});
-
-
- 
 
   useEffect(() => {
     emailRef.current?.focus();
   }, []);
 
-
   useEffect(() => {
     setErrMsg("");
   }, [user, pwd]);
 
-
-
-
-  const handleSubmit = async (e:any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-   
-
     try {
-          dispatch(login({user, pwd}))
-          
+      // dispatch(login({ user, pwd }));
+     
+      //  const accessToken = response?.data?.accessToken;
 
-        //  setUser({ user });
+     
 
+      //  setUser({ user });
 
-        //  dispatch(login({ user, pwd })).then((action) => {
-        //   if (login.fulfilled.match(action)) {
-        //     setUser({user})
-        //     localStorage.setItem('isLoggedIn', "true");
-        //   } else{
-        //   }});
+       dispatch(login({ user, pwd })).then((action) => {
+        if (login.fulfilled.match(action)) {
+          // setUser({user})
 
-        
-        setEmail('');
-        setPwd('');
-        setSuccess(true);
-        
-    } catch (err:any) {
-        if (!err?.response) {
-            setErrMsg('No Server Response');
-        } else if (err.response?.status === 400) {
-            setErrMsg('Missing Username or Password');
-        } else if (err.response?.status === 401) {
-            setErrMsg('Unauthorized');
-        } else {
-            setErrMsg('Login Failed');
-        }
-        errRef.current?.focus();
+          setAuth({ user, pwd, accessToken: action.payload.accessToken });
+
+          dispatch(getSpecificUserInfo(user));
+           navigate("/customize");
+
+        } else{
+        }});
+
+      setEmail("");
+      setPwd("");
+      setSuccess(true);
+    } catch (err: any) {
+      if (!err?.response) {
+        setErrMsg("No Server Response");
+      } else if (err.response?.status === 400) {
+        setErrMsg("Missing Username or Password");
+      } else if (err.response?.status === 401) {
+        setErrMsg("Unauthorized");
+      } else {
+        setErrMsg("Login Failed");
+      }
+      errRef.current?.focus();
     }
-}
+  };
 
+  const togglePersist = () => {
+    setPersist((prev: any) => !prev);
+  };
+
+
+  useEffect(() => {
+    localStorage.setItem("persist", persist.toString());
+  }, [persist]);
 
   return (
     <section className="authSection">
@@ -104,9 +115,7 @@ export default function Login() {
                   placeholder="e.g. alex@email.com"
                   value={user}
                   onChange={(e) => setEmail(e.target.value)}
-        
                   required
-        
                   aria-describedby="uidnote"
                   inputRef={emailRef}
                   autoComplete="off"
@@ -132,24 +141,27 @@ export default function Login() {
                     error={"Please enter a password"}
                   />
                 </div>
-
               </div>
             </div>
             <div className="buttoncontainer">
-              <Button
-                text="Login"
-                disabled={
-                  !user || !pwd ? true : false
-                }
-              />
+              <Button text="Login" disabled={!user || !pwd ? true : false} />
             </div>
 
             <div className="questioncontainer">
               <MBody text={"Don't have an account?"} />
               <Link className="link-to" to={"/register"}>
-              <MBody className="loginQuestion" text={"Create account"} />
+                <MBody className="loginQuestion" text={"Create account"} />
               </Link>
-             
+            </div>
+
+            <div className="persistCheck">
+              <input
+                type="checkbox"
+                id="persist"
+                onChange={togglePersist}
+                checked={persist}
+              />
+              <label htmlFor="persist">Trust This Device</label>
             </div>
           </div>
         </div>

@@ -8,7 +8,6 @@ const PrivateRoute = () => {
 
   const isAuthenticated = useSelector(selectAuthStatus);
 
-
   return isAuthenticated === "succeeded" ? (
     <Outlet />
   ) : (

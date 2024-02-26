@@ -59,8 +59,24 @@ export default function CustomeLink(Props: TProps) {
   // console.log(isPrompts, "isPrompts")
 
   // Populate the prompts array with the items in the promptSlice (isPrompts) if there is any
-  useEffect(() => {
 
+
+  // if (isPrompts.length > 0) {
+  //   const convertedData: TCustomize[] = isPrompts.map((link: any) => ({
+  //     id: link.id,
+  //     answer: link.answer,
+  //     label: link.label,
+  //     bgColor: link.bgColor,
+  //     image: link.image,
+  //     placeholder: "",
+  //     userId: link.userId,
+  //   }));
+
+  //   setPrompts(convertedData);
+  //   setGetUpdatedLinks(true);
+  // }
+
+  useEffect(() => {
     if (isPrompts.length > 0) {
       const convertedData: TCustomize[] = isPrompts.map((link: any) => ({
         id: link.id,
@@ -71,12 +87,17 @@ export default function CustomeLink(Props: TProps) {
         placeholder: "",
         userId: link.userId,
       }));
-
+  
       setPrompts(convertedData);
       setGetUpdatedLinks(true);
     }
+  }, [isPrompts]);
 
-  }, []);
+
+  // useEffect(() => {
+
+   
+  // }, [isPrompts ]);
 
 
 
