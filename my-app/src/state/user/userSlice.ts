@@ -12,7 +12,6 @@ interface UserInfoCredentials {
   firstName: string;
   lastName: string;
   email: string;
-  profileImage: React.SetStateAction<string>;
 }
 
 interface ImageCredentials  {
@@ -127,6 +126,9 @@ const userSlice = createSlice({
     });
     builder.addCase(getSpecificUserInfo.fulfilled, (state, action) => {
       state.users = action.payload;
+    });
+    builder.addCase(getSpecificUserInfo.rejected, (state, action) => {
+      state.users = {firstName: "", lastName: "", email: ""};
     });
 
   },
