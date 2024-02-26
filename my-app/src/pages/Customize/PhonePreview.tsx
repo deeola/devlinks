@@ -2,9 +2,7 @@ import { useEffect, useState} from "react";
 import "./PhonePreview.css";
 import arrow from "../../assets/images/icon-arrow-right.svg";
 import { MBody, SBody } from "../../components/Text/Text";
-import { useSelector, useDispatch } from "react-redux";
-import { AppDispatch} from "../../state/store";
-import { getSpecificUserInfo, selectUser } from "../../state/user/userSlice";
+
 
 
 type TProps = {

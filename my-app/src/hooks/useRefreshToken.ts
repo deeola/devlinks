@@ -22,7 +22,7 @@ const useRefreshToken = () => {
 
     return response.data.accessToken;
   };
-  console.log("refresh", refresh);
+
   return refresh;
 };
 

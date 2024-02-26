@@ -5,7 +5,7 @@ import InputField from "../../components/Input/InputField";
 import Button from "../../components/Button/Button";
 import "./Profile.css";
 import {  useDispatch, useSelector } from "react-redux";
-import {  postUserInfo, getSpecificUserInfo } from "../../state/user/userSlice";
+import {  postUserInfo} from "../../state/user/userSlice";
 import { AppDispatch } from "../../state/store";
 
 
@@ -43,13 +43,13 @@ const dispatch = useDispatch<AppDispatch>();
         firstName: string;
         lastName: string;
         email: string;
-        profileImage: SetStateAction<string>;
+        
       
     }>({
         firstName: "",
         lastName: "",
-        email: "",
-        profileImage: "",
+        email: userId,
+
       })
 
       const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -88,9 +88,9 @@ const dispatch = useDispatch<AppDispatch>();
     
       const handleSave = async(e: any) => {
         e.preventDefault();
-        const userData = { ...userInfo, profileImage};
+        const userData = { ...userInfo};
         const response = {email: userId, profileImage: profileImage}
-         dispatch(postUserInfo(userData))
+         dispatch(postUserInfo(userInfo))
         //  await dispatch(userImageURLThunk(response));
         return userData;
         
@@ -167,14 +167,14 @@ const dispatch = useDispatch<AppDispatch>();
           </div>
           <MBody text={userId} />
           <div className="inputfield-container">
-          <InputField
+          {/* <InputField
           type="email"
             id="email"
             name="email"
             placeholder="e.g email@example.com"
             onChange={handleInput}
             value={userInfo.email}
-          />
+          /> */}
           </div>
          
         </div>
