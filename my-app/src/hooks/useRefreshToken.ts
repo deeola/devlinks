@@ -1,5 +1,7 @@
 import axios from "../api/axios";
 import useAuth from "./useAuth";
+import { setNewUser } from "../state/user/authSlice";
+
 
 const useRefreshToken = () => {
   const { setAuth } = useAuth();
@@ -9,6 +11,18 @@ const useRefreshToken = () => {
     const response = await axios.get("/refresh", {
       withCredentials: true,
     });
+
+    console.log(response.data.accessToken, "response.data.accessToken")
+
+    setNewUser((prev: any) =>{
+        return {
+            ...prev,
+            username: response.data.username,
+            accessToken: response.data.accessToken,
+        }
+    })
+
+
 
     setAuth((prev: any) => {
       return {

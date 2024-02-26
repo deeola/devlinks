@@ -11,6 +11,7 @@ import { addPrompt, deletePrompt, getlinks, selectAllPrompts } from "../../state
 import axios from "../../api/axios";
 import { TCustomize, TLinks } from "../../types";
 
+
 type TProps = {
   isPrompts:  object[];
    userId: string;

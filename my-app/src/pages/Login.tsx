@@ -58,9 +58,8 @@ export default function Login() {
           // setUser({user})
 
           setAuth({ user, pwd, accessToken: action.payload.accessToken });
-
           dispatch(getSpecificUserInfo(user));
-           navigate("/customize");
+          navigate("/customize");
 
         } else{
         }});

@@ -81,6 +81,8 @@ const handleRefreshToken = (req, res) => {
 
     const refreshToken = cookies.jwt
 
+    console.log('refreshToken: ', refreshToken)
+
     jwt.verify(
         refreshToken,
         process.env.REFRESH_TOKEN_SECRET,

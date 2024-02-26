@@ -1,5 +1,7 @@
 
 import { createContext, useState, ReactNode, useContext, Dispatch, SetStateAction } from "react";
+import { setNewUser } from "../state/user/authSlice";
+import { access } from "fs";
 
 // Define types for authentication data and context value
 type AuthData = {
@@ -11,7 +13,10 @@ type AuthData = {
 
 // Create context with initial empty values
 const initialAuthContext: AuthData = {
-  auth: {},
+  auth: {
+    accessToken: "",
+    username: ""
+  },
   setAuth: () => {},
   persist: false,
   setPersist: () => {}
@@ -30,6 +35,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   console.log(persistValue, "persistValue")
   console.log(auth, "authircular" )
+
+  
   const [persist, setPersist] = useState<boolean>(persistValue ? persistValue === "true" : false);
   
 
@@ -44,5 +51,4 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 export const useAuth = () => useContext(AuthContext);
 
 export default AuthContext;
-
 

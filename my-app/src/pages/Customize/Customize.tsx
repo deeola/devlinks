@@ -14,20 +14,32 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../state/store";
 import { selectAuthenticatedUser } from "../../state/user/authSlice";
 import { getSpecificUserInfo, selectUser } from "../../state/user/userSlice";
-
+import useAuth from "../../hooks/useAuth";
 export default function Customize() {
   const [isShowProfile, setIsShowProfile] = useState<boolean>(false);
-  const username = useSelector(selectAuthenticatedUser);
+  // const username = useSelector(selectAuthenticatedUser);
+
+
+const { auth } = useAuth();
+
+console.log(auth, "auth inside customize page")
+
+let username = auth?.user;
+
+
+
+
+
 
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    dispatch(getSpecificUserInfo(username?.username));
-    
+    dispatch(getSpecificUserInfo(username));
+
   }, []);
 
   useEffect(() => {
-    dispatch(getlinks(username?.username));
+    dispatch(getlinks(username));
 
   }, []);
 
@@ -75,7 +87,7 @@ export default function Customize() {
       <div className="customContainer">
         <PhonePreview
           isPrompts={linksArray}
-          userId={username !== undefined && username?.username}
+          userId={username}
           userInformation={UserInformation}
         />
         {isShowProfile ? (
@@ -83,7 +95,7 @@ export default function Customize() {
         ) : (
           <CustomeLink
             isPrompts={linksArray}
-            userId={username?.username}
+            userId={username}
             userInformation={UserInformation}
           />
         )}

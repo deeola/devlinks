@@ -76,7 +76,11 @@ const initialState: AuthState = {
 const authSlice = createSlice({
     name: 'auth',
     initialState,
-    reducers: {},
+    reducers: {
+        setNewUser: (state, action) => {
+            state.user = action.payload;
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(login.pending, (state) => {
@@ -109,7 +113,7 @@ const authSlice = createSlice({
 });
 
 
-
+export const {setNewUser} =  authSlice.actions; 
 export const selectAuthenticatedUser = (state: any) => state.auth.user;
 export const selectAuthStatus = (state: any) => state.auth.status;
 export const selectAuthError = (state: any) => state.auth.error;
