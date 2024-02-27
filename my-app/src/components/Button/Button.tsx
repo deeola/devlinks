@@ -10,16 +10,17 @@ type Button = {
     classname? :  string,
     onClick? : () => void
     disabled?: boolean
+    type?: "submit" | "button" | "reset"
 }
 
 
 export default function Button(Props: Button) {
 
-    const { text, buttonType, backgroundSubtype, classname, onClick, disabled } = Props;
+    const { text, buttonType, backgroundSubtype, classname, onClick, disabled, type } = Props;
 
 
     return (
-        <button disabled={disabled} onClick={onClick} className={`bgColor ${classname}`} data-subtype={backgroundSubtype} data-buttontype={buttonType}> { text }</button >
+        <button type={type} disabled={disabled} onClick={onClick} className={`bgColor ${classname}`} data-subtype={backgroundSubtype} data-buttontype={buttonType}> { text }</button >
     )
 }
 

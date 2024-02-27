@@ -49,13 +49,34 @@ const createNewLinks = async (req, res) => {
             return res.status(400).json({ message: 'Request body should be an array.' });
         }
 
-        const createdLinks = await Link.insertMany(req.body);
+        const linksToInsert = [];
+
+        for (const linkData of req.body) {
+            const existingLink = await Link.findOne({
+                id: linkData.id,
+                label: linkData.label,
+                answer: linkData.answer
+            });
+
+            if (!existingLink) {
+                // No duplicate found, add to the array of links to insert
+                linksToInsert.push(linkData);
+            }
+        }
+
+        if (linksToInsert.length === 0) {
+            return res.status(400).json({ message: 'All provided links are duplicates.' });
+        }
+
+        const createdLinks = await Link.insertMany(linksToInsert);
         res.status(201).json({ message: 'Links created successfully.', createdLinks });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal Server Error.' });
     }
 };
+
+
 
 const updateLinks = async (req, res) => {
     try {
@@ -76,26 +97,39 @@ const updateLinks = async (req, res) => {
     }
 };
 
+
+
 const deleteLinks = async (req, res) => {
     try {
-        const { id } = req.body;
+        const { id, userId } = req.body;
+
+        // Confirm data
+        console.log('id', id);
+
         if (!id) {
-            return res.status(400).json({ message: 'Link ID is required.' });
+            return res.status(400).json({ message: 'Link ID required' });
         }
 
-     
-            const deletedLink = await Link.findOneAndDelete(id);
-            if (!deletedLink) {
-                return res.status(404).json({ message: `Link with ID ${id} not found.` });
-            }
+        // Confirm link exists to delete
+        const deletedLink = await Link.findOneAndDelete({ id });
 
-            res.json({ message: `Link with ID ${id} deleted successfully.` });
-        
+        if (!deletedLink) {
+            return res.status(404).json({ message: 'Link not found' });
+        }
+
+        // Fetch the remaining links after deleting the specified one
+        const remainingLinks = await Link.find({ userId: userId });
+
+
+        res.json({ message: 'Link deleted', deletedLink, remainingLinks });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal Server Error.' });
     }
 };
+
+
+
 
 const getLink = async (req, res) => {
     try {

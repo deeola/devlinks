@@ -38,6 +38,7 @@ export default function Customize() {
 
 
   const linksArray = useSelector(selectAllPrompts);
+  console.log(linksArray, "linksArray");
   const UserInformation = useSelector(selectUser);
 
   return (

@@ -30,11 +30,18 @@ export interface TCustomize {
 }
   
 
-export interface LinksState {
-  links:TLinks[];
-}
+// export interface LinksState {
+//   links:TLinks[];
+// }
 
 export type TLinkState = {
   links: MergedValues[];
+}
+
+
+export interface ILinks {
+  links: TLinks[];
+  status: 'idle' | 'loading' | 'succeeded' | 'failed',
+  error: string | undefined;
 }
 
