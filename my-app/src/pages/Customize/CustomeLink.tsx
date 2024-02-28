@@ -2,14 +2,11 @@ import { useState, useEffect } from "react";
 import { MBody, MHeader } from "../../components/Text/Text";
 import Button from "../../components/Button/Button";
 import picture from "../../assets/images/illustration-empty.svg";
-import { useSelector, useDispatch } from "react-redux";
-import { AppDispatch, RootState } from "../../state/store";
-import {  setAllPrompts, removeLink, addNewLink, selectAllLinks } from "../../state/link/linkSlice";
 import { v4 as uuidv4 } from "uuid";
 import AddnewLink from "../../components/Addlink/Addnewlink";
-import { addPrompt, deletePrompt, getlinks, selectAllPrompts } from "../../state/link/promptSlice";
-import axios from "../../api/axios";
-import { TCustomize, TLinks } from "../../types";
+
+import { TCustomize } from "../../types";
+import { useAddLinksMutation, useDeleteLinkMutation } from "../../state/api/apiSlice";
 
 type TProps = {
   isPrompts:  object[];
@@ -19,18 +16,25 @@ type TProps = {
 
 export default function CustomeLink(Props: TProps) {
 
+  const [addLinks] = useAddLinksMutation();
+  const [deleteLink] = useDeleteLinkMutation();
 
- const { isPrompts, userId } = Props;
+  
 
+ let { isPrompts, userId } = Props;
 
- const dispatch = useDispatch<AppDispatch>();
+ if (!isPrompts) {
+  // Handle the case where isPrompts (linksArray) is undefined
+  isPrompts = []
+}
+
 
 
  const [getUpdatedLinks, setGetUpdatedLinks] = useState(false);
 
  const [prompts, setPrompts] = useState<TCustomize[]>([
     {
-      id: "",
+      id: uuidv4(),
       answer: "",
       label: "",
       bgColor: "",
@@ -152,9 +156,6 @@ export default function CustomeLink(Props: TProps) {
  const handleDisplayFirstPrompt = () => {
    setIsActive(true);
  };
- let deletePrompts = [...prompts];
-
- console.log("deletePrompts", deletePrompts);
 
  // Function to handle prompt deletion
  const handleDelete = async (e:React.MouseEvent<HTMLButtonElement>, i:number, id: string, label: string) => {
@@ -167,10 +168,12 @@ export default function CustomeLink(Props: TProps) {
     console.log("deletePrompts", deletePrompts);
 
     // Dispatch the removeLink action first
-    dispatch(removeLink(id));
+    //  dispatch(removeLink(id));
     
     // Wait for the removeLink action to complete before dispatching deletePrompt
-    await dispatch(deletePrompt({id, label, userId}));
+    // await dispatch(deletePrompt({id, label, userId}));
+
+      deleteLink({id, userId: userId})
 
     // Optionally, update the local state with the modified prompts array
     setPrompts(deletePrompts);
@@ -208,7 +211,11 @@ export default function CustomeLink(Props: TProps) {
      image,
      userId
    }));
-   dispatch(addPrompt(newPromptsArray));
+
+   console.log("newPromptsArray", newPromptsArray);
+ 
+
+   addLinks(newPromptsArray);
    setMyError(false);
  };
 
@@ -230,7 +237,7 @@ export default function CustomeLink(Props: TProps) {
         </div>
         
         <div className="link-middle-addnewlinkcontainer">
-          {(!isActive  && !getUpdatedLinks && isPrompts.length === 0) && (
+          {((!isActive  && !getUpdatedLinks) || (getUpdatedLinks && isPrompts.length === 0)) && (
             <div className="link-middle">
               <div className="link-middle-image">
                 <img src={picture} alt="get-started-icon" />

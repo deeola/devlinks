@@ -5,17 +5,17 @@ import { MBody, SBody } from "../../components/Text/Text";
 import arrow from "../../assets/images/icon-arrow-right.svg";
 import profileimage from "../../assets/images/mann.jpeg";
 import { useSelector } from "react-redux";
-import { AppDispatch} from "../../state/store";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { getlinks, selectAllPrompts } from "../../state/link/promptSlice";
 import {  selectUser } from "../../state/user/userSlice";
+import { useGetLinksQuery } from "../../state/api/apiSlice";
+import { useAuth } from "../../context/AuthProvider";
 
 export default function Preview() {
 
-  const dispatch = useDispatch<AppDispatch>();
-  
+  const { auth } = useAuth();
+  let username = auth?.user;
 
+  
 
   const userInformation = useSelector(selectUser);
 
@@ -33,11 +33,36 @@ export default function Preview() {
     }
   }, [userInformation]);
 
-  useEffect(() => {
-    dispatch(getlinks("my@test.coms"));
-  }, [dispatch]);
 
-  const linksArray = useSelector(selectAllPrompts);
+
+  const {
+    data: links,
+    isLoading,
+    isSuccess,
+    isError,
+    error
+  } = useGetLinksQuery(username);
+
+  let linksArray;
+  
+  if (isLoading) {
+    console.log("Loading...");
+  } else if (isSuccess) {
+    linksArray = links; // Set linksArray to links when data retrieval is successful
+  
+  } else if (isError) {
+    if ('status' in error && error.status === 404) {
+      linksArray = []; 
+      console.log(linksArray.length);
+  
+    } else {
+
+      console.error("An error occurred:", error);
+    }
+  }
+  
+
+  // const linksArray = useSelector(selectAllPrompts);
 
   const profileImage = "https://res.cloudinary.com/djvjxp2am/image/upload/v1631530733/Profile%20Pictures/IMG_20210913_123456";
 

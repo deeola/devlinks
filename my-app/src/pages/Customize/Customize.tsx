@@ -9,37 +9,92 @@ import links from "../../assets/images/icon-link.svg";
 import profiledetails from "../../assets/images/icon-profile-details-header.svg";
 import Profile from "../Profile/Profile";
 import { Link } from "react-router-dom";
-import { getlinks, selectAllPrompts } from "../../state/link/promptSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch } from "../../state/store";
-import { selectAuthenticatedUser } from "../../state/user/authSlice";
 import useAuth from "../../hooks/useAuth";
-import { getSpecificUserInfo, selectUser } from "../../state/user/userSlice";
+import { useGetLinksQuery, useGetUsersInfoQuery } from "../../state/api/apiSlice";
+
 
 export default function Customize() {
   const [isShowProfile, setIsShowProfile] = useState<boolean>(false);
+  
 
   //get username from the auth state in useContext
   const { auth } = useAuth();
   let username = auth?.user;
 
-  const dispatch = useDispatch<AppDispatch>();
+  // const dispatch = useDispatch<AppDispatch>();
+
+
+
 
 
   //fetch links array and specific user information
-  useEffect(() => {
-    dispatch(getSpecificUserInfo(username));
-  }, []);
-
-  useEffect(() => {
-    dispatch(getlinks(username));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getSpecificUserInfo(username));
+  // }, []);
 
 
+  const {
+    data: userInfo,
+    isLoading: userInfoLoading,
+    isSuccess: userInfoSuccess,
+    isError: userInfoError,
+    error: userInfoErrorData,
+  } = useGetUsersInfoQuery(username);
+  
 
-  const linksArray = useSelector(selectAllPrompts);
-  console.log(linksArray, "linksArray");
-  const UserInformation = useSelector(selectUser);
+let UserInformation;
+
+
+if (userInfoLoading) {
+  console.log("Loading...");
+} else if (userInfoSuccess) {
+  UserInformation = userInfo; // Set UserInformation to userInfo when data retrieval is successful
+} else if (userInfoError) {
+  if('status' in userInfoErrorData && userInfoErrorData.status === 404){
+    UserInformation = {};
+  } else {
+    console.error("An error occurred:", userInfoErrorData);
+  }
+ 
+}
+
+ 
+
+
+const {
+  data: links,
+  isLoading,
+  isSuccess,
+  isError,
+  error
+} = useGetLinksQuery(username);
+
+
+let linksArray;
+
+if (isLoading) {
+  console.log("Loading...");
+} else if (isSuccess) {
+  linksArray = links; // Set linksArray to links when data retrieval is successful
+
+} else if (isError) {
+  if ('status' in error && error.status === 404) {
+
+    linksArray = []; 
+    console.log(linksArray.length);
+
+  } else {
+
+    console.error("An error occurred:", error);
+  }
+}
+
+
+
+
+// console.log(linksArray, "links from rtk query")
+
+
 
   return (
     <section className="customize">
@@ -80,7 +135,7 @@ export default function Customize() {
           userInformation={UserInformation}
         />
         {isShowProfile ? (
-          <Profile isPrompts={linksArray} userId={username} />
+          <Profile userInformation={UserInformation} userId={username} />
         ) : (
           <CustomeLink
             isPrompts={linksArray}

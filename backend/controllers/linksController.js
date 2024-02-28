@@ -48,8 +48,9 @@ const createNewLinks = async (req, res) => {
         if (!Array.isArray(req.body)) {
             return res.status(400).json({ message: 'Request body should be an array.' });
         }
-
         const linksToInsert = [];
+
+        console.log('req.body', req.body )
 
         for (const linkData of req.body) {
             const existingLink = await Link.findOne({
@@ -57,6 +58,8 @@ const createNewLinks = async (req, res) => {
                 label: linkData.label,
                 answer: linkData.answer
             });
+
+            console.log('existingLink', existingLink);
 
             if (!existingLink) {
                 // No duplicate found, add to the array of links to insert
