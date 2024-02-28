@@ -2,14 +2,11 @@ import { useState, useEffect } from "react";
 import { MBody, MHeader } from "../../components/Text/Text";
 import Button from "../../components/Button/Button";
 import picture from "../../assets/images/illustration-empty.svg";
-import { useSelector, useDispatch } from "react-redux";
-import { AppDispatch, RootState } from "../../state/store";
-import {  setAllPrompts, removeLink, addNewLink, selectAllLinks } from "../../state/link/linkSlice";
 import { v4 as uuidv4 } from "uuid";
 import AddnewLink from "../../components/Addlink/Addnewlink";
-import { addPrompt, deletePrompt, getlinks, selectAllPrompts } from "../../state/link/promptSlice";
-import axios from "../../api/axios";
-import { TCustomize, TLinks } from "../../types";
+
+import { TCustomize } from "../../types";
+import { useAddLinksMutation, useDeleteLinkMutation } from "../../state/api/apiSlice";
 
 type TProps = {
   isPrompts:  object[];
@@ -19,258 +16,213 @@ type TProps = {
 
 export default function CustomeLink(Props: TProps) {
 
-  const { isPrompts, userId, userInformation} = Props;
+  const [addLinks] = useAddLinksMutation();
+  const [deleteLink] = useDeleteLinkMutation();
+
+  
+
+ let { isPrompts, userId } = Props;
+
+ if (!isPrompts) {
+  // Handle the case where isPrompts (linksArray) is undefined
+  isPrompts = []
+}
 
 
-  const dispatch = useDispatch<AppDispatch>();
 
+ const [getUpdatedLinks, setGetUpdatedLinks] = useState(false);
 
-
-
-  const [getUpdatedLinks, setGetUpdatedLinks] = useState(false);
-
-
-  // const userId = username?.username;
-
-  // const userId = "my@test.coms";
-
-  //initial value of new prompt
-
-  const [prompts, setPrompts] = useState<TCustomize[]>([
+ const [prompts, setPrompts] = useState<TCustomize[]>([
     {
       id: uuidv4(),
       answer: "",
       label: "",
       bgColor: "",
       image: "",
-      placeholder: "",
-      userId: userId,
+      placeholder: "Enter a valid link",
+      userId: "",
     },
-  ]);
-
-  // useEffect(() => {
-  //   dispatch(getlinks(userId));
-  // },[])
-
-
-
-  // const isPrompts = useSelector(selectAllPrompts);
-
-  // console.log(isPrompts, "isPrompts")
-
-  // Populate the prompts array with the items in the promptSlice (isPrompts) if there is any
-
-
-  // if (isPrompts.length > 0) {
-  //   const convertedData: TCustomize[] = isPrompts.map((link: any) => ({
-  //     id: link.id,
-  //     answer: link.answer,
-  //     label: link.label,
-  //     bgColor: link.bgColor,
-  //     image: link.image,
-  //     placeholder: "",
-  //     userId: link.userId,
-  //   }));
-
-  //   setPrompts(convertedData);
-  //   setGetUpdatedLinks(true);
-  // }
-
-  useEffect(() => {
-    if (isPrompts.length > 0) {
-      const convertedData: TCustomize[] = isPrompts.map((link: any) => ({
-        id: link.id,
-        answer: link.answer,
-        label: link.label,
-        bgColor: link.bgColor,
-        image: link.image,
-        placeholder: "",
-        userId: link.userId,
-      }));
-  
-      setPrompts(convertedData);
-      setGetUpdatedLinks(true);
-    }
-  }, [isPrompts]);
-
-
-  // useEffect(() => {
-
-   
-  // }, [isPrompts ]);
-
+ ]);
 
 
  const [isActive, setIsActive] = useState<boolean>(false);
+
  const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
  const [myError, setMyError] = useState<boolean>(false);
+
  const [errorMessage, setErrorMessage] = useState<string>("");
 
-  
+ // Effect to update prompts when isPrompts changes
+ useEffect(() => {
+   if (isPrompts.length > 0) {
+     // Convert data from isPrompts to TCustomize type
+     const convertedData: TCustomize[] = isPrompts.map((link: any) => ({
+       id: link.id,
+       answer: link.answer,
+       label: link.label,
+       bgColor: link.bgColor,
+       image: link.image,
+       placeholder: "",
+       userId: link.userId,
+     }));
+
+     // Update prompts state
+     setPrompts(convertedData);
+     setGetUpdatedLinks(true);
+   } 
+ }, [isPrompts]);
 
 
-  //   // selectors
-  // const linksComponents = useSelector((state: RootState) => state.link.links);
 
+ // Function to handle button click
+ const handleButtonClick = (i: number) => {
+   setActiveIndex(i === activeIndex ? null : i);
+ };
+
+
+ // Function to add a new prompt
+ const handleAddPrompt = () => {
+   // Check if any prompt's answer is empty
+   const hasEmptyAnswer = prompts.some(prompt => prompt.answer === "");
+
+   if (!hasEmptyAnswer) {
+     setIsActive(true);
+     // Add a new prompt to the prompts array
+     setPrompts([
+       ...prompts,
+       {
+         id: uuidv4(),
+         answer: "",
+         label: "",
+         bgColor: "",
+         image: "",
+         placeholder: "",
+         userId: userId,
+       },
+     ]);
+   }
+ };
+
+
+ // Function to handle option click
+ const handleOptionClick = (
+   e: any,
+   i: any,
+   label: string,
+   image: string,
+   placeholder: string,
+   bgColor: string,
+ ) => {
+   const hasEmptyAnswer = prompts.some(prompt => prompt.label === label);
+   if (hasEmptyAnswer) return;
+
+   // Update the selected prompt
+   const updatedPrompts = prompts.map((prompt, index) => {
+     if (index === i) {
+       return {
+         ...prompt,
+         bgColor: bgColor,
+         image: image,
+         placeholder: placeholder,
+         label: label,
+         userId: userId
+       };
+     }
+     return prompt;
+   });
+   setPrompts(updatedPrompts);
+   setActiveIndex(null);
+ };
+
+
+ // Function to handle input change
+ const handleInputChange = (
+   e: React.ChangeEvent<HTMLInputElement>,
+   i: number
+ ) => {
+   const { value } = e.target;
+   setPrompts((prevPrompts: any) => {
+     const updatedPrompts = [...prevPrompts];
+     updatedPrompts[i] = {
+       ...updatedPrompts[i],
+       answer: value,
+     };
+     return updatedPrompts;
+   });
+ };
+
+ // Function to display the first prompt
+ const handleDisplayFirstPrompt = () => {
+   setIsActive(true);
+ };
+
+ // Function to handle prompt deletion
+ const handleDelete = async (e:React.MouseEvent<HTMLButtonElement>, i:number, id: string, label: string) => {
+   e.preventDefault();
+   try {
+    // Remove the prompt from the prompts array
+    let deletePrompts = [...prompts];
+    deletePrompts.splice(i, 1);
+
+    console.log("deletePrompts", deletePrompts);
+
+    // Dispatch the removeLink action first
+    //  dispatch(removeLink(id));
+    
+    // Wait for the removeLink action to complete before dispatching deletePrompt
+    // await dispatch(deletePrompt({id, label, userId}));
+
+      deleteLink({id, userId: userId})
+
+    // Optionally, update the local state with the modified prompts array
+    setPrompts(deletePrompts);
+} catch (error) {
+    // Handle any errors here
+    console.error("Error deleting prompt:", error);
+}
+
+ };
+
+ // Function to save prompts
+ const handleSave = async(e: React.FormEvent<HTMLFormElement>) => {
+   e.preventDefault();
+   const hasEmptyAnswer = prompts.some(prompt => prompt.answer === "");
+   if (hasEmptyAnswer) {
+     console.error("Cannot save link with empty answer for any prompt.");
+     setMyError(true)
+     setErrorMessage("Please enter a text.")
+     return; 
+   }
+
+   // Check for duplicate labels
+   const hasDuplicateLabel = prompts.some(prompt => prompt.label === "");
+   if (hasDuplicateLabel) {
+     console.error("Cannot save link with duplicate label.");
+     return; 
+   }
+
+   // Save prompts
+   const newPromptsArray = prompts.map(({ answer, label, bgColor, image, id, userId }) => ({
+     id,
+     answer,
+     label,
+     bgColor,
+     image,
+     userId
+   }));
+
+   console.log("newPromptsArray", newPromptsArray);
  
- 
- 
 
-
-
-  const handleButtonClick = (i: number) => {
-    setActiveIndex(i === activeIndex ? null : i);
-  };
-
-
-  const handleAddPrompt = () => {
-
-  // Check if prompt.answer is empty for any existing prompt
-  const hasEmptyAnswer = prompts.some(prompt => prompt.answer === "");
-
- 
-  if (!hasEmptyAnswer) {
-    setIsActive(true);
-    setPrompts([
-      ...prompts,
-      {
-        id: uuidv4(),
-        answer: "",
-        label: "",
-        bgColor: "",
-        image: "",
-        placeholder: "",
-        userId: userId,
-      },
-    ]);
-  }
-  };
-
-
-
-  // Option click handler to handle the platform selection
-
-  const handleOptionClick = (
-    e: any,
-    i: any,
-    label: string,
-    image: string,
-    placeholder: string,
-    bgColor: string,
-  ) => {
-
-    const hasEmptyAnswer = prompts.some(prompt => prompt.label === label);
-    if (hasEmptyAnswer) return;
-
-    const updatedPrompts = prompts.map((prompt, index) => {
-
-      console.log(prompt)
-      if (index === i) {
-        return {
-          ...prompt,
-          bgColor: bgColor,
-          image: image,
-          placeholder: placeholder,
-          label: label,
-          userId: userId
-        };
-      }
-      return prompt;
-    });
-    setPrompts(updatedPrompts);
-    setActiveIndex(null);
-  };
-
-
-
-
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    i: number
-  ) => {
-    const { value } = e.target;
-
-    setPrompts((prevPrompts: any) => {
-      const updatedPrompts = [...prevPrompts];
-      updatedPrompts[i] = {
-        ...updatedPrompts[i],
-        answer: value,
-      };
-      return updatedPrompts;
-    });
-  };
-
- 
-
-  const handleDisplayFirstPrompt = () => {
-    setIsActive(true);
-  };
-
-
-
- // Remove a prompt from the prompts array and also from the promptSlice 
-
-  const handleDelete = (i: string) => {
-    // let deletePrompts = [...prompts];
-    // deletePrompts.splice(i, 1);
-
-    // dispatch(removeLink(prompts[i].id));
-    dispatch(deletePrompt(i));
-
-    // setPrompts(deletePrompts);
-    console.log(prompts.length)
-  };
-
-
-  // save the prompts to the promptSlice
-
- const handleSave = async(e: any) => {
-
- e.preventDefault()
-  
-  const hasEmptyAnswer = prompts.some(prompt => prompt.answer === "");
-
-  if (hasEmptyAnswer) {
-    console.error("Cannot save link with empty answer for any prompt.");
-    setMyError(true)
-    setErrorMessage("Please enter a text.")
-    return; 
-  }
-
-  // Check if any prompt has the same selectedlabel as the one being added
-  const hasDuplicateLabel = prompts.some(prompt => prompt.label === "");
-
-  // If any prompt has the same selectedlabel, display an error or handle as needed
-  if (hasDuplicateLabel) {
-    console.error("Cannot save link with duplicate label.");
-    return; 
-  }
-
-  const newPromptsArray = prompts.map(({ answer, label, bgColor, image, id, userId }) => ({
-    id,
-    answer,
-    label,
-    bgColor,
-    image,
-    userId
-  }));
-  
-    dispatch(addPrompt(newPromptsArray));
-    // dispatch(setPrompt(prompts));
-    // dispatch(setAllPrompts(newPromptsArray))
-    console.log(prompts)
-    setMyError(false)
-
-  };
-
-
-
+   addLinks(newPromptsArray);
+   setMyError(false);
+ };
 
 
   return (
     <div className="customelinkcontainer">
-      <form onClick={handleSave}>
+      <form onSubmit={handleSave}>
       <div className="edit-links-remove">
         <div>
         <MHeader className="your-links" text="Customize your links" />
@@ -285,7 +237,7 @@ export default function CustomeLink(Props: TProps) {
         </div>
         
         <div className="link-middle-addnewlinkcontainer">
-          {(!isActive  && !getUpdatedLinks) || (prompts.length <= 1) && (
+          {((!isActive  && !getUpdatedLinks) || (getUpdatedLinks && isPrompts.length === 0)) && (
             <div className="link-middle">
               <div className="link-middle-image">
                 <img src={picture} alt="get-started-icon" />
@@ -304,8 +256,8 @@ export default function CustomeLink(Props: TProps) {
 
           {(isActive || getUpdatedLinks) && (
             <div className="addnewlinkcontainer">
-               <AddnewLink
-               errorMessage={errorMessage}
+              <AddnewLink
+              errorMessage={errorMessage}
               handleInputChange={handleInputChange}
               prompts={prompts}
               activeIndex={activeIndex}
@@ -328,6 +280,7 @@ export default function CustomeLink(Props: TProps) {
           backgroundSubtype={"active"}
           classname="custom-button"
           text="Save"
+          type="submit"
         />
       </div>
       </form>

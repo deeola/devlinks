@@ -14,8 +14,13 @@ type TProps = {
 
 export default function PhonePreview(Props: TProps ) {
 
-  const { isPrompts, userInformation} = Props;
-  // const username = useSelector((state: RootState) => state.auth.user);
+  let { isPrompts, userInformation} = Props;
+
+  
+  if (!userInformation) {
+    userInformation = null;
+  }
+  
 
  
   const [details, setDetails] = useState({
@@ -36,6 +41,10 @@ export default function PhonePreview(Props: TProps ) {
   
 
   
+  if (!isPrompts) {
+    // Handle the case where isPrompts (linksArray) is undefined
+    isPrompts = []
+  }
 
 
   let  mylinks: object[] = [];

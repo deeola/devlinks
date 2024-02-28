@@ -1,3 +1,8 @@
+export type TLogo = {
+  size: "small" | "large",
+  className?: string
+}
+
 export interface TCustomize {
     id: string;
     answer: string;
@@ -30,11 +35,18 @@ export interface TCustomize {
 }
   
 
-export interface LinksState {
-  links:TLinks[];
-}
+// export interface LinksState {
+//   links:TLinks[];
+// }
 
 export type TLinkState = {
   links: MergedValues[];
+}
+
+
+export interface ILinks {
+  links: TLinks[];
+  status: 'idle' | 'loading' | 'succeeded' | 'failed',
+  error: string | undefined;
 }
 

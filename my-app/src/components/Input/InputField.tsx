@@ -31,7 +31,7 @@ export default function InputField(Props: UInputs) {
  
 
   return (
-    <div className={`input-container ${error ? "error" : ""}`}>
+    <div data-testid="input-container" className={`input-container ${error ? "error" : ""}`}>
       {img && (
         <span className="image">
           <img src={img} alt="Icon" />
