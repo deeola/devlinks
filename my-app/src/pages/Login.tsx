@@ -30,6 +30,7 @@ export default function Login() {
 
   const [user, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
 
@@ -131,7 +132,7 @@ export default function Login() {
                     placeholder="Enter your password"
                     img={password}
                     name="password"
-                    type="password"
+                    type= { showPassword ? "text" : "password" }
                     id="password"
                     onChange={(e) => setPwd(e.target.value)}
                     value={pwd}
@@ -140,6 +141,10 @@ export default function Login() {
                     errorMessage={errMsg}
                     error={"Please enter a password"}
                   />
+                  <div 
+                    onClick={() => setShowPassword(true)}
+                    onMouseLeave={() => setShowPassword(false)}
+                   >X</div>
                 </div>
               </div>
             </div>
