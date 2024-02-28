@@ -39,22 +39,22 @@ const initialState: UserState = {
 };
 
 // API endpoint URL
-const USER_URL = "http://localhost:3500/info";
-const GET_USER_URL = "http://localhost:3500/info/specific";
+// const USER_URL = "http://localhost:3500/info";
+// const GET_USER_URL = "http://localhost:3500/info/specific";
  const IMAGE_URL = "http://localhost:3500/s3upload";
 
 // Define async thunk for posting user info
-export const postUserInfo = createAsyncThunk<User, UserInfoCredentials >(
-  "fetchUserInfo",
-  async (loginCredentials, { rejectWithValue }) => {
-    try {
-      const response = await axios.post(USER_URL, loginCredentials);
-      return response.data;
-    } catch (error: any) {
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
+// export const postUserInfo = createAsyncThunk<User, UserInfoCredentials >(
+//   "fetchUserInfo",
+//   async (loginCredentials, { rejectWithValue }) => {
+//     try {
+//       const response = await axios.post(USER_URL, loginCredentials);
+//       return response.data;
+//     } catch (error: any) {
+//       return rejectWithValue(error.response.data);
+//     }
+//   }
+// );
 
 // Define async thunk for fetching user info
 // export const getSpecificUserInfo = createAsyncThunk<User, string>(
@@ -69,17 +69,7 @@ export const postUserInfo = createAsyncThunk<User, UserInfoCredentials >(
 //   }
 // );
 
-export const getSpecificUserInfo = createAsyncThunk(
-  'userInfo/fetchUserInfo',
-  async (email: string) => {
-    try {
-      const response = await axios.get(`${GET_USER_URL}?email=${email}`);
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
-  }
-);
+
 
 
 
@@ -118,19 +108,6 @@ const userSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(postUserInfo.fulfilled, (state, action) => {
-      state.users = action.payload;
-    });
-    builder.addCase(getSpecificUserInfo.pending, (state, action) => {
-      state.users = {firstName: "", lastName: "", email: ""};
-    });
-    builder.addCase(getSpecificUserInfo.fulfilled, (state, action) => {
-      state.users = action.payload;
-    });
-    builder.addCase(getSpecificUserInfo.rejected, (state, action) => {
-      state.users = {firstName: "", lastName: "", email: ""};
-    });
-
   },
 });
 

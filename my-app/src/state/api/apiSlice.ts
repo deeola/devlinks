@@ -4,7 +4,7 @@ import { add } from 'lodash'
 export const apiSlice = createApi({
     reducerPath: 'api',
     baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3500' }),
-    tagTypes: ['Links', "UserInfo"],
+    tagTypes: ['Links', "UserInfo", "Auth"],
     endpoints: (builder) => ({
         getLinks: builder.query({
             query: (user) => `links/getlinks/${user}`,
@@ -59,9 +59,8 @@ export const apiSlice = createApi({
 export const {
     useGetLinksQuery,
      useAddLinksMutation,
-    // useUpdateTodoMutation,
     useDeleteLinkMutation,
     useGetUsersInfoQuery,
     useAddUsersInfoMutation,
-    useUpdateUsersInfoMutation
+    useUpdateUsersInfoMutation,
 } = apiSlice

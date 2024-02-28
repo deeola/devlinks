@@ -1,7 +1,7 @@
 
 import { createContext, useState, ReactNode, useContext, Dispatch, SetStateAction } from "react";
 
-// Define types for authentication data and context value
+
 type AuthData = {
   auth: any;
   setAuth: Dispatch<SetStateAction<any>>;
@@ -9,7 +9,7 @@ type AuthData = {
   setPersist: Dispatch<SetStateAction<boolean>>;
 };
 
-// Create context with initial empty values
+
 const initialAuthContext: AuthData = {
   auth: {},
   setAuth: () => {},

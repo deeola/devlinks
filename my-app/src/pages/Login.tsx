@@ -11,7 +11,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../state/user/authSlice";
 import { AppDispatch } from "../state/store";
-import { getSpecificUserInfo } from "../state/user/userSlice";
+// import { getSpecificUserInfo } from "../state/user/userSlice";
 import useAuth from "../hooks/useAuth";
 
 const LOGIN_URL = "/auth";
@@ -59,7 +59,7 @@ export default function Login() {
 
           setAuth({ user, pwd, accessToken: action.payload.accessToken });
 
-          dispatch(getSpecificUserInfo(user));
+          // dispatch(getSpecificUserInfo(user));
            navigate("/customize");
 
         } else{
