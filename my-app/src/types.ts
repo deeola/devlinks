@@ -1,4 +1,7 @@
-
+export type TLogo = {
+  size: "small" | "large",
+  className?: string
+}
 
 export interface TCustomize {
     id: string;

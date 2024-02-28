@@ -21,17 +21,6 @@ export default function Customize() {
   const { auth } = useAuth();
   let username = auth?.user;
 
-  // const dispatch = useDispatch<AppDispatch>();
-
-
-
-
-
-  //fetch links array and specific user information
-  // useEffect(() => {
-  //   dispatch(getSpecificUserInfo(username));
-  // }, []);
-
 
   const {
     data: userInfo,
@@ -48,7 +37,7 @@ let UserInformation;
 if (userInfoLoading) {
   console.log("Loading...");
 } else if (userInfoSuccess) {
-  UserInformation = userInfo; // Set UserInformation to userInfo when data retrieval is successful
+  UserInformation = userInfo;
 } else if (userInfoError) {
   if('status' in userInfoErrorData && userInfoErrorData.status === 404){
     UserInformation = {};
@@ -75,7 +64,7 @@ let linksArray;
 if (isLoading) {
   console.log("Loading...");
 } else if (isSuccess) {
-  linksArray = links; // Set linksArray to links when data retrieval is successful
+  linksArray = links;
 
 } else if (isError) {
   if ('status' in error && error.status === 404) {
@@ -88,12 +77,6 @@ if (isLoading) {
     console.error("An error occurred:", error);
   }
 }
-
-
-
-
-// console.log(linksArray, "links from rtk query")
-
 
 
   return (
