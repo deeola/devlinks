@@ -9,36 +9,75 @@ import links from "../../assets/images/icon-link.svg";
 import profiledetails from "../../assets/images/icon-profile-details-header.svg";
 import Profile from "../Profile/Profile";
 import { Link } from "react-router-dom";
-import { getlinks, selectAllPrompts } from "../../state/link/promptSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch } from "../../state/store";
-import { selectAuthenticatedUser } from "../../state/user/authSlice";
 import useAuth from "../../hooks/useAuth";
-import { getSpecificUserInfo, selectUser } from "../../state/user/userSlice";
+import { useGetLinksQuery, useGetUsersInfoQuery } from "../../state/api/apiSlice";
+
 
 export default function Customize() {
   const [isShowProfile, setIsShowProfile] = useState<boolean>(false);
+  
 
   //get username from the auth state in useContext
   const { auth } = useAuth();
   let username = auth?.user;
 
-  const dispatch = useDispatch<AppDispatch>();
+
+  const {
+    data: userInfo,
+    isLoading: userInfoLoading,
+    isSuccess: userInfoSuccess,
+    isError: userInfoError,
+    error: userInfoErrorData,
+  } = useGetUsersInfoQuery(username);
+  
+
+let UserInformation;
 
 
-  //fetch links array and specific user information
-  useEffect(() => {
-    dispatch(getSpecificUserInfo(username));
-  }, []);
+if (userInfoLoading) {
+  console.log("Loading...");
+} else if (userInfoSuccess) {
+  UserInformation = userInfo;
+} else if (userInfoError) {
+  if('status' in userInfoErrorData && userInfoErrorData.status === 404){
+    UserInformation = {};
+  } else {
+    console.error("An error occurred:", userInfoErrorData);
+  }
+ 
+}
 
-  useEffect(() => {
-    dispatch(getlinks(username));
-  }, []);
+ 
 
 
+const {
+  data: links,
+  isLoading,
+  isSuccess,
+  isError,
+  error
+} = useGetLinksQuery(username);
 
-  const linksArray = useSelector(selectAllPrompts);
-  const UserInformation = useSelector(selectUser);
+
+let linksArray;
+
+if (isLoading) {
+  console.log("Loading...");
+} else if (isSuccess) {
+  linksArray = links;
+
+} else if (isError) {
+  if ('status' in error && error.status === 404) {
+
+    linksArray = []; 
+    console.log(linksArray.length);
+
+  } else {
+
+    console.error("An error occurred:", error);
+  }
+}
+
 
   return (
     <section className="customize">
@@ -79,7 +118,7 @@ export default function Customize() {
           userInformation={UserInformation}
         />
         {isShowProfile ? (
-          <Profile isPrompts={linksArray} userId={username} />
+          <Profile userInformation={UserInformation} userId={username} />
         ) : (
           <CustomeLink
             isPrompts={linksArray}

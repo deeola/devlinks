@@ -24,3 +24,8 @@
 20240218	15:43:31	700ba81b-46ab-4a06-9933-330d28edc068	Error: Cannot set headers after they are sent to the client
 20240218	19:34:02	1eab17e5-5229-4b55-bfcd-9a3a31d23fbc	ReferenceError: data is not defined
 20240218	19:34:06	28bcbc88-5c5c-4625-9bba-9a219544b043	ReferenceError: data is not defined
+20240226	10:09:18	9014bb21-6099-458c-a6b1-037ace325c4e	SyntaxError: Expected double-quoted property name in JSON at position 52
+20240226	10:16:02	816a80c3-09fe-4fad-8731-90d3dae8c688	SyntaxError: Expected ',' or '}' after property value in JSON at position 50
+20240226	10:56:30	9b6d9fbe-3443-4951-9568-9ba4f4785052	PayloadTooLargeError: request entity too large
+20240226	10:56:43	32e111f8-12b7-4933-b8bb-6827ae62afd7	PayloadTooLargeError: request entity too large
+20240226	11:24:42	6a0fa42e-ff3f-40f7-b73b-929e4e150e8f	SyntaxError: Expected double-quoted property name in JSON at position 49

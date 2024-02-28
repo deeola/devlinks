@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../../api/axios';
-import { useDispatch } from 'react-redux';
-import { getSpecificUserInfo } from './userSlice';
+
 
 
 interface LoginCredentials {

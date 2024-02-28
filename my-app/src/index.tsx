@@ -6,7 +6,9 @@ import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import { store } from "./state/store";
 import { BrowserRouter } from "react-router-dom";
-import { AuthProvider } from './context/AuthProvider';
+import { AuthProvider } from "./context/AuthProvider";
+import { ApiProvider } from "@reduxjs/toolkit/query/react";
+import { apiSlice } from "./state/api/apiSlice";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -14,17 +16,15 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-    <AuthProvider>
-    <Provider store={store}>
-        <App />
-      </Provider>
-    </AuthProvider>
-     
+      <AuthProvider>
+        <ApiProvider api={apiSlice}>
+          <Provider store={store}>
+            <App />
+          </Provider>
+        </ApiProvider>
+      </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

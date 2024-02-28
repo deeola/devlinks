@@ -1,30 +1,29 @@
-import React,{useState, useRef, SetStateAction, useEffect} from "react";
+import React,{useState, useRef, SetStateAction} from "react";
 import { MBody, MHeader } from "../../components/Text/Text";
 import UploadImage from "../../components/Uploadimage/UploadImage";
 import InputField from "../../components/Input/InputField";
 import Button from "../../components/Button/Button";
 import "./Profile.css";
-import {  useDispatch, useSelector } from "react-redux";
-import {  postUserInfo} from "../../state/user/userSlice";
-import { AppDispatch } from "../../state/store";
+import { useAddUsersInfoMutation } from "../../state/api/apiSlice";
 
 
 
 type TProps = {
-  isPrompts:  object[];
+ userInformation: any;
   userId: string;
-
-  }
+}
 
 
 
 export default function Profile(Props: TProps ) {
 
-  const { isPrompts, userId} = Props;
+  const { userInformation, userId} = Props;
 
-  console.log(userId, "userId inside profile page")
 
-const dispatch = useDispatch<AppDispatch>();
+  const buttonText = userInformation.firstName  ? "Update" : "Save"; 
+
+  const [addUserInfo] = useAddUsersInfoMutation()
+
 
 
  
@@ -90,8 +89,12 @@ const dispatch = useDispatch<AppDispatch>();
         e.preventDefault();
         const userData = { ...userInfo};
         const response = {email: userId, profileImage: profileImage}
-         dispatch(postUserInfo(userInfo))
         //  await dispatch(userImageURLThunk(response));
+
+ 
+          addUserInfo(userData)
+ 
+       
         return userData;
         
       };
@@ -181,7 +184,7 @@ const dispatch = useDispatch<AppDispatch>();
 
         <div>
         <div className="custome-save-button">
-          <Button classname="custom-button" text="Save"  />
+          <Button classname="custom-button" text={buttonText}  />
         </div>
       </div>
       </form>

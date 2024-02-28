@@ -5,7 +5,9 @@ const RequireAuth = () => {
     const { auth } = useAuth();
 
     return (
-             auth?.accessToken ? <Outlet /> : <Navigate to="/" />
+             auth?.accessToken ? <div data-testid="myOutlet">
+                <Outlet /> 
+             </div> : <Navigate to="/" />
     );
 }
 

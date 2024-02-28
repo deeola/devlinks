@@ -5,6 +5,7 @@ import "../Input/InputField.css";
 import iconLink from "../../assets/images/icon-link.svg";
 import { MBody } from "../Text/Text";
 import "../Addlink/AddLink.css";
+import { useDeleteLinkMutation } from "../../state/api/apiSlice";
 
 type Tdropdown = {
   errorMessage: string;
@@ -24,7 +25,7 @@ type Tdropdown = {
     e: React.ChangeEvent<HTMLInputElement>,
     i: number
   ) => void;
-  handleDelete: (i: any) => void;
+  handleDelete: (e: React.MouseEvent<HTMLButtonElement>, i:number, id: string, label:string) => void;
   handleButtonClick: (i: number) => void;
   activeIndex: number | null;
  
@@ -49,16 +50,19 @@ export default function AddnewLink(Props: Tdropdown) {
 
   } = Props;
 
+
+  
+
   return (
     <div>
-      {prompts.map((prompt: any, i: any) => (
+      {prompts.map((prompt: any, i: number) => (
         <div className="addlink-container" key={prompts.indexOf(prompt) + 1}>
           <div className="addlinknumber-remove">
             <MBody text={`= Link #${prompts.indexOf(prompt) + 1}`} />
             <div className="edit-remove">
-            <p className="remove-button" onClick={() => handleDelete(prompt.id)}>
+            <button type="button" className="remove-button" onClick={(e) => handleDelete(e,i, prompt.id, prompt.label)}>
               Remove
-            </p>
+            </button>
             </div>
             
           </div>
