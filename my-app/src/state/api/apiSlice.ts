@@ -4,7 +4,7 @@ import { add } from 'lodash'
 export const apiSlice = createApi({
     reducerPath: 'api',
     baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3500' }),
-    tagTypes: ['Links', "UserInfo", "Auth"],
+    tagTypes: ['Links', "UserInfo", "Auth", "Photo"],
     endpoints: (builder) => ({
         getLinks: builder.query({
             query: (user) => `links/getlinks/${user}`,
@@ -52,6 +52,17 @@ export const apiSlice = createApi({
             invalidatesTags: ['UserInfo']
         }),
 
+        getPhoto: builder.query({
+            query: (img) => {
+                return {
+                    url: `/s3upload/${img}`,
+                    method: 'GET'
+                }
+            
+            },
+             providesTags: ['Photo']
+        }),
+
         submitPhoto: builder.mutation({
             query: ({ event, image }) => {
                 event.preventDefault();
@@ -67,7 +78,10 @@ export const apiSlice = createApi({
                     // },
                 };
             },
+            invalidatesTags: ['Photo']
         }),
+
+    
 
 
     })
@@ -80,5 +94,6 @@ export const {
     useGetUsersInfoQuery,
     useAddUsersInfoMutation,
     useUpdateUsersInfoMutation,
+    useGetPhotoQuery,
     useSubmitPhotoMutation 
 } = apiSlice

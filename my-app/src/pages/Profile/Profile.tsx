@@ -4,8 +4,7 @@ import UploadImage from "../../components/Uploadimage/UploadImage";
 import InputField from "../../components/Input/InputField";
 import Button from "../../components/Button/Button";
 import "./Profile.css";
-import { useAddUsersInfoMutation, useSubmitPhotoMutation } from "../../state/api/apiSlice";
-import axios from "../../api/axios";
+import { useAddUsersInfoMutation, useSubmitPhotoMutation, useGetPhotoQuery } from "../../state/api/apiSlice";
 
 
 
@@ -24,6 +23,19 @@ export default function Profile(Props: TProps ) {
   const buttonText = userInformation.firstName  ? "Update" : "Save"; 
 
   const [addUserInfo] = useAddUsersInfoMutation()
+  
+  const {data: picture, 
+    error, 
+    isLoading, 
+    isSuccess, 
+    isError, 
+  } = useGetPhotoQuery("1916ff0680373b9b2e5d8f4746ecb599f6e1700a9ab97f042bd3add16699e288")
+
+  if(isSuccess){
+    console.log(picture)
+  }
+
+
 
 
 
@@ -44,12 +56,14 @@ export default function Profile(Props: TProps ) {
         firstName: string;
         lastName: string;
         email: string;
+        picture: string;
         
       
     }>({
         firstName: "",
         lastName: "",
         email: userId,
+        picture: "",
 
       })
 
@@ -63,43 +77,13 @@ export default function Profile(Props: TProps ) {
         console.log(name, value)
       }
 
-      const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-
-        const files = Array.from(e.currentTarget.files ?? []) as File[];
-        setSelectedFiles(files);
-        
-    
-        if (files.length > 0) {
-          const reader = new FileReader();
-          reader.onload = () => {
-            if (typeof reader.result === "string") {
-              setFileInputStyle({
-                backgroundImage: `url(${reader.result})`,
-              });
-              setProfileImage(reader.result as string);
-            }
-          };
-
-          reader.readAsDataURL(files[0]);
-        }
-
-       
-      };
 
       const fileSelected = (event:any) => {
         const file = event.target.files[0]
         setFile(file)
       }
 
-      const submitPhoto = async (event: any, image: any )=> {
-        event.preventDefault()
-    
-        const formData = new FormData();
-        formData.append("image", image);
-        await axios.post("/s3upload", formData, { headers: {'Content-Type': 'multipart/form-data'}})
-    
-      }
-
+ 
       
 const [submitPhotoMutation] = useSubmitPhotoMutation()
       
@@ -107,12 +91,16 @@ const [submitPhotoMutation] = useSubmitPhotoMutation()
     
       const handleSave = async(e: any) => {
         e.preventDefault();
-        const userData = { ...userInfo};
+       
         const response = {email: userId, profileImage: profileImage}
         //  await dispatch(userImageURLThunk(response));
 
  
         submitPhotoMutation({event:e , image:file});
+
+
+        const userData = { ...userInfo};
+
         addUserInfo(userData)
  
        
