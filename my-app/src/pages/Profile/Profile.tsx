@@ -5,6 +5,7 @@ import InputField from "../../components/Input/InputField";
 import Button from "../../components/Button/Button";
 import "./Profile.css";
 import { useAddUsersInfoMutation } from "../../state/api/apiSlice";
+import axios from "../../api/axios";
 
 
 
@@ -33,6 +34,7 @@ export default function Profile(Props: TProps ) {
     const [profileImage, setProfileImage] = React.useState<SetStateAction<string>>("");
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
     const [fileInputStyle, setFileInputStyle] = useState<React.CSSProperties>({});
+    const [file, setFile] = useState()
 
     const handleClick = () => {
         ref.current?.click();
@@ -84,6 +86,24 @@ export default function Profile(Props: TProps ) {
        
       };
 
+      const fileSelected = (event:any) => {
+        const file = event.target.files[0]
+        setFile(file)
+      }
+
+      const submitPhoto = async (event: any, image: any )=> {
+        event.preventDefault()
+    
+        const formData = new FormData();
+        formData.append("image", image);
+        await axios.post("/s3upload", formData, { headers: {'Content-Type': 'multipart/form-data'}})
+    
+      }
+
+      
+
+      
+
     
       const handleSave = async(e: any) => {
         e.preventDefault();
@@ -92,7 +112,8 @@ export default function Profile(Props: TProps ) {
         //  await dispatch(userImageURLThunk(response));
 
  
-          addUserInfo(userData)
+        submitPhoto(e, file);
+        addUserInfo(userData)
  
        
         return userData;
@@ -116,9 +137,10 @@ export default function Profile(Props: TProps ) {
           <p className="profile-picture-text">Profile Picture</p>
           <div className="upload-image-container">
             <UploadImage
-              text="Image must be below 1024x1024px"
+              text="Image must be below 5mb"
               subtext="Use PNG or JPG format."
-              onChange={handleChange}
+              // onChange={handleChange}
+              onChange={fileSelected}
               fileInputStyle={fileInputStyle}
               handleClick={handleClick}
               selectedFiles={selectedFiles}
