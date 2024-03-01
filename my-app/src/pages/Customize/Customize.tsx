@@ -1,16 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import "./Customize.css";
 import Logo from "../../components/Logo/Logo";
 import Tabs from "../../components/Tabs/Tabs";
 import Button from "../../components/Button/Button";
 import PhonePreview from "./PhonePreview";
 import CustomeLink from "./CustomeLink";
-import links from "../../assets/images/icon-link.svg";
 import profiledetails from "../../assets/images/icon-profile-details-header.svg";
 import Profile from "../Profile/Profile";
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
-import { useGetLinksQuery, useGetUsersInfoQuery } from "../../state/api/apiSlice";
+import { useGetLinksQuery, useGetUsersInfoQuery, useGetPhotoQuery } from "../../state/api/apiSlice";
 
 
 export default function Customize() {
@@ -32,12 +31,13 @@ export default function Customize() {
   
 
 let UserInformation;
+let pictureLink;
 
 
-if (userInfoLoading) {
-  console.log("Loading...");
-} else if (userInfoSuccess) {
+ if (userInfoSuccess) {
   UserInformation = userInfo;
+
+
 } else if (userInfoError) {
   if('status' in userInfoErrorData && userInfoErrorData.status === 404){
     UserInformation = {};
@@ -46,6 +46,16 @@ if (userInfoLoading) {
   }
  
 }
+
+const {data: pictured} = useGetPhotoQuery(UserInformation?.imgName)
+
+
+if(pictured?.url !== undefined){
+  pictureLink = pictured.url;
+} else{
+  pictureLink = "";
+}
+
 
  
 
@@ -61,9 +71,7 @@ const {
 
 let linksArray;
 
-if (isLoading) {
-  console.log("Loading...");
-} else if (isSuccess) {
+if (isSuccess) {
   linksArray = links;
 
 } else if (isError) {
@@ -116,9 +124,10 @@ if (isLoading) {
           isPrompts={linksArray}
           userId={username}
           userInformation={UserInformation}
+          profilePicture={pictureLink}
         />
         {isShowProfile ? (
-          <Profile userInformation={UserInformation} userId={username} />
+          <Profile  userInformation={UserInformation} userId={username} />
         ) : (
           <CustomeLink
             isPrompts={linksArray}

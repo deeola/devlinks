@@ -23,17 +23,21 @@ export default function Profile(Props: TProps ) {
   const buttonText = userInformation.firstName  ? "Update" : "Save"; 
 
   const [addUserInfo] = useAddUsersInfoMutation()
-  
-  const {data: picture, 
-    error, 
-    isLoading, 
-    isSuccess, 
-    isError, 
-  } = useGetPhotoQuery("1916ff0680373b9b2e5d8f4746ecb599f6e1700a9ab97f042bd3add16699e288")
 
-  if(isSuccess){
-    console.log(picture)
-  }
+
+  const imgURL = userInformation
+
+
+  console.log(imgURL)
+
+
+  // const {data: picture, 
+  //   error, 
+  //   isLoading, 
+  //   isSuccess, 
+  //   isError, 
+  // } = useGetPhotoQuery(imgURL)
+
 
 
 
@@ -56,15 +60,12 @@ export default function Profile(Props: TProps ) {
         firstName: string;
         lastName: string;
         email: string;
-        picture: string;
         
       
     }>({
         firstName: "",
         lastName: "",
-        email: userId,
-        picture: "",
-
+        email: userId
       })
 
       const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -96,10 +97,21 @@ const [submitPhotoMutation] = useSubmitPhotoMutation()
         //  await dispatch(userImageURLThunk(response));
 
  
-        submitPhotoMutation({event:e , image:file});
+        const url = await submitPhotoMutation({event:e , image:file});
+
+        console.log(url)
+
+        let imageName;
+if ('data' in url && url.data) {
+    imageName = url.data.imageName;
+} else {
+    // Handle the case where data doesn't exist or is null/undefined
+}
 
 
-        const userData = { ...userInfo};
+        const userData = { ...userInfo, imgName: imageName};
+
+        console.log(userData, "userData")
 
         addUserInfo(userData)
  

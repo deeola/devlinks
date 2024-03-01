@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { add } from 'lodash'
+
 
 export const apiSlice = createApi({
     reducerPath: 'api',
@@ -73,9 +73,7 @@ export const apiSlice = createApi({
                     url: '/s3upload',
                     method: 'POST',
                     body: formData,
-                    // headers: {
-                    //     'Content-Type': 'multipart/form-data',
-                    // },
+
                 };
             },
             invalidatesTags: ['Photo']

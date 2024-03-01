@@ -9,12 +9,13 @@ type TProps = {
   isPrompts:  object[];
   userId: string;
   userInformation: any;
+  profilePicture: string;
   }
 
 
 export default function PhonePreview(Props: TProps ) {
 
-  let { isPrompts, userInformation} = Props;
+  let { isPrompts, userInformation, profilePicture} = Props;
 
   
   if (!userInformation) {
@@ -26,6 +27,7 @@ export default function PhonePreview(Props: TProps ) {
   const [details, setDetails] = useState({
     name: "",
     email: "",
+    picture: ""
   })
 
 
@@ -34,9 +36,12 @@ export default function PhonePreview(Props: TProps ) {
     if (userInformation !== null) {
       setDetails({
         name: `${userInformation.firstName} ${userInformation.lastName}`,
-        email: userInformation.email
+        email: userInformation.email,
+        picture: userInformation.imgName
       });
     }
+
+    console.log(userInformation)
   }, [userInformation]);
   
 
@@ -92,7 +97,7 @@ export default function PhonePreview(Props: TProps ) {
             className="rounded-image-foreign"
           >
             <div className="rounded-image-container">
-              <img src={isImage} alt="Profile" className="rounded-image" />
+              <img src={profilePicture} alt="Profile" className="rounded-image" />
             </div>
           </foreignObject>
         )}

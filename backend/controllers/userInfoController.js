@@ -9,8 +9,8 @@ const getAllUserInfo = async (req, res) => {
 
 
 const handleNewUserInfo = async (req, res) => {
-  const {firstName, lastName, email } = req.body;
-  if (!firstName && !lastName && !email) {
+  const {firstName, lastName, email, imgName } = req.body;
+  if (!firstName && !lastName && !email && !imgName) {
     return res.status(400).json({ message: "At least one field is required to update." });
   }
 
@@ -34,6 +34,9 @@ const handleNewUserInfo = async (req, res) => {
     if (email) {
       userInfo.email = email;
     }
+    if (imgName) {
+      userInfo.imgName = imgName;
+    } 
 
 
     const result = await userInfoDB.findOneAndUpdate({ email: email }, userInfo, { new: true });
