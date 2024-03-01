@@ -52,6 +52,23 @@ export const apiSlice = createApi({
             invalidatesTags: ['UserInfo']
         }),
 
+        submitPhoto: builder.mutation({
+            query: ({ event, image }) => {
+                event.preventDefault();
+                const formData = new FormData();
+                formData.append("image", image);
+                
+                return {
+                    url: '/s3upload',
+                    method: 'POST',
+                    body: formData,
+                    // headers: {
+                    //     'Content-Type': 'multipart/form-data',
+                    // },
+                };
+            },
+        }),
+
 
     })
 })
@@ -63,4 +80,5 @@ export const {
     useGetUsersInfoQuery,
     useAddUsersInfoMutation,
     useUpdateUsersInfoMutation,
+    useSubmitPhotoMutation 
 } = apiSlice

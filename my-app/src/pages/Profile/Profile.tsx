@@ -4,7 +4,7 @@ import UploadImage from "../../components/Uploadimage/UploadImage";
 import InputField from "../../components/Input/InputField";
 import Button from "../../components/Button/Button";
 import "./Profile.css";
-import { useAddUsersInfoMutation } from "../../state/api/apiSlice";
+import { useAddUsersInfoMutation, useSubmitPhotoMutation } from "../../state/api/apiSlice";
 import axios from "../../api/axios";
 
 
@@ -101,7 +101,7 @@ export default function Profile(Props: TProps ) {
       }
 
       
-
+const [submitPhotoMutation] = useSubmitPhotoMutation()
       
 
     
@@ -112,7 +112,7 @@ export default function Profile(Props: TProps ) {
         //  await dispatch(userImageURLThunk(response));
 
  
-        submitPhoto(e, file);
+        submitPhotoMutation({event:e , image:file});
         addUserInfo(userData)
  
        
