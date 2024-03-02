@@ -40,11 +40,20 @@
    
 }
 
-.textFONAME{
-    text-align: center !important;
-    font-weight: 700 !important;
-    color: black !important;
-    font-size: 20px !important;
+.textFNAME{
+    margin-right: 5px;
+}
+
+.textLNAME{
+
+    margin-left: 5px;
+}
+
+.textFONAMES{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    align-items: center;
 }
 
 .rounded-image-container {

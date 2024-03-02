@@ -61,9 +61,27 @@ export default function Profile(Props: TProps ) {
       }
 
 
-      const fileSelected = (event:any) => {
+
+
+      const fileSelected = (event: any) => {
         const file = event.target.files[0]
         setFile(file)
+
+        const files = Array.from(event.currentTarget.files ?? []) as File[];
+        setSelectedFiles(files);
+
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            if (typeof reader.result === "string") {
+              setFileInputStyle({
+                backgroundImage: `url(${reader.result})`,
+              });
+              setProfileImage(reader.result as string);
+            }
+          };
+          reader.readAsDataURL(file);
+        }
       }
 
  
@@ -121,7 +139,6 @@ if ('data' in url && url.data) {
             <UploadImage
               text="Image must be below 5mb"
               subtext="Use PNG or JPG format."
-              // onChange={handleChange}
               onChange={fileSelected}
               fileInputStyle={fileInputStyle}
               handleClick={handleClick}

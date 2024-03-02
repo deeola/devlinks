@@ -25,7 +25,8 @@ export default function PhonePreview(Props: TProps ) {
 
  
   const [details, setDetails] = useState({
-    name: "",
+    firstName: "",
+    lastName: "",
     email: "",
     picture: ""
   })
@@ -35,14 +36,15 @@ export default function PhonePreview(Props: TProps ) {
   useEffect(() => {
     if (userInformation !== null) {
       setDetails({
-        name: userInformation.firstName + userInformation.lastName,
+        firstName: userInformation.firstName,
+        lastName: userInformation.lastName,
         email: userInformation.email,
         picture: userInformation.imgName
       });
     } 
 
     console.log(userInformation, "userInformation in phonePreview")
-    console.log(details.name, "details.name in phonePreview")
+
   }, [userInformation]);
   
 
@@ -103,11 +105,15 @@ export default function PhonePreview(Props: TProps ) {
           </foreignObject>
         )}
 
-        {!details.name ? (
+        {!details.firstName && !details.lastName ? (
           <rect width="160" height="16" x="73.5" y="185" fill="#EEE" rx="8" />
         ) : (
           <foreignObject x="0" y="180" className="nameEmailForeignObject">
-            <MBody className="textFONAME" text={details.name} />
+            <div className="textFONAMES">
+            <MBody className="textFNAME" text={details.firstName} />
+            <MBody className="textLNAME" text={" " + details.lastName} />
+            </div>
+            
           </foreignObject>
         )}
 
