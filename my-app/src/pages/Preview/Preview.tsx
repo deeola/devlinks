@@ -1,68 +1,92 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./Preview.css";
 import Button from "../../components/Button/Button";
 import { MBody, SBody } from "../../components/Text/Text";
 import arrow from "../../assets/images/icon-arrow-right.svg";
 import profileimage from "../../assets/images/mann.jpeg";
-import { useSelector } from "react-redux";
+
 import { Link } from "react-router-dom";
-import {  selectUser } from "../../state/user/userSlice";
-import { useGetLinksQuery } from "../../state/api/apiSlice";
+
+import {
+  useGetLinksQuery,
+  useGetUsersInfoQuery,
+  useGetPhotoQuery,
+} from "../../state/api/apiSlice";
 import { useAuth } from "../../context/AuthProvider";
 
-export default function Preview() {
 
+export default function Preview() {
   const { auth } = useAuth();
   let username = auth?.user;
-
-  
-
-  const userInformation = useSelector(selectUser);
-
   const [details, setDetails] = useState({
-    name: "",
-    email: "",
+    firstName: "",
+    lastName: "",
   });
 
-  useEffect(() => {
-    if (userInformation !== null) {
-      setDetails({
-        name: `${userInformation.firstName} ${userInformation.lastName}`,
-        email: userInformation.email,
-      });
+  const {
+    data: userInfo,
+    isSuccess: userInfoSuccess,
+    isError: userInfoError,
+    error: userInfoErrorData,
+  } = useGetUsersInfoQuery(username);
+
+  let UserInformation 
+  let pictureLink;
+
+  console.log(userInfo, "userInfo in preview")
+  
+  if (userInfoSuccess) {
+    UserInformation = userInfo;
+
+  } else if (userInfoError) {
+    if ("status" in userInfoErrorData && userInfoErrorData.status === 404) {
+      UserInformation = {};
+    } else {
+      UserInformation = {};
+      console.error("An error occurred:", userInfoErrorData);
     }
-  }, [userInformation]);
+  }
 
 
+  console.log(UserInformation?.imgName)
+
+  const {
+    data: pictured,
+    isSuccess: picturedSuccess,
+    isLoading: picturedLoading,
+  } = useGetPhotoQuery(UserInformation?.imgName);
+
+
+
+  if (pictured?.url !== undefined) {
+    pictureLink = pictured.url;
+  } else {
+    pictureLink = "";
+  }
 
   const {
     data: links,
     isLoading,
     isSuccess,
     isError,
-    error
+    error,
   } = useGetLinksQuery(username);
 
   let linksArray;
-  
-if (isSuccess) {
-    linksArray = links; // Set linksArray to links when data retrieval is successful
-  
-  } else if (isError) {
-    if ('status' in error && error.status === 404) {
-      linksArray = []; 
-      console.log(linksArray.length);
-  
-    } else {
 
+  if (isLoading) {
+    linksArray = [];
+  
+  } else if (isSuccess) {
+    linksArray = links;
+  } else if (isError) {
+    if ("status" in error && error.status === 404) {
+      linksArray = [];
+      console.log(linksArray.length);
+    } else {
       console.error("An error occurred:", error);
     }
   }
-  
-
-  // const linksArray = useSelector(selectAllPrompts);
-
-  const profileImage = "https://res.cloudinary.com/djvjxp2am/image/upload/v1631530733/Profile%20Pictures/IMG_20210913_123456";
 
   return (
     <div className="preview-container">
@@ -80,12 +104,16 @@ if (isSuccess) {
             <div className="profile-image-container">
               <img
                 className="preview-img"
-                src={profileImage ? profileImage : profileimage}
+                src={pictureLink}
                 alt="display-img"
               />
             </div>
-            <MBody text={details.name} className="preview-username" />
-            <SBody text={details.email} className="preview-email" />
+
+            <div>
+              <MBody text={UserInformation?.firstName ? UserInformation.firstName : "" } className="preview-username" />
+              <MBody text={UserInformation?.lastName ? UserInformation.lastName : ""} className="preview-username" />
+            </div>
+            <SBody text={username} className="preview-email" />
           </div>
           <div className="preview-cards">
             {linksArray.map((prompt: any) => (
@@ -95,6 +123,7 @@ if (isSuccess) {
                 rel="noreferrer"
                 className="cards"
                 style={{ backgroundColor: prompt.bgColor }}
+                key={prompt.label}
               >
                 <div className="preview-card-icon-name-container">
                   <img
@@ -113,3 +142,6 @@ if (isSuccess) {
     </div>
   );
 }
+
+
+

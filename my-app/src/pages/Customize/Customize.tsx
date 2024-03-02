@@ -119,14 +119,11 @@ if (isSuccess) {
               onClick={() => setIsShowProfile(true)}
             />
           </div>
-          <div className="preview-sign">
+   
             <Link to={"/preview"}>
               <Button disabled={false} buttonType="secondary" text="Preview" />
             </Link>
-            <Link to={"/preview"}>
-              <Button disabled={false} buttonType="secondary" text="Sign Out" />
-            </Link>
-          </div>
+        
         </div>
       </div>
       <div className="customContainer">
