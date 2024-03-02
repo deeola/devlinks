@@ -45,9 +45,7 @@ export default function Preview() {
 
   let linksArray;
   
-  if (isLoading) {
-    console.log("Loading...");
-  } else if (isSuccess) {
+if (isSuccess) {
     linksArray = links; // Set linksArray to links when data retrieval is successful
   
   } else if (isError) {

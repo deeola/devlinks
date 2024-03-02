@@ -7,12 +7,16 @@ import Login from "./pages/Login";
 import PersistLogin from "./pages/auth/PersistLogin";
 import Missing from "./pages/auth/Missing";
 import RequireAuth from "./pages/auth/RequireAuth";
+import Notification from "./components/notification/Notification";
+
 
 
 function App() {
 
   return (
+
     <Routes>
+      
       <Route >
         <Route path="/" element={<Login />} /> 
         <Route path="register" element={<Auth />} />

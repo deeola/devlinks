@@ -20,31 +20,10 @@ export default function Profile(Props: TProps ) {
   const { userInformation, userId} = Props;
 
 
-  const buttonText = userInformation.firstName  ? "Update" : "Save"; 
 
-  const [addUserInfo] = useAddUsersInfoMutation()
+  const buttonText = userInformation?.firstName  ? "Update" : "Save"; 
 
-
-  const imgURL = userInformation
-
-
-  console.log(imgURL)
-
-
-  // const {data: picture, 
-  //   error, 
-  //   isLoading, 
-  //   isSuccess, 
-  //   isError, 
-  // } = useGetPhotoQuery(imgURL)
-
-
-
-
-
-
- 
- 
+  const [addUserInfo] = useAddUsersInfoMutation();
 
     const ref = useRef<HTMLInputElement>(null);
     const [profileImage, setProfileImage] = React.useState<SetStateAction<string>>("");
@@ -55,6 +34,7 @@ export default function Profile(Props: TProps ) {
     const handleClick = () => {
         ref.current?.click();
       };
+
 
     const [userInfo, setUserInfo] = useState<{
         firstName: string;
@@ -67,6 +47,8 @@ export default function Profile(Props: TProps ) {
         lastName: "",
         email: userId
       })
+
+
 
       const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;

@@ -9,6 +9,8 @@ import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./context/AuthProvider";
 import { ApiProvider } from "@reduxjs/toolkit/query/react";
 import { apiSlice } from "./state/api/apiSlice";
+import Notification from "./components/notification/Notification";
+
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -19,7 +21,8 @@ root.render(
       <AuthProvider>
         <ApiProvider api={apiSlice}>
           <Provider store={store}>
-            <App />
+            <Notification key="notification"  />
+            <App key="app" />
           </Provider>
         </ApiProvider>
       </AuthProvider>

@@ -50,3 +50,13 @@ export interface ILinks {
   error: string | undefined;
 }
 
+export interface TNotification {
+  id: string;
+  message: string;
+  type: "success" | "error" | "warning"; 
+}
+
+
+export interface TNotificationState {
+  notifications: TNotification[];
+}

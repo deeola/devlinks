@@ -7,9 +7,13 @@ import mergedValuesSlice from "./inputs/mergedValuesSlice";
 import promptSlice from "./link/promptSlice";
 import authSlice from "./user/authSlice";
 import { apiSlice } from "./api/apiSlice";
+import notificationSlice from "./notification/notificationSlice";
+
+
 
 export const store = configureStore({
   reducer: {
+    notification: notificationSlice,
     user: userSlice,
     link: linkSlice,
     dropdown: dropdownSlice,

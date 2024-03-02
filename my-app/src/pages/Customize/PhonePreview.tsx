@@ -15,7 +15,7 @@ type TProps = {
 
 export default function PhonePreview(Props: TProps ) {
 
-  let { isPrompts, userInformation, profilePicture} = Props;
+  let { isPrompts, userInformation, profilePicture, userId} = Props;
 
   
   if (!userInformation) {
@@ -35,13 +35,14 @@ export default function PhonePreview(Props: TProps ) {
   useEffect(() => {
     if (userInformation !== null) {
       setDetails({
-        name: `${userInformation.firstName} ${userInformation.lastName}`,
+        name: userInformation.firstName + userInformation.lastName,
         email: userInformation.email,
         picture: userInformation.imgName
       });
-    }
+    } 
 
-    console.log(userInformation)
+    console.log(userInformation, "userInformation in phonePreview")
+    console.log(details.name, "details.name in phonePreview")
   }, [userInformation]);
   
 
@@ -110,11 +111,11 @@ export default function PhonePreview(Props: TProps ) {
           </foreignObject>
         )}
 
-        {!details.email  ? (
+        {!userId  ? (
           <rect width="160" height="16" x="73.5" y="207" fill="#EEE" rx="8" />
         ) : (
           <foreignObject x="0" y="220" className="nameEmailForeignObject">
-            <SBody className="textFO" text={details.email} />
+            <SBody className="textFO" text={userId} />
           </foreignObject>
         )}
 

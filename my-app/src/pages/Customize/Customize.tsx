@@ -10,6 +10,9 @@ import Profile from "../Profile/Profile";
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { useGetLinksQuery, useGetUsersInfoQuery, useGetPhotoQuery } from "../../state/api/apiSlice";
+import { addNotification } from "../../state/notification/notificationSlice";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../state/store";
 
 
 export default function Customize() {
@@ -19,6 +22,8 @@ export default function Customize() {
   //get username from the auth state in useContext
   const { auth } = useAuth();
   let username = auth?.user;
+
+  const dispatch = useDispatch<AppDispatch>();
 
 
   const {
@@ -41,6 +46,7 @@ let pictureLink;
 } else if (userInfoError) {
   if('status' in userInfoErrorData && userInfoErrorData.status === 404){
     UserInformation = {};
+    dispatch(addNotification({ message: "No user inforrmation", type: "error" , id: "no-user-information" }))
   } else {
     console.error("An error occurred:", userInfoErrorData);
   }
@@ -76,10 +82,14 @@ if (isSuccess) {
 
 } else if (isError) {
   if ('status' in error && error.status === 404) {
-
     linksArray = []; 
-    console.log(linksArray.length);
 
+    const errorMessage = typeof error.data === 'string' ? "hello" : 'No links found';
+
+    dispatch(addNotification({ message: "hello", type: "error" , id: "emptylinks" }))
+    
+     
+    console.log(linksArray.length);
   } else {
 
     console.error("An error occurred:", error);

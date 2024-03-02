@@ -9,20 +9,19 @@ const getAllUserInfo = async (req, res) => {
 
 
 const handleNewUserInfo = async (req, res) => {
-  const {firstName, lastName, email, imgName } = req.body;
+  const { firstName, lastName, email, imgName } = req.body;
+  
   if (!firstName && !lastName && !email && !imgName) {
     return res.status(400).json({ message: "At least one field is required to update." });
   }
 
   try {
-    let userInfo;
-    if (email) {
-      userInfo = await userInfoDB.findOne({ email });
-      if (!email) {
-        return res.status(404).json({ message: "User not found." });
-      }
-    } else {
-      userInfo = {};
+    let userInfo = await userInfoDB.findOne({ email });
+
+    if (!userInfo) {
+      // If no user found, create a new userInfo
+      userInfo = new userInfoDB();
+      userInfo.email = email;
     }
 
     if (firstName) {
@@ -31,27 +30,17 @@ const handleNewUserInfo = async (req, res) => {
     if (lastName) {
       userInfo.lastName = lastName;
     }
-    if (email) {
-      userInfo.email = email;
-    }
     if (imgName) {
       userInfo.imgName = imgName;
     } 
 
+    await userInfo.save();
 
-    const result = await userInfoDB.findOneAndUpdate({ email: email }, userInfo, { new: true });
-
-
-    if (result) {
-      res.status(200).json({ success: "User info updated successfully." });
-    } else {
-      res.status(500).json({ message: "Failed to update user info." });
-    }
+    res.status(200).json({ success: "User info updated successfully." });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
-
 
 
 const getSpecificUserInfo = async (req, res) => {
