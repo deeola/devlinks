@@ -33,8 +33,9 @@ cursor: pointer;
 }
 
 [data-subtype="disabled"] {
-    cursor: not-allowed;
+    cursor: not-allowed !important;
     opacity: 0.5;
+    background-color: #EFEBFF !important;
 }
 
 [data-buttonType="secondary"] {
@@ -45,7 +46,9 @@ cursor: pointer;
 
 [data-buttonType="secondary"]:hover {
   color: #633CFF;
-    background-color: #EFEBFF;
+    
     border: 1px solid #633CFF;
   
 }
+
+

@@ -128,7 +128,7 @@ if (isSuccess) {
           </div>
    
             <Link to={"/preview"}>
-              <Button disabled={false} buttonType="secondary" text="Preview" />
+              <Button isDisabled={false} buttonType="secondary" text="Preview" />
             </Link>
         
         </div>

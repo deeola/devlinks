@@ -14,7 +14,7 @@ describe("<Button />", () => {
   });
 
   it("renders with disabled attribute", () => {
-    render(<Button text="Disabled Button" disabled />);
+    render(<Button text="Disabled Button" isDisabled />);
     const button = screen.getByText("Disabled Button");
     expect(button).toBeDisabled();
   });

@@ -24,7 +24,7 @@ export default function Notification() {
       {notifications.map((notification) => (
         <div
           key={notification.id}
-          className={`notification ${notification.type}`}
+          className={`notification ${notification.type === "error" ? "notification-error" : notification.type}`}
         >
           <>
             <MBody text={notification.message} className="notification-text" />

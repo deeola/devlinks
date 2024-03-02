@@ -209,7 +209,7 @@ export default function Auth() {
             <div className="buttoncontainer">
               <Button
                 text="Create new account"
-                disabled={
+               isDisabled={
                   !validEmail || !validPwd || !validMatch ? true : false
                 }
               />

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, MutableRefObject } from "react";
+import { useState, useEffect, useRef, MutableRefObject } from "react";
 import "./Auth.css";
 import Logo from "../components/Logo/Logo";
 import { MBody, MHeader, SBody } from "../components/Text/Text";
@@ -6,23 +6,20 @@ import InputField from "../components/Input/InputField";
 import Button from "../components/Button/Button";
 import mailbox from "../assets/images/icon-email.svg";
 import password from "../assets/images/icon-password.svg";
-import axios from "../api/axios";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../state/user/authSlice";
 import { AppDispatch } from "../state/store";
-// import { getSpecificUserInfo } from "../state/user/userSlice";
+
 import useAuth from "../hooks/useAuth";
 
-const LOGIN_URL = "/auth";
+
 
 export default function Login() {
   const { setAuth, persist, setPersist } = useAuth();
 
 
   const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
 
   const dispatch = useDispatch<AppDispatch>();
   const emailRef: MutableRefObject<HTMLInputElement | null> = useRef(null);
@@ -33,6 +30,10 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
+  const [isError, setIsError] = useState({
+    email: false,
+    password: false,
+  });
 
   useEffect(() => {
     emailRef.current?.focus();
@@ -44,25 +45,33 @@ export default function Login() {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-
     try {
 
-     
-
-      //  setUser({ user });
 
        dispatch(login({ user, pwd })).then((action) => {
+        
+
+        //set error messages if user or password is not set
+
         if (login.fulfilled.match(action)) {
-          // setUser({user})
-
           setAuth({ user, pwd, accessToken: action.payload.accessToken });
-
-          // dispatch(getSpecificUserInfo(user));
            navigate("/customize");
-
         } else{
         }});
 
+        // if (!user) {
+        //   setIsError((prev) => ({ ...prev, email: true }));
+        //   emailRef.current?.focus();
+        //   return;
+        // }
+        // if (!pwd) {
+        //   setIsError((prev) => ({ ...prev, password: true }));
+        //   errRef.current?.focus();
+        //   return;
+        // }
+
+
+       
       setEmail("");
       setPwd("");
       setSuccess(true);
@@ -94,7 +103,6 @@ export default function Login() {
       <form className="authContainer" onSubmit={handleSubmit}>
         <div>
           <div className="logoContainer">
-            {/* Assuming Logo component is used here */}
             <Logo size="large" />
           </div>
           <div className="devAuthContainer">
@@ -117,8 +125,8 @@ export default function Login() {
                   aria-describedby="uidnote"
                   inputRef={emailRef}
                   autoComplete="off"
-                  error={errMsg}
-                  errorMessage={"Please enter email address"}
+                  error={isError.email}
+                  errorMessage={errMsg}
                 />
               </div>
 
@@ -135,8 +143,9 @@ export default function Login() {
                     value={pwd}
                     required
                     aria-describedby="pwdnote"
+                    error={isError.password}
                     errorMessage={errMsg}
-                    error={"Please enter a password"}
+                    
                   />
                   <div 
                     onClick={() => setShowPassword(true)}
@@ -146,7 +155,7 @@ export default function Login() {
               </div>
             </div>
             <div className="buttoncontainer">
-              <Button text="Login" disabled={!user || !pwd ? true : false} />
+              <Button text="Login" isDisabled={(!user || !pwd ) ? true : false}  backgroundSubtype={(!user || !pwd ) ? "active" : "secondary"} />
             </div>
 
             <div className="questioncontainer">
