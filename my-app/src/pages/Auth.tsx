@@ -9,16 +9,20 @@ import password from "../assets/images/icon-password.svg";
 import axios from "../api/axios";
 import { head } from "lodash";
 import Login from "./Login";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../state/store";
 import { register } from "../state/user/authSlice";
+import useAuth from "../hooks/useAuth";
 
 const EMAIL_REGEX = /^[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 
 export default function Auth() {
+  const { setAuth, persist, setPersist } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const dispatch = useDispatch<AppDispatch>();
   const emailRef: MutableRefObject<HTMLInputElement | null> = useRef(null);
@@ -86,6 +90,19 @@ export default function Auth() {
 
     try {
       dispatch(register({ user, pwd }));
+
+      dispatch(register({ user, pwd })).then((action) => {
+        if (register.fulfilled.match(action)) {
+          // setUser({user})
+
+          // setAuth({ user, pwd, accessToken: action.payload.accessToken });
+
+          // dispatch(getSpecificUserInfo(user));
+           navigate("/");
+
+        } else{
+        }});
+
    
             setEmail('');
             setPwd('');

@@ -20,18 +20,17 @@ export default function Notification() {
   };
 
   return (
-    <div className="notication-container">
+    <div className="notification-container">
       {notifications.map((notification) => (
         <div
           key={notification.id}
           className={`notification ${notification.type}`}
         >
           <>
-            {/* <img src={img} alt="notifcationimg" /> */}
             <MBody text={notification.message} className="notification-text" />
           </>
-          <button onClick={() => handleDismiss(notification.id)}>
-            Dismiss
+          <button className="notificationCloseButton" onClick={() => handleDismiss(notification.id)}>
+            X
           </button>
         </div>
       ))}

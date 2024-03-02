@@ -21,8 +21,9 @@ root.render(
       <AuthProvider>
         <ApiProvider api={apiSlice}>
           <Provider store={store}>
-            <Notification key="notification"  />
+           
             <App key="app" />
+            <Notification key="notification"  />
           </Provider>
         </ApiProvider>
       </AuthProvider>

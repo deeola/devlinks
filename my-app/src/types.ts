@@ -54,6 +54,7 @@ export interface TNotification {
   id: string;
   message: string;
   type: "success" | "error" | "warning"; 
+  timeout?: NodeJS.Timeout;
 }
 
 

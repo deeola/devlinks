@@ -46,9 +46,6 @@ export default function Login() {
     e.preventDefault();
 
     try {
-      // dispatch(login({ user, pwd }));
-     
-      //  const accessToken = response?.data?.accessToken;
 
      
 

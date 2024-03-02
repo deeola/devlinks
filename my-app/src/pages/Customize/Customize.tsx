@@ -10,7 +10,7 @@ import Profile from "../Profile/Profile";
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { useGetLinksQuery, useGetUsersInfoQuery, useGetPhotoQuery } from "../../state/api/apiSlice";
-import { addNotification } from "../../state/notification/notificationSlice";
+import { addNotification, removeNotification } from "../../state/notification/notificationSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../state/store";
 
@@ -84,9 +84,16 @@ if (isSuccess) {
   if ('status' in error && error.status === 404) {
     linksArray = []; 
 
-    const errorMessage = typeof error.data === 'string' ? "hello" : 'No links found';
 
-    dispatch(addNotification({ message: "hello", type: "error" , id: "emptylinks" }))
+
+
+      dispatch(addNotification({ message: "No links found", type: "warning" , id: "emptylinks" }))
+
+      // setTimeout(() => {
+      //   dispatch(removeNotification("emptylinks"));
+      // }, 3000);
+
+   
     
      
     console.log(linksArray.length);
