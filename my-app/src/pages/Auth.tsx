@@ -14,118 +14,122 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "../state/store";
 import { register } from "../state/user/authSlice";
 import useAuth from "../hooks/useAuth";
+import { useAuthFormValidation } from "../hooks/useAuthFormValidation";
+import {
+  addNotification,
+  removeNotification,
+} from "../state/notification/notificationSlice";
 
-const EMAIL_REGEX = /^[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,}$/;
-const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-
+// const EMAIL_REGEX = /^[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,}$/;
+// const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 export default function Auth() {
-  const { setAuth, persist, setPersist } = useAuth();
+ 
   const navigate = useNavigate();
-  const location = useLocation();
+ 
 
   const dispatch = useDispatch<AppDispatch>();
   const emailRef: MutableRefObject<HTMLInputElement | null> = useRef(null);
-  const errRef: MutableRefObject<HTMLInputElement | null>  = useRef(null);
+
 
   const [user, setEmail] = useState("");
-  const [validEmail, setValidEmail] = useState(false);
-  const [emailFocus, setEmailFocus] = useState(false);
-
   const [pwd, setPwd] = useState("");
-  const [validPwd, setValidPwd] = useState(false);
-  const [pwdFocus, setPwdFocus] = useState(false);
-
   const [matchPwd, setMatchPwd] = useState("");
-  const [validMatch, setValidMatch] = useState(false);
-  const [matchFocus, setMatchFocus] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
-  const [errMsg, setErrMsg] = useState({
-    user: "",
-    pwd: "",
-    matchPwd: "",
-  });
 
 
   useEffect(() => {
     emailRef.current?.focus();
   }, []);
 
-  useEffect(() => {
-    setValidEmail(EMAIL_REGEX.test(user));
-  }, [user]);
 
-  useEffect(() => {
-    setValidPwd(PWD_REGEX.test(pwd));
-    setValidMatch(pwd === matchPwd);
-  }, [pwd, matchPwd]);
+ 
 
-  useEffect(() => {
-    setErrMsg({
-      user: "",
-      pwd: "",
-      matchPwd: "",
-    });
-  }, [user, pwd, matchPwd]);
+  const { errors, validateForm } = useAuthFormValidation();
 
-  const emailError = emailFocus && user && !validEmail;
-  const passwordError = pwdFocus && !validPwd;
-  const matchError = matchFocus && !validMatch;
-
-  const handleSubmit = async(e: any) => {
-
+ 
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    
-    const v1 = EMAIL_REGEX.test(user);
-    const v2 = PWD_REGEX.test(pwd);
-    const v3 = pwd === matchPwd;
-    if (!v1 || !v2) {
-      setErrMsg({
-        user: !v1 ? "Please enter a valid email address." : "",
-        pwd: !v2 ? "Please enter a valid password." : "",
-        matchPwd: !v3 ? "Passwords do not match." : "",
-      });
-      return;
+
+    const isValid = validateForm(user, pwd, matchPwd);
+
+    console.log(isValid);
+    console.log(errors);
+
+    if (isValid) {
+      try {
+        dispatch(register({ user, pwd })).then((action: any) => {
+          if (register.fulfilled.match(action)) {
+            navigate("/");
+            dispatch(
+              addNotification({
+                message: `Account with username: ${user} has been created successfully. Please login to continue.`,
+                type: "success",
+                id: "accountcreated-auth",
+              })
+            );
+            setTimeout(() => {
+              dispatch(removeNotification("accountcreated-auth"));
+            }, 6000);
+          } else {
+            console.log(action.payload);
+            if (
+              action.payload &&
+              action.payload.message === "Username already exists"
+            ) {
+
+              dispatch(
+                addNotification({
+                  message:
+                    "User already exists, please login or use a different email",
+                  type: "error",
+                  id: "unauthorizedauth",
+                })
+              );
+              setEmail("");
+              setPwd("");
+              setMatchPwd("");
+
+              setTimeout(() => {
+                dispatch(removeNotification("unauthorizedauth"));
+              }, 6000);
+            } else if (
+              action?.payload &&
+              action.payload.message === "No Server Response"
+            ) {
+              dispatch(
+                addNotification({
+                  message: "No server response, please try again later",
+                  type: "error",
+                  id: "noserverresponse-auth",
+                })
+              );
+
+              setTimeout(() => {
+                dispatch(removeNotification("noserverresponse-auth"));
+              }, 6000);
+            }
+          }
+        });
+      } catch (err: any) {
+        dispatch(
+          addNotification({
+            message: "An unexpected error occurred. Please try again later.",
+            type: "error",
+            id: "unexpectederror-auth",
+          })
+        );
+
+        setTimeout(() => {
+          dispatch(removeNotification("unexpectederror-auth"));
+        }, 6000);
+      }
     }
-
-    try {
-      dispatch(register({ user, pwd }));
-
-      dispatch(register({ user, pwd })).then((action) => {
-        if (register.fulfilled.match(action)) {
-
-           navigate("/");
-
-        } else{
-        }});
-
-   
-            setEmail('');
-            setPwd('');
-            setMatchPwd('');
-        
-    } catch (err:any) {
-       if (err.response?.status === 409) {
-            setErrMsg({
-                user: "Email already exists",
-                pwd: "",
-                matchPwd: ""
-            });
-        } 
-        errRef.current?.focus();
-        return err.response?.status;
-    
-       
-
-    }
-
-    
   };
-
 
   return (
     <section className="authSection">
-
       <form className="authContainer" onSubmit={handleSubmit}>
         <div>
           <div className="logoContainer">
@@ -139,6 +143,7 @@ export default function Auth() {
             <div>
               <div className="inputcontainer">
                 <SBody className="label" text="Email address" />
+
                 <InputField
                   img={mailbox}
                   type="email"
@@ -147,14 +152,11 @@ export default function Auth() {
                   placeholder="e.g. alex@email.com"
                   value={user}
                   onChange={(e) => setEmail(e.target.value)}
-                  onFocus={() => setEmailFocus(true)}
-                  required
-                  aria-invalid={validEmail ? "false" : "true"}
                   aria-describedby="uidnote"
                   inputRef={emailRef}
                   autoComplete="off"
-                  error={emailError}
-                  errorMessage={errMsg.user}
+                  error={errors.user ? true : false}
+                  errorMessage={errors.user}
                 />
               </div>
 
@@ -165,59 +167,75 @@ export default function Auth() {
                     placeholder="At least 8 characters"
                     img={password}
                     name="password"
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     id="password"
                     onChange={(e) => setPwd(e.target.value)}
                     value={pwd}
-                    required
-                    aria-invalid={validPwd ? "false" : "true"}
                     aria-describedby="pwdnote"
-                    onFocus={() => setPwdFocus(true)}
-                    onBlur={() => setPwdFocus(false)}
-                    errorMessage={errMsg.pwd}
-                    error={passwordError}
+ 
+                    error={errors.pwd ? true : false}
+                    errorMessage={
+                      errors.pwd !==
+                      "Password must contain at least 8 characters, including uppercase, lowercase, and special characters"
+                        ? errors.pwd
+                        : ""
+                    }
+                    passwordImg
+                    handlePasswordClick={() => setShowPassword(true)}
+                    handlePasswordLeave={() => setShowPassword(false)}
+                    inputDataTestId="password-input"
                   />
                 </div>
                 <div className="inputcontainer">
                   <SBody className="label" text="Confirm password" />
                   <InputField
                     name="confirm_pwd"
-                    placeholder="At least 8 characters"
+                    placeholder="Enter your password again"
                     img={password}
-                    type="password"
                     id="confirm_pwd"
                     onChange={(e) => setMatchPwd(e.target.value)}
                     value={matchPwd}
-                    required
-                    aria-invalid={validMatch ? "false" : "true"}
                     aria-describedby="confirmnote"
-                    onFocus={() => setMatchFocus(true)}
-                    onBlur={() => setMatchFocus(false)}
-                    errorMessage={errMsg.matchPwd}
-                    error={matchError}
+                   
+                    errorMessage={errors.matchPwd}
+                    passwordImg
+                    error={errors.matchPwd ? true : false}
+                    handlePasswordClick={() => setShowPassword(true)}
+                    handlePasswordLeave={() => setShowPassword(false)}
+                    inputDataTestId="pwdMatch-input"
+                    type={showPassword ? "text" : "password"}
                   />
                 </div>
                 <div className="passwordcontain">
-                  <SBody text="Password must contain at least 8 characters" />
+                  <SBody
+                  className="passwordcontain-text"
+                    text={
+                      errors.pwd ===
+                      "Password must contain at least 8 characters, including uppercase, lowercase, and special characters"
+                        ? errors.pwd
+                        : ""
+                    }
+                  />
                 </div>
               </div>
             </div>
             <div className="buttoncontainer">
               <Button
                 text="Create new account"
-               isDisabled={
-                  !validEmail || !validPwd || !validMatch ? true : false
+                isDisabled={!user && !pwd && !matchPwd ? true : false}
+                backgroundSubtype={
+                  !user && !pwd && !matchPwd ? "active" : "secondary"
                 }
+
+                datatestid="register-button"
               />
             </div>
 
             <div className="questioncontainer">
               <MBody text={"Already have an account?"} />
               <Link className="link-to" to="/">
-
-              <MBody className="loginQuestion" text={"Login"} />
+                <MBody className="loginQuestion" text={"Login"} />
               </Link>
-             
             </div>
           </div>
         </div>
@@ -225,4 +243,3 @@ export default function Auth() {
     </section>
   );
 }
-

@@ -4,13 +4,12 @@ import {
   waitFor,
   screen,
   cleanup,
-  findAllByTestId,
+
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Login from "./Login";
-import { BrowserRouter, MemoryRouter } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "../context/AuthProvider";
-import { store } from "../state/store";
 import { ApiProvider } from "@reduxjs/toolkit/query/react";
 import { apiSlice } from "../state/api/apiSlice";
 

@@ -18,6 +18,8 @@
   background-color: #fafafa;
   height: 100vh;
 }
+
+
 .authContainer {
   width: 30%;
   display: flex;
@@ -91,6 +93,10 @@
 
 .persistCheckbox{
  width: 10%;
+}
+
+.passwordcontain-text{
+  color: red !important;
 }
 
 

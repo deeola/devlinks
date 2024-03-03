@@ -44,15 +44,7 @@ export const register = createAsyncThunk<UserData, LoginCredentials>(
             const response = await axios.post(REGISTER_URL, { user, pwd });
             return response.data;
         } catch (error: any) {
-            if (error.response && error.response.data && error.response.data.message) {
-                // If the server returned an error message, return it
-                console.log(error.response.data.message, "error.response.data.message")
-                return rejectWithValue(error.response.data.message);
-            } else {
-                console.log("there is an errorß")
-                // If no specific error message is available, return a generic error
-                return rejectWithValue('An error occurred during registration.');
-            }
+            return rejectWithValue(error.response.data);
         }
     }
 );
