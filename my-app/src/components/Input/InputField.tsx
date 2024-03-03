@@ -28,11 +28,13 @@ interface UInputs {
   handlePasswordClick? : () => void;
   handlePasswordLeave? : () => void;
   inputDataTestId?: string;
+  readOnly?: boolean;
+  
 }
 
 export default function InputField(Props: UInputs) {
 
-  const { id, name, img, placeholder, type , onChange, value, required, onFocus,inputRef, autoComplete, onBlur, error, errorMessage, passwordImg, handlePasswordClick, handlePasswordLeave, inputDataTestId } = Props;
+  const { readOnly, id, name, img, placeholder, type , onChange, value, required, onFocus,inputRef, autoComplete, onBlur, error, errorMessage, passwordImg, handlePasswordClick, handlePasswordLeave, inputDataTestId } = Props;
   const [typing, setTyping] = useState(false);
 
 
@@ -73,6 +75,7 @@ export default function InputField(Props: UInputs) {
           ref={inputRef}
           autoComplete={autoComplete}
           data-testid={inputDataTestId}
+          readOnly={readOnly}
         />
 
       {passwordImg && (

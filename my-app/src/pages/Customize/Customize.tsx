@@ -53,7 +53,7 @@ let pictureLink;
  
 }
 
-const {data: pictured} = useGetPhotoQuery(UserInformation?.imgName)
+const {data: pictured, isLoading: pictureLoading} = useGetPhotoQuery(UserInformation?.imgName)
 
 
 if(pictured?.url !== undefined){
@@ -89,9 +89,9 @@ if (isSuccess) {
 
       dispatch(addNotification({ message: "No links found", type: "warning" , id: "emptylinks" }))
 
-      // setTimeout(() => {
-      //   dispatch(removeNotification("emptylinks"));
-      // }, 3000);
+      setTimeout(() => {
+        dispatch(removeNotification("emptylinks"));
+      }, 3000);
 
    
     
@@ -140,6 +140,7 @@ if (isSuccess) {
           userId={username}
           userInformation={UserInformation}
           profilePicture={pictureLink}
+          isPictureLoading={pictureLoading}
         />
         {isShowProfile ? (
           <Profile  userInformation={UserInformation} userId={username} />

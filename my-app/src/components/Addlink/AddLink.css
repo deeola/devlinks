@@ -23,6 +23,11 @@ align-items: center;
 }
 
 .remove-button{
+    border: none;
+    text-decoration: none;
+    background-color: none !important;
+    color:  black;
+    cursor: pointer;
 
 }
 

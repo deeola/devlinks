@@ -8,10 +8,12 @@ describe("<PhonePreview />", () => {
       firstName: "John",
       lastName: "Doe",
       email: "johndoe@example.com",
-      imgName: "profile.jpg"
+      imgName: "profile.jpg",
+
     },
     profilePicture: "https://example.com/profile.jpg",
-    userId: "johndoe@example.com"
+    userId: "johndoe@example.com",
+    isPictureLoading: false
   };
 
   it("renders user information correctly", () => {

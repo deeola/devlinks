@@ -3,7 +3,7 @@ import { linkArray } from "../../linkArray";
 import "../Dropdown/Dropdown.css";
 import "../Input/InputField.css";
 import iconLink from "../../assets/images/icon-link.svg";
-import { MBody } from "../Text/Text";
+import { MBody, SBody } from "../Text/Text";
 import "../Addlink/AddLink.css";
 import { useDeleteLinkMutation } from "../../state/api/apiSlice";
 
@@ -60,6 +60,7 @@ export default function AddnewLink(Props: Tdropdown) {
           <div className="addlinknumber-remove">
             <MBody text={`= Link #${prompts.indexOf(prompt) + 1}`} />
             <div className="edit-remove">
+          
             <button type="button" className="remove-button" onClick={(e) => handleDelete(e,i, prompt.id, prompt.label)}>
               Remove
             </button>

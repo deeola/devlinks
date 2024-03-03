@@ -189,16 +189,16 @@ if ('data' in url && url.data) {
           <div className="label-container">
             <label>Email</label>
           </div>
-          <MBody text={userId} />
           <div className="inputfield-container">
-          {/* <InputField
+          <InputField
           type="email"
             id="email"
             name="email"
             placeholder="e.g email@example.com"
             onChange={handleInput}
-            value={userInfo.email}
-          /> */}
+            value={userId}
+            readOnly
+          />
           </div>
          
         </div>

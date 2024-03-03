@@ -10,12 +10,13 @@ type TProps = {
   userId: string;
   userInformation: any;
   profilePicture: string;
+  isPictureLoading: boolean;
   }
 
 
 export default function PhonePreview(Props: TProps ) {
 
-  let { isPrompts, userInformation, profilePicture, userId} = Props;
+  let { isPrompts, userInformation, profilePicture, userId, isPictureLoading} = Props;
 
   
   if (!userInformation) {
@@ -43,8 +44,6 @@ export default function PhonePreview(Props: TProps ) {
       });
     } 
 
-    console.log(userInformation, "userInformation in phonePreview")
-
   }, [userInformation]);
   
 
@@ -61,11 +60,7 @@ export default function PhonePreview(Props: TProps ) {
    mylinks = isPrompts
   }
 
- 
-  const profileImage = "https://res.cloudinary.com/djvjxp2am/image/upload/v1631530733/Profile%20Pictures/IMG_20210913_123456";
 
-
-  let isImage: string = profileImage;
 
   //hide other items if the length is more than 5
   const shouldScroll = isPrompts.length > 5;
@@ -89,7 +84,7 @@ export default function PhonePreview(Props: TProps ) {
           stroke="#737373"
           d="M12 55.5C12 30.923 31.923 11 56.5 11h24C86.851 11 92 16.149 92 22.5c0 8.008 6.492 14.5 14.5 14.5h95c8.008 0 14.5-6.492 14.5-14.5 0-6.351 5.149-11.5 11.5-11.5h24c24.577 0 44.5 19.923 44.5 44.5v521c0 24.577-19.923 44.5-44.5 44.5h-195C31.923 621 12 601.077 12 576.5v-521Z"
         />
-        {!isImage ? (
+        {!profilePicture || isPictureLoading ? (
           <circle cx="153.5" cy="112" r="48" fill="#EEE" />
         ) : (
           <foreignObject

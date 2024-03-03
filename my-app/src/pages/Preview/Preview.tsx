@@ -3,7 +3,7 @@ import "./Preview.css";
 import Button from "../../components/Button/Button";
 import { MBody, SBody } from "../../components/Text/Text";
 import arrow from "../../assets/images/icon-arrow-right.svg";
-import profileimage from "../../assets/images/mann.jpeg";
+
 
 import { Link } from "react-router-dom";
 
@@ -18,10 +18,7 @@ import { useAuth } from "../../context/AuthProvider";
 export default function Preview() {
   const { auth } = useAuth();
   let username = auth?.user;
-  const [details, setDetails] = useState({
-    firstName: "",
-    lastName: "",
-  });
+
 
   const {
     data: userInfo,
