@@ -12,6 +12,7 @@ import { AuthProvider } from "../context/AuthProvider";
 import { ApiProvider } from "@reduxjs/toolkit/query/react";
 import { apiSlice } from "../state/api/apiSlice";
 
+
 afterEach(cleanup);
 
 const MockApp = () => {

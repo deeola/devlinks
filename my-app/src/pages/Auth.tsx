@@ -6,28 +6,23 @@ import InputField from "../components/Input/InputField";
 import Button from "../components/Button/Button";
 import mailbox from "../assets/images/icon-email.svg";
 import password from "../assets/images/icon-password.svg";
-import axios from "../api/axios";
-import { head } from "lodash";
-import Login from "./Login";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../state/store";
 import { register } from "../state/user/authSlice";
-import useAuth from "../hooks/useAuth";
+
 import { useAuthFormValidation } from "../hooks/useAuthFormValidation";
 import {
   addNotification,
   removeNotification,
 } from "../state/notification/notificationSlice";
 
-// const EMAIL_REGEX = /^[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,}$/;
-// const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+
 
 export default function Auth() {
  
   const navigate = useNavigate();
  
-
   const dispatch = useDispatch<AppDispatch>();
   const emailRef: MutableRefObject<HTMLInputElement | null> = useRef(null);
 
@@ -39,14 +34,15 @@ export default function Auth() {
 
 
 
+ 
   useEffect(() => {
-    emailRef.current?.focus();
+    emailRef.current?.focus();   // focus on email input on page load
   }, []);
 
 
  
 
-  const { errors, validateForm } = useAuthFormValidation();
+  const { errors, validateForm } = useAuthFormValidation(); 
 
  
   const handleSubmit = async (e: any) => {
