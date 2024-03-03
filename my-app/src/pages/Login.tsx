@@ -161,12 +161,15 @@ export default function Login() {
                     passwordImg
                     handlePasswordClick={() => setShowPassword(true)}
                     handlePasswordLeave={() => setShowPassword(false)}
+                    inputDataTestId="password-input"
+                    
                   />
                 </div>
               </div>
             </div>
             <div className="buttoncontainer">
               <Button
+              datatestid="login-button"
                 text="Login"
                 isDisabled={!user && !pwd ? true : false}
                 backgroundSubtype={!user && !pwd ? "active" : "secondary"}

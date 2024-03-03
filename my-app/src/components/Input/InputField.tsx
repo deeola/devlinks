@@ -27,16 +27,15 @@ interface UInputs {
   passwordImg?: boolean;
   handlePasswordClick? : () => void;
   handlePasswordLeave? : () => void;
+  inputDataTestId?: string;
 }
 
 export default function InputField(Props: UInputs) {
 
-  const { id, name, img, placeholder, type , onChange, value, required, onFocus,inputRef, autoComplete, onBlur, error, errorMessage, passwordImg, handlePasswordClick, handlePasswordLeave } = Props;
+  const { id, name, img, placeholder, type , onChange, value, required, onFocus,inputRef, autoComplete, onBlur, error, errorMessage, passwordImg, handlePasswordClick, handlePasswordLeave, inputDataTestId } = Props;
   const [typing, setTyping] = useState(false);
 
-  console.log(error, "error")
-  console.log(errorMessage, "errorMessage");
-  console.log(typing, "typing");
+
 
 
 
@@ -73,10 +72,11 @@ export default function InputField(Props: UInputs) {
           required={required}
           ref={inputRef}
           autoComplete={autoComplete}
+          data-testid={inputDataTestId}
         />
 
       {passwordImg && (
-        <span className="password-img-container" onClick={handlePasswordClick} onMouseLeave={handlePasswordLeave} >
+        <span className="password-img-container" onClick={handlePasswordClick} onMouseLeave={handlePasswordLeave} data-testid="password-toggle" >
           <img className="passwordImg" src={eye} alt="Icon" />
         </span>
       )}

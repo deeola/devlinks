@@ -10,6 +10,7 @@ type Buttons = {
   onClick?: () => void;
   isDisabled?: boolean;
   type?: "submit" | "button" | "reset";
+  datatestid?: string;
 };
 
 export default function Button(Props: Buttons) {
@@ -21,6 +22,7 @@ export default function Button(Props: Buttons) {
     onClick,
     isDisabled,
     type,
+    datatestid
   } = Props;
 
   return (
@@ -31,6 +33,7 @@ export default function Button(Props: Buttons) {
       className={`bgColor ${classname}`}
       data-subtype={backgroundSubtype}
       data-buttontype={buttonType}
+      data-testid={datatestid}
     >
       {text}
     </button>

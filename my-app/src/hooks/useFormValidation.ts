@@ -5,7 +5,6 @@ export const useLoginFormValidation = () => {
 
   const validateEmail = (email: string) => {
     if (!email) {
-      console.log("Email is requiredzzzz", email)
       return "Email is required";
     }
     return "";
