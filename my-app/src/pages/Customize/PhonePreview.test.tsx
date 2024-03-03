@@ -16,7 +16,8 @@ describe("<PhonePreview />", () => {
 
   it("renders user information correctly", () => {
     render(<PhonePreview {...mockProps} />);
-    expect(screen.getByText("John Doe")).toBeInTheDocument();
+    expect(screen.getByText("John")).toBeInTheDocument();
+    expect(screen.getByText("Doe")).toBeInTheDocument();
     expect(screen.getByText("johndoe@example.com")).toBeInTheDocument();
   });
 

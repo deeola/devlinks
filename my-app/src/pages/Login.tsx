@@ -10,88 +10,103 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../state/user/authSlice";
 import { AppDispatch } from "../state/store";
-
 import useAuth from "../hooks/useAuth";
+import { useLoginFormValidation } from "../hooks/useFormValidation";
+import {
+  addNotification,
+  removeNotification,
+} from "../state/notification/notificationSlice";
+
 
 
 
 export default function Login() {
   const { setAuth, persist, setPersist } = useAuth();
 
-
   const navigate = useNavigate();
+  const { errors, validateForm } = useLoginFormValidation();
 
   const dispatch = useDispatch<AppDispatch>();
   const emailRef: MutableRefObject<HTMLInputElement | null> = useRef(null);
-  const errRef: MutableRefObject<HTMLInputElement | null> = useRef(null);
-
   const [user, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [errMsg, setErrMsg] = useState("");
-  const [success, setSuccess] = useState(false);
-  const [isError, setIsError] = useState({
-    email: false,
-    password: false,
-  });
+
 
   useEffect(() => {
     emailRef.current?.focus();
   }, []);
 
-  useEffect(() => {
-    setErrMsg("");
-  }, [user, pwd]);
+
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    try {
 
+    const isValid = validateForm(user, pwd);
 
-       dispatch(login({ user, pwd })).then((action) => {
-        
+    if (isValid) {
+      try {
+        dispatch(login({ user, pwd })).then((action: any) => {
+          if (login.fulfilled.match(action)) {
+            setAuth({ user, pwd, accessToken: action.payload.accessToken });
+            navigate("/customize");
+          } else {
+            if (action.payload && action.payload.message === "Unauthorized") {
+              dispatch(
+                addNotification({
+                  message:
+                    "Login failed. Please check your details again and try again",
+                  type: "error",
+                  id: "unauthorizedlogin",
+                })
+              );
 
-        //set error messages if user or password is not set
+              setEmail("");
+              setPwd("");
 
-        if (login.fulfilled.match(action)) {
-          setAuth({ user, pwd, accessToken: action.payload.accessToken });
-           navigate("/customize");
-        } else{
-        }});
+              setTimeout(() => {
+                dispatch(removeNotification("unauthorizedlogin"));
+              }, 6000);
+            } else if (
+              action?.payload &&
+              action.payload.message === "No Server Response"
+            ) {
+              dispatch(
+                addNotification({
+                  message: "No server response, please try again later",
+                  type: "error",
+                  id: "noserverresponse",
+                })
+              );
 
-        // if (!user) {
-        //   setIsError((prev) => ({ ...prev, email: true }));
-        //   emailRef.current?.focus();
-        //   return;
-        // }
-        // if (!pwd) {
-        //   setIsError((prev) => ({ ...prev, password: true }));
-        //   errRef.current?.focus();
-        //   return;
-        // }
+              setTimeout(() => {
+                dispatch(removeNotification("noserverresponse"));
+              }, 6000);
+            }
+          }
+        });
+      } catch (err: any) {
+        dispatch(
+          addNotification({
+            message: "An unexpected error occurred. Please try again later.",
+            type: "error",
+            id: "unexpectederror",
+          })
+        );
 
-
-       
-      setEmail("");
-      setPwd("");
-      setSuccess(true);
-    } catch (err: any) {
-      if (!err?.response) {
-        setErrMsg("No Server Response");
-      } else if (err.response?.status === 400) {
-        setErrMsg("Missing Username or Password");
-      } else if (err.response?.status === 401) {
-        setErrMsg("Unauthorized");
-      } else {
-        setErrMsg("Login Failed");
+        setTimeout(() => {
+          dispatch(removeNotification("unexpectederror"));
+        }, 6000);
       }
-      errRef.current?.focus();
     }
   };
+
+  
 
   const togglePersist = () => {
     setPersist((prev: any) => !prev);
   };
+
 
 
   useEffect(() => {
@@ -121,12 +136,11 @@ export default function Login() {
                   placeholder="e.g. alex@email.com"
                   value={user}
                   onChange={(e) => setEmail(e.target.value)}
-                  required
                   aria-describedby="uidnote"
                   inputRef={emailRef}
                   autoComplete="off"
-                  error={isError.email}
-                  errorMessage={errMsg}
+                  error={errors.email ? true : false}
+                  errorMessage={errors.email}
                 />
               </div>
 
@@ -137,25 +151,41 @@ export default function Login() {
                     placeholder="Enter your password"
                     img={password}
                     name="password"
-                    type= { showPassword ? "text" : "password" }
+                    type={showPassword ? "text" : "password"}
                     id="password"
                     onChange={(e) => setPwd(e.target.value)}
                     value={pwd}
-                    required
                     aria-describedby="pwdnote"
-                    error={isError.password}
-                    errorMessage={errMsg}
-                    
+                    error={errors.password ? true : false}
+                    errorMessage={errors.password}
+                    passwordImg
+                    handlePasswordClick={() => setShowPassword(true)}
+                    handlePasswordLeave={() => setShowPassword(false)}
                   />
-                  <div 
-                    onClick={() => setShowPassword(true)}
-                    onMouseLeave={() => setShowPassword(false)}
-                   >X</div>
                 </div>
               </div>
             </div>
             <div className="buttoncontainer">
-              <Button text="Login" isDisabled={(!user || !pwd ) ? true : false}  backgroundSubtype={(!user || !pwd ) ? "active" : "secondary"} />
+              <Button
+                text="Login"
+                isDisabled={!user && !pwd ? true : false}
+                backgroundSubtype={!user && !pwd ? "active" : "secondary"}
+              />
+            </div>
+
+            <div className="persistCheck-container">
+              <div className="persistCheck">
+                <label className="persistLabel" htmlFor="persist">
+                  Trust this device
+                </label>
+                <input
+                  className="persistCheckbox"
+                  type="checkbox"
+                  id="persist"
+                  onChange={togglePersist}
+                  checked={persist}
+                />
+              </div>
             </div>
 
             <div className="questioncontainer">
@@ -164,19 +194,216 @@ export default function Login() {
                 <MBody className="loginQuestion" text={"Create account"} />
               </Link>
             </div>
-
-            <div className="persistCheck">
-              <input
-                type="checkbox"
-                id="persist"
-                onChange={togglePersist}
-                checked={persist}
-              />
-              <label htmlFor="persist">Trust This Device</label>
-            </div>
           </div>
         </div>
       </form>
     </section>
   );
 }
+
+// import { useState, useEffect, useRef, MutableRefObject } from "react";
+// import "./Auth.css";
+// import Logo from "../components/Logo/Logo";
+// import { MBody, MHeader, SBody } from "../components/Text/Text";
+// import InputField from "../components/Input/InputField";
+// import Button from "../components/Button/Button";
+// import mailbox from "../assets/images/icon-email.svg";
+// import password from "../assets/images/icon-password.svg";
+// import { Link, useNavigate } from "react-router-dom";
+// import { useDispatch } from "react-redux";
+// import { login } from "../state/user/authSlice";
+// import { AppDispatch } from "../state/store";
+
+// import useAuth from "../hooks/useAuth";
+// import { useLoginFormValidation } from "../hooks/useFormValidation";
+// import {
+//   addNotification,
+//   removeNotification,
+// } from "../state/notification/notificationSlice";
+// import { error } from "console";
+// import { set } from "lodash";
+
+// const EMAIL_REGEX = /^[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,}$/;
+// const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+
+// export default function Login() {
+//   const { setAuth, persist, setPersist } = useAuth();
+//   const navigate = useNavigate();
+//   const dispatch = useDispatch<AppDispatch>();
+//   const emailRef: MutableRefObject<HTMLInputElement | null> = useRef(null);
+//   const [user, setEmail] = useState("");
+//   const [pwd, setPwd] = useState("");
+//   const [showPassword, setShowPassword] = useState(false);
+//   const [errMsg, setErrMsg] = useState({
+//     user: "",
+//     pwd: "",
+//   });
+
+//   const [isError, setIsError] = useState({
+//     email: false,
+//     password: false,
+//   });
+
+//   useEffect(() => {
+//     emailRef.current?.focus();
+//   }, []);
+
+//   const { errors, validateForm } = useLoginFormValidation();
+
+//   useEffect(() =>{
+
+//     const isValid = validateForm(user, pwd);
+
+//     if (!isValid) {
+//       if (errors.email) {
+//         setErrMsg({ ...errMsg, user: errors.email });
+//         setIsError({ ...isError, email: true });
+//         console.log(errors.email);
+//       }
+
+//       if (errors.password) {
+//         setErrMsg({ ...errMsg, pwd: errors.password });
+//         setIsError({ ...isError, password: true });
+//         console.log(errors);
+//       }
+//     }
+
+//   }, [user, pwd]);
+
+//   const handleSubmit = async (e: any) => {
+//     e.preventDefault();
+
+//     dispatch(login({ user, pwd })).then((action: any) => {
+//       if (login.fulfilled.match(action)) {
+//         setAuth({ user, pwd, accessToken: action.payload.accessToken });
+//         navigate("/customize");
+//       } else {
+//         if (action.payload && action.payload.message === "Unauthorized") {
+//           dispatch(
+//             addNotification({
+//               message:
+//                 "Login failed. Please check your details again and try again",
+//               type: "error",
+//               id: "unauthorizedlogin",
+//             })
+//           );
+
+//           setEmail("");
+//           setPwd("");
+
+//           setTimeout(() => {
+//             dispatch(removeNotification("unauthorizedlogin"));
+//           }, 6000);
+//         } else if (
+//           action?.payload &&
+//           action.payload.message === "No Server Response"
+//         ) {
+//           dispatch(
+//             addNotification({
+//               message: "No server response, please try again later",
+//               type: "error",
+//               id: "noserverresponse",
+//             })
+//           );
+
+//           setTimeout(() => {
+//             dispatch(removeNotification("noserverresponse"));
+//           }, 6000);
+//         }
+//       }
+//     });
+//   };
+
+//   const togglePersist = () => {
+//     setPersist((prev: any) => !prev);
+//   };
+
+//   useEffect(() => {
+//     localStorage.setItem("persist", persist.toString());
+//   }, [persist]);
+
+//   return (
+//     <section className="authSection">
+//       <form className="authContainer" onSubmit={handleSubmit}>
+//         <div>
+//           <div className="logoContainer">
+//             <Logo size="large" />
+//           </div>
+//           <div className="devAuthContainer">
+//             <div className="authHeaderContainer">
+//               <MHeader text="Login" className="authHeading" />
+//               <MBody text={"Add your details below to get back on the app"} />
+//             </div>
+//             <div>
+//               <div className="inputcontainer">
+//                 <SBody className="label" text="Email address" />
+//                 <InputField
+//                   img={mailbox}
+//                   type="email"
+//                   id="email"
+//                   name="email"
+//                   placeholder="e.g. alex@email.com"
+//                   value={user}
+//                   onChange={(e) => setEmail(e.target.value)}
+//                   aria-describedby="uidnote"
+//                   // inputRef={emailRef}
+//                   autoComplete="off"
+//                   error={isError.email}
+//                   errorMessage={errors.email}
+//                 />
+//               </div>
+
+//               <div className="inputcontainer">
+//                 <SBody className="label" text="Password" />
+//                 <InputField
+//                   placeholder="Enter your password"
+//                   img={password}
+//                   name="password"
+//                   type={showPassword ? "text" : "password"}
+//                   id="password"
+//                   onChange={(e) => setPwd(e.target.value)}
+//                   value={pwd}
+//                   aria-describedby="pwdnote"
+//                   error={isError.password}
+//                   errorMessage={errors.password}
+//                   passwordImg
+//                   handlePasswordClick={() => setShowPassword(!showPassword)}
+//                   handlePasswordLeave={() => setShowPassword(false)}
+//                 />
+//               </div>
+//             </div>
+//             <div className="buttoncontainer">
+//               <Button
+//                 text="Login"
+//                 // isDisabled={!user || !pwd || errMsg.user || errMsg.pwd}
+//                 backgroundSubtype={!user && !pwd ? "active" : "secondary"}
+//               />
+//             </div>
+
+//             <div className="persistCheck-container">
+//               <div className="persistCheck">
+//                 <label className="persistLabel" htmlFor="persist">
+//                   Trust this device
+//                 </label>
+//                 <input
+//                   className="persistCheckbox"
+//                   type="checkbox"
+//                   id="persist"
+//                   onChange={togglePersist}
+//                   checked={persist}
+//                 />
+//               </div>
+//             </div>
+
+//             <div className="questioncontainer">
+//               <MBody text={"Don't have an account?"} />
+//               <Link className="link-to" to={"/register"}>
+//                 <MBody className="loginQuestion" text={"Create account"} />
+//               </Link>
+//             </div>
+//           </div>
+//         </div>
+//       </form>
+//     </section>
+//   );
+// }

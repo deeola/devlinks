@@ -93,11 +93,7 @@ export default function Auth() {
 
       dispatch(register({ user, pwd })).then((action) => {
         if (register.fulfilled.match(action)) {
-          // setUser({user})
 
-          // setAuth({ user, pwd, accessToken: action.payload.accessToken });
-
-          // dispatch(getSpecificUserInfo(user));
            navigate("/");
 
         } else{
