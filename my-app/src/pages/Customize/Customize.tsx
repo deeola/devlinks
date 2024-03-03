@@ -116,13 +116,14 @@ if (isSuccess) {
               links="/"
               img={links}
               text="Links"
+              TabsType={ isShowProfile ?  "default" : "active"}
               onClick={() => setIsShowProfile(false)}
             />
             <Tabs
               links="/"
               img={profiledetails}
               text="Profile Details"
-              TabsType="default"
+              TabsType={ !isShowProfile ?  "default" : "active"}
               onClick={() => setIsShowProfile(true)}
             />
           </div>
