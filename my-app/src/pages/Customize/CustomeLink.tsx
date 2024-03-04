@@ -5,7 +5,7 @@ import picture from "../../assets/images/illustration-empty.svg";
 import { v4 as uuidv4 } from "uuid";
 import AddnewLink from "../../components/Addlink/Addnewlink";
 
-import { TCustomize } from "../../types";
+import { TCustomizeWithError } from "../../types";
 import {
   useAddLinksMutation,
   useDeleteLinkMutation,
@@ -37,7 +37,7 @@ export default function CustomeLink(Props: TProps) {
 
   const [getUpdatedLinks, setGetUpdatedLinks] = useState(false);
 
-  const [prompts, setPrompts] = useState<TCustomize[]>([
+  const [prompts, setPrompts] = useState<TCustomizeWithError[]>([
     {
       id: uuidv4(),
       answer: "",
@@ -46,6 +46,8 @@ export default function CustomeLink(Props: TProps) {
       image: "",
       placeholder: "Enter a valid link",
       userId: "",
+      error: false,
+      errorMessage: "",
     },
   ]);
 
@@ -60,7 +62,7 @@ export default function CustomeLink(Props: TProps) {
   useEffect(() => {
     if (isPrompts.length > 0) {
       // Convert data from isPrompts to TCustomize type
-      const convertedData: TCustomize[] = isPrompts.map((link: any) => ({
+      const convertedData: TCustomizeWithError[] = isPrompts.map((link: any) => ({
         id: link.id,
         answer: link.answer,
         label: link.label,
@@ -68,6 +70,8 @@ export default function CustomeLink(Props: TProps) {
         image: link.image,
         placeholder: "",
         userId: link.userId,
+        error: false,
+        errorMessage: "",
       }));
 
       // Update prompts state
@@ -100,6 +104,8 @@ export default function CustomeLink(Props: TProps) {
           image: "",
           placeholder: "",
           userId: userId,
+          error: false,
+          errorMessage: "",
         },
       ]);
     }
@@ -218,7 +224,21 @@ export default function CustomeLink(Props: TProps) {
 
 
     if (hasEmptyAnswer) {
-      console.error("Cannot save link with empty answer for any prompt.");
+
+      const updatedPrompts = prompts.map((prompt) => {
+        if (prompt.answer === "") {
+          return {
+            ...prompt,
+            error: true,
+            errorMessage: "Please enter a text.",
+          };
+        }
+        return prompt;
+      });
+
+      
+      setPrompts(updatedPrompts);
+    
       dispatch(
         addNotification({
           type: "error",

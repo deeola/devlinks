@@ -61,3 +61,9 @@ export interface TNotification {
 export interface TNotificationState {
   notifications: TNotification[];
 }
+
+
+export interface TCustomizeWithError extends TCustomize {
+  error: boolean;
+  errorMessage: string;
+}

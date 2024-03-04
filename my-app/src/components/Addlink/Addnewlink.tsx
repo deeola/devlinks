@@ -25,17 +25,17 @@ type Tdropdown = {
     e: React.ChangeEvent<HTMLInputElement>,
     i: number
   ) => void;
-  handleDelete: (e: React.MouseEvent<HTMLButtonElement>, i:number, id: string, label:string) => void;
+  handleDelete: (
+    e: React.MouseEvent<HTMLButtonElement>,
+    i: number,
+    id: string,
+    label: string
+  ) => void;
   handleButtonClick: (i: number) => void;
   activeIndex: number | null;
- 
-
 };
 
 export default function AddnewLink(Props: Tdropdown) {
-
-  
-
   const {
     errorMessage,
     error,
@@ -46,12 +46,7 @@ export default function AddnewLink(Props: Tdropdown) {
     handleDelete,
     handleButtonClick,
     activeIndex,
-
-
   } = Props;
-
-
-  
 
   return (
     <div>
@@ -60,18 +55,19 @@ export default function AddnewLink(Props: Tdropdown) {
           <div className="addlinknumber-remove">
             <MBody text={`= Link #${prompts.indexOf(prompt) + 1}`} />
             <div className="edit-remove">
-          
-            <button type="button" className="remove-button" onClick={(e) => handleDelete(e,i, prompt.id, prompt.label)}>
-              Remove
-            </button>
+              <button
+                type="button"
+                className="remove-button"
+                onClick={(e) => handleDelete(e, i, prompt.id, prompt.label)}
+              >
+                Remove
+              </button>
             </div>
-            
           </div>
 
           <div className="platforms-container">
             <div className="platform-label-container">
               <label className="plabel">Platform</label>
-
 
               <div className="platform-link">
                 <div
@@ -90,9 +86,17 @@ export default function AddnewLink(Props: Tdropdown) {
                   >
                     <div className="dropdown-selected-value">
                       <span className="image">
-                        <img className="prompt-image" src={!prompt.image ? iconLink : prompt.image } alt="Icon" />
+                        <img
+                          className="prompt-image"
+                          src={!prompt.image ? iconLink : prompt.image}
+                          alt="Icon"
+                        />
                       </span>
-                      <span className="selected-value">{!prompt.label ? "Please select a platform" : prompt.label}</span>
+                      <span className="selected-value">
+                        {!prompt.label
+                          ? "Please select a platform"
+                          : prompt.label}
+                      </span>
                     </div>
                     <span className="arrow"></span>
                   </div>
@@ -125,7 +129,6 @@ export default function AddnewLink(Props: Tdropdown) {
                             alt=""
                           />
                           <p>{list.label}</p>
-                          
                         </div>
                       </li>
                     ))}
@@ -134,31 +137,30 @@ export default function AddnewLink(Props: Tdropdown) {
               </div>
             </div>
 
-
-
             <div className="platform-label-container">
-            <label className="plabel">Link</label>
-            <div className={`input-container ${error ? "error" : ""}`}>
-              <span className="image">
-                <img src={iconLink} alt="Icon" />
-              </span>
-              <div className="input-and-error">
-                <input
-                  value={prompt.answer}
-                  onChange={(e) => handleInputChange(e, i)}
-                  type={type}
-                  data-id="myInput"
-                  className={`${error ? "error-text" : ""}`}
-                  placeholder={prompt.placeholder}
-                  id={`answer-${i}`}
-                  name={`answer-${i}`}
-                />
-                {error && <span className="error-span"> {errorMessage} </span>}
+              <label className="plabel">Link</label>
+              <div className={`input-container ${prompt.error ? "error" : ""}`}>
+                <span className="image">
+                  <img src={iconLink} alt="Icon" />
+                </span>
+                <div className="input-and-error">
+                  <input
+                    value={prompt.answer}
+                    onChange={(e) => handleInputChange(e, i)}
+                    type={type}
+                    data-id="myInput"
+                    className={`${prompt.error ? "error-text" : ""}`}
+                    placeholder={prompt.placeholder}
+                    id={`answer-${i}`}
+                    name={`answer-${i}`}
+                  />
+                  {error && (
+                    <span className="error-span"> {prompt.errorMessage} </span>
+                  )}
+                </div>
               </div>
             </div>
           </div>
-          </div>
-
         </div>
       ))}
     </div>
