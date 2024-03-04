@@ -84,9 +84,6 @@ if (isSuccess) {
   if ('status' in error && error.status === 404) {
     linksArray = []; 
 
-
-
-
       dispatch(addNotification({ message: "No links found", type: "warning" , id: "emptylinks" }))
 
       setTimeout(() => {
@@ -94,9 +91,6 @@ if (isSuccess) {
       }, 3000);
 
    
-    
-     
-    console.log(linksArray.length);
   } else {
 
     console.error("An error occurred:", error);

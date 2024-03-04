@@ -27,6 +27,7 @@ export default function CustomeLink(Props: TProps) {
 
   const [addLinks] = useAddLinksMutation();
   const [deleteLink] = useDeleteLinkMutation();
+  const [isActive, setIsActive] = useState<boolean>(false);
 
   let { isPrompts, userId } = Props;
 
@@ -51,8 +52,6 @@ export default function CustomeLink(Props: TProps) {
     },
   ]);
 
-  const [isActive, setIsActive] = useState<boolean>(false);
-
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   const [myError, setMyError] = useState<boolean>(false);
@@ -62,17 +61,19 @@ export default function CustomeLink(Props: TProps) {
   useEffect(() => {
     if (isPrompts.length > 0) {
       // Convert data from isPrompts to TCustomize type
-      const convertedData: TCustomizeWithError[] = isPrompts.map((link: any) => ({
-        id: link.id,
-        answer: link.answer,
-        label: link.label,
-        bgColor: link.bgColor,
-        image: link.image,
-        placeholder: "",
-        userId: link.userId,
-        error: false,
-        errorMessage: "",
-      }));
+      const convertedData: TCustomizeWithError[] = isPrompts.map(
+        (link: any) => ({
+          id: link.id,
+          answer: link.answer,
+          label: link.label,
+          bgColor: link.bgColor,
+          image: link.image,
+          placeholder: "",
+          userId: link.userId,
+          error: false,
+          errorMessage: "",
+        })
+      );
 
       // Update prompts state
       setPrompts(convertedData);
@@ -195,7 +196,9 @@ export default function CustomeLink(Props: TProps) {
       dispatch(
         addNotification({
           type: "success",
-          message: `Link with label "${label}" has been deleted.`,
+          message: `Link with  ${
+            label !== "" ? "label " + label : "no label"
+          } has been deleted.`,
           id: "delete-link",
         })
       );
@@ -221,28 +224,26 @@ export default function CustomeLink(Props: TProps) {
   const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const hasEmptyAnswer = prompts.some((prompt) => prompt.answer === "");
-
+    console.log("hasEmptyAnswer", hasEmptyAnswer);
 
     if (hasEmptyAnswer) {
-
       const updatedPrompts = prompts.map((prompt) => {
         if (prompt.answer === "") {
           return {
             ...prompt,
             error: true,
-            errorMessage: "Please enter a text.",
+            errorMessage: "Please enter a link",
           };
         }
         return prompt;
       });
 
-      
       setPrompts(updatedPrompts);
-    
+
       dispatch(
         addNotification({
           type: "error",
-          message: "Please enter a text.",
+          message: "Please enter a link",
           id: "empty-answer",
         })
       );
@@ -256,6 +257,8 @@ export default function CustomeLink(Props: TProps) {
 
     // Check for duplicate labels
     const hasDuplicateLabel = prompts.some((prompt) => prompt.label === "");
+
+    console.log("hasDuplicateLabel", hasDuplicateLabel);
     if (hasDuplicateLabel) {
       console.error("Cannot save link with duplicate label.");
 
@@ -271,15 +274,17 @@ export default function CustomeLink(Props: TProps) {
         bgColor,
         image,
         userId,
-        
       })
     );
 
-    console.log("newPromptsArray", newPromptsArray);
-
     addLinks(newPromptsArray);
-    setMyError(false);
-    setErrorMessage("");
+    dispatch(
+      addNotification({
+        type: "success",
+        message: "Links saved successfully",
+        id: "save-links",
+      })
+    );
   };
 
   return (
@@ -297,6 +302,7 @@ export default function CustomeLink(Props: TProps) {
                 onClick={isActive ? handleAddPrompt : handleDisplayFirstPrompt}
                 buttonType="secondary"
                 text="+ Add new link"
+                type="button"
               />
             </div>
           </div>

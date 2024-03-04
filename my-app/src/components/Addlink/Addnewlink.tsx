@@ -3,9 +3,9 @@ import { linkArray } from "../../linkArray";
 import "../Dropdown/Dropdown.css";
 import "../Input/InputField.css";
 import iconLink from "../../assets/images/icon-link.svg";
-import { MBody, SBody } from "../Text/Text";
+import { MBody} from "../Text/Text";
 import "../Addlink/AddLink.css";
-import { useDeleteLinkMutation } from "../../state/api/apiSlice";
+
 
 type Tdropdown = {
   errorMessage: string;
@@ -37,8 +37,7 @@ type Tdropdown = {
 
 export default function AddnewLink(Props: Tdropdown) {
   const {
-    errorMessage,
-    error,
+
     type,
     handleOptionClick,
     prompts,
@@ -154,7 +153,7 @@ export default function AddnewLink(Props: Tdropdown) {
                     id={`answer-${i}`}
                     name={`answer-${i}`}
                   />
-                  {error && (
+                  {prompt.error && (
                     <span className="error-span"> {prompt.errorMessage} </span>
                   )}
                 </div>
