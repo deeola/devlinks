@@ -129,7 +129,7 @@ export default function Auth() {
       <form className="authContainer" onSubmit={handleSubmit}>
         <div>
           <div className="logoContainer">
-            <Logo size="large" />
+            <Logo className="logo"  size="large" />
           </div>
           <div className="devAuthContainer">
             <div className="authHeaderContainer">
