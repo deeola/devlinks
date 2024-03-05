@@ -35,3 +35,14 @@
     
     filter: unset;
 }
+
+
+/* Iphone 14 */
+
+@media screen and (max-width: 428px){
+    
+    .tabsText{
+        display: none;
+    }
+
+}

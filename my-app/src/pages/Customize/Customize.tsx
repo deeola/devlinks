@@ -13,6 +13,7 @@ import { useGetLinksQuery, useGetUsersInfoQuery, useGetPhotoQuery } from "../../
 import { addNotification, removeNotification } from "../../state/notification/notificationSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../state/store";
+import { Navbar } from "../../components/Navbar/Navbar";
 
 
 export default function Customize() {
@@ -100,34 +101,7 @@ if (isSuccess) {
 
   return (
     <section className="customize">
-      <div className="Navbar">
-        <div className="custom-logo-container">
-          <Logo size="large" />
-        </div>
-        <div className="navlinks-button">
-          <div className="navlinks">
-            <Tabs
-              links="/"
-              img={links}
-              text="Links"
-              TabsType={ isShowProfile ?  "default" : "active"}
-              onClick={() => setIsShowProfile(false)}
-            />
-            <Tabs
-              links="/"
-              img={profiledetails}
-              text="Profile Details"
-              TabsType={ !isShowProfile ?  "default" : "active"}
-              onClick={() => setIsShowProfile(true)}
-            />
-          </div>
-   
-            <Link to={"/preview"}>
-              <Button isDisabled={false} buttonType="secondary" text="Preview" />
-            </Link>
-        
-        </div>
-      </div>
+      <Navbar isShowProfile={isShowProfile} setIsShowProfile={setIsShowProfile} />
       <div className="customContainer">
         <PhonePreview
           isPrompts={linksArray}
