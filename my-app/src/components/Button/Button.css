@@ -11,7 +11,7 @@
       format("truetype");
   }
 
-.bgColor{
+.button-base{
 width: 100%;
 padding: 11px 27px;
 border-radius: 5px;

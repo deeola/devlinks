@@ -4,28 +4,8 @@
   justify-content: space-between;
 }
 
-.Navbar {
-  display: flex;
-  justify-content: space-between;
-  padding: 20px;
-  align-items: center;
-  background-color: white;
-}
 
-.navlinks-button {
-  display: flex;
-  justify-content: space-between;
-  width: 60%;
-}
 
-.navlinks {
-  display: flex;
-  width: 27%;
-  justify-content: space-between;
-}
-
-.custom-logo-container {
-}
 
 .customContainer {
   display: flex;
@@ -193,4 +173,29 @@
   .link-middle-mbody {
     width: 70%;
   }
+}
+
+
+/*Ipad Pro*/
+
+@media (max-width: 1024px) {
+  .phonePreview{
+    display: none;
+  }
+
+  .customContainer {
+   width: 100%;
+  }
+
+  .customelinkcontainer {
+    /* display: flex;
+    flex-direction: column;
+    justify-content: space-between; */
+    width: 100%;
+    height: unset;
+    /* background-color: white;
+    margin: 20px 20px 20px 10px; */
+  }
+  
+
 }

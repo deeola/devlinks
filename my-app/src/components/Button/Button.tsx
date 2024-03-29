@@ -30,7 +30,7 @@ export default function Button(Props: Buttons) {
       type={type}
       disabled={isDisabled}
       onClick={onClick}
-      className={`bgColor ${classname}`}
+      className={`button-base ${classname}`}
       data-subtype={backgroundSubtype}
       data-buttontype={buttonType}
       data-testid={datatestid}

@@ -1,0 +1,48 @@
+
+
+
+.Navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    align-items: center;
+    background-color: white;
+  }
+  
+  .custom-logo-container {
+    
+  }
+
+  
+  .navlinks-button {
+    display: flex;
+    justify-content: space-between;
+    width: 60%;
+    align-items: center;
+  }
+
+  .navlinks {
+    display: flex;
+    width: 27%;
+    justify-content: space-between;
+  }
+
+
+
+@media  (max-width: 1440px) {
+    .navlinks {
+        width: 40%;
+  
+    } 
+  
+  }
+
+
+@media (max-width: 1024px) {
+    .navlinks {
+        width: 50%;
+        background-color: 'red';
+    } 
+  
+  }
+  
