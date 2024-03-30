@@ -24,10 +24,14 @@ type TProps = {
 
 export default function CustomeLink(Props: TProps) {
   const dispatch = useDispatch();
-
   const [addLinks] = useAddLinksMutation();
   const [deleteLink] = useDeleteLinkMutation();
-  const [isActive, setIsActive] = useState<boolean>(false);
+
+  //display the prompt if true and let"s get you started if false
+  const [isLinkAvaialable, setLinkAvaialable] = useState<boolean>(false);
+
+  // get updated link from backend if there is any
+  const [getUpdatedLinks, setGetUpdatedLinks] = useState(false);
 
   let { isPrompts, userId } = Props;
 
@@ -35,8 +39,6 @@ export default function CustomeLink(Props: TProps) {
     // Handle the case where isPrompts (linksArray) is undefined
     isPrompts = [];
   }
-
-  const [getUpdatedLinks, setGetUpdatedLinks] = useState(false);
 
   const [prompts, setPrompts] = useState<TCustomizeWithError[]>([
     {
@@ -87,13 +89,19 @@ export default function CustomeLink(Props: TProps) {
     setActiveIndex(i === activeIndex ? null : i);
   };
 
+
+
   // Function to add a new prompt
   const handleAddPrompt = () => {
     // Check if any prompt's answer is empty
+
+    console.log("oluwaloseyi")
+    setLinkAvaialable(true)
     const hasEmptyAnswer = prompts.some((prompt) => prompt.answer === "");
 
     if (!hasEmptyAnswer) {
-      setIsActive(true);
+      // setIsActive(true);
+
       // Add a new prompt to the prompts array
       setPrompts([
         ...prompts,
@@ -155,6 +163,8 @@ export default function CustomeLink(Props: TProps) {
     setActiveIndex(null);
   };
 
+
+
   // Function to handle input change
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -171,10 +181,8 @@ export default function CustomeLink(Props: TProps) {
     });
   };
 
-  // Function to display the first prompt
-  const handleDisplayFirstPrompt = () => {
-    setIsActive(true);
-  };
+ 
+
 
   // Function to handle prompt deletion
   const handleDelete = async (
@@ -193,6 +201,12 @@ export default function CustomeLink(Props: TProps) {
       // Optionally, update the local state with the modified prompts array
       setPrompts(deletePrompts);
 
+      if (deletePrompts.length === 0) {
+        setLinkAvaialable(false);
+        setGetUpdatedLinks(false);
+      }
+
+
       dispatch(
         addNotification({
           type: "success",
@@ -205,6 +219,7 @@ export default function CustomeLink(Props: TProps) {
       setTimeout(() => {
         dispatch(removeNotification("delete-link"));
       }, 3000);
+
     } catch (error) {
       // Handle any errors here
       dispatch(
@@ -219,6 +234,9 @@ export default function CustomeLink(Props: TProps) {
       }, 3000);
     }
   };
+
+
+
 
   // Function to save prompts
   const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -287,9 +305,20 @@ export default function CustomeLink(Props: TProps) {
     );
   };
 
+  console.log("isLinkAvailable is " + isLinkAvaialable);
+  console.log("link is  truly available  is " + getUpdatedLinks);
+
+  //if there is no items from the backend, isLinkAvailable should be false
+
+  // if there is links from the backend, isLinkAvaialable should be true
+
+  // if all items is deleted, isLinkAvailabke should be false
+
+  // if add new prompt is clicked, isLinkAvailable should be true
+
   return (
     <div className="customelinkcontainer">
-      <form onSubmit={handleSave}>
+      <form className="customForm" onSubmit={handleSave}>
         <div className="edit-links-remove">
           <div>
             <MHeader className="your-links" text="Customize your links" />
@@ -299,7 +328,7 @@ export default function CustomeLink(Props: TProps) {
             />
             <div className="add-new-link">
               <Button
-                onClick={isActive ? handleAddPrompt : handleDisplayFirstPrompt}
+                onClick={handleAddPrompt}
                 buttonType="secondary"
                 text="+ Add new link"
                 type="button"
@@ -308,8 +337,21 @@ export default function CustomeLink(Props: TProps) {
           </div>
 
           <div className="link-middle-addnewlinkcontainer">
-            {((!isActive && !getUpdatedLinks) ||
-              (getUpdatedLinks && isPrompts.length === 0)) && (
+            {isLinkAvaialable || getUpdatedLinks ? (
+              <div className="addnewlinkcontainer">
+                <AddnewLink
+                  errorMessage={errorMessage}
+                  handleInputChange={handleInputChange}
+                  prompts={prompts}
+                  activeIndex={activeIndex}
+                  handleDelete={handleDelete}
+                  handleButtonClick={handleButtonClick}
+                  handleOptionClick={handleOptionClick}
+                  type="text"
+                  error={myError}
+                />
+              </div>
+            ) : (
               <div className="link-middle">
                 <div className="link-middle-image">
                   <img src={picture} alt="get-started-icon" />
@@ -325,24 +367,10 @@ export default function CustomeLink(Props: TProps) {
                 </div>
               </div>
             )}
-
-            {(isActive || getUpdatedLinks) && (
-              <div className="addnewlinkcontainer">
-                <AddnewLink
-                  errorMessage={errorMessage}
-                  handleInputChange={handleInputChange}
-                  prompts={prompts}
-                  activeIndex={activeIndex}
-                  handleDelete={handleDelete}
-                  handleButtonClick={handleButtonClick}
-                  handleOptionClick={handleOptionClick}
-                  type="text"
-                  error={myError}
-                />
-              </div>
-            )}
           </div>
         </div>
+
+
 
         <div className="custome-save-button">
           <Button

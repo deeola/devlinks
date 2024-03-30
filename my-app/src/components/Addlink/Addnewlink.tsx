@@ -37,7 +37,6 @@ type Tdropdown = {
 
 export default function AddnewLink(Props: Tdropdown) {
   const {
-
     type,
     handleOptionClick,
     prompts,
