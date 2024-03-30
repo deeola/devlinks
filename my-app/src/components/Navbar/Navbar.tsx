@@ -3,6 +3,7 @@ import Logo from "../Logo/Logo";
 import Tabs from "../Tabs/Tabs";
 import linkIcon from "../../assets/images/icon-link.svg";
 import profiledetails from "../../assets/images/icon-profile-details-header.svg";
+import iconPreview from "../../assets/images/icon-preview-header.svg"
 import { Link } from "react-router-dom";
 import Button from "../Button/Button";
 
@@ -17,10 +18,10 @@ export const Navbar = (Props: Tnavbar) => {
   return (
     <nav className="Navbar">
       <div className="custom-logo-container">
-        <Logo size="large" />
+        <Logo size="large" className="large-logo" />
+        <Logo size="small"  className="small-logo"/>
       </div>
       <div className="navlinks-button">
-        <div className="navlinks">
           <Tabs
             links="/"
             img={linkIcon}
@@ -37,10 +38,16 @@ export const Navbar = (Props: Tnavbar) => {
             onClick={() => setIsShowProfile(true)}
           />
         </div>
-
-        <Link to={"/preview"}>
-          <Button isDisabled={false} buttonType="secondary" text="Preview" />
+   
+      <div className="navbarPreview">
+      <Link to={"/preview"}>
+          <Button isDisabled={false} buttonType="secondary" text="Preview" classname="previewLarge" />
+          <div className="previewSmall">
+          <img alt="hi" src={iconPreview}  />
+          </div>
+         
         </Link>
+        
       </div>
     </nav>
   );

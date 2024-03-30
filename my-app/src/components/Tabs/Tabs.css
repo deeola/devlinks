@@ -36,12 +36,24 @@
     filter: unset;
 }
 
+@media  (max-width: 567px){
+
+    .tabsText{
+        font-size: 12px;
+    }
+    
+
+}
+
 
 /* Iphone 14 */
 
-@media screen and (max-width: 428px){
+@media screen and (max-width: 430px){
     .tabsText{
         display: none;
     }
     
+    .tabsImg{
+        width: 2rem;
+    }
 }
