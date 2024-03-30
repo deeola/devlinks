@@ -41,7 +41,6 @@
     .tabsText{
         font-size: 12px;
     }
-    
 
 }
 
@@ -56,4 +55,10 @@
     .tabsImg{
         width: 2rem;
     }
+
+    .tabs span{
+    filter: unset;
+    fill: var(--Purple, #633CFF);
+    margin-right: 5px;
+}
 }
