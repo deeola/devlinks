@@ -3,7 +3,7 @@
   justify-content: space-between;
   padding: 20px;
   align-items: center;
-   background-color: white; 
+  background-color: white; 
 }
 
 .custom-logo-container {
@@ -42,6 +42,9 @@
 /*Ipad */
 @media (max-width: 1024px) {
 
+  .Navbar{
+    padding: 30px;
+  }
 
 
 }

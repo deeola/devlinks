@@ -39,3 +39,11 @@ align-items: center;
     /* margin-bottom: 10px; */
 }
 
+
+@media (max-width: 1024px){
+    .addlink-container{
+        padding: 40px 20px;
+        margin-bottom: 40px;
+    }
+}
+

@@ -1,30 +1,20 @@
 .customize {
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  background-color: rgb(54, 114, 167);
-
 }
-
-
-
 
 .customContainer {
   display: flex;
   justify-content: space-between;
-  /* padding: 16px 24px; */
-
-  /* background-color: white; */
+  height: 90vh;
 }
 
 .phone-prev {
   width: 40%;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
-  /* padding: 100px 0px; */
 }
 
 .phonePreview {
@@ -56,13 +46,11 @@
   flex-direction: column;
   justify-content: space-between;
   width: 60%;
-  height: 87vh;
   background-color: white;
-  margin: 20px 20px 20px 10px;
-
+  margin: 20px 10px 20px 20px;
 }
 
-.customForm{
+.customForm {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -75,7 +63,7 @@
   flex-direction: column;
   /* justify-content: space-between; */
 
-  /* height: 90%; */
+  height: 90%;
 }
 
 .your-links {
@@ -104,7 +92,7 @@
 }
 
 .addnewlinkcontainer {
-  max-height: 480px;
+  max-height: 400px;
   overflow-y: auto;
 }
 
@@ -133,13 +121,16 @@
   border-top: 1px solid gainsboro;
   display: flex;
   justify-content: end;
+  background-color: white;
+  position: relative;
+  z-index: 100;
 }
 
 .custom-button {
-  width: 10% !important;
+  width: 150px !important ;
 }
 
-.preview-sign{
+.preview-sign {
   display: flex;
   justify-content: space-between;
   width: 23%;
@@ -154,8 +145,8 @@
 
   .customelinkcontainer {
     width: 60%;
-    height: 84vh; /* check later*/
-    margin: 20px 20px 20px 10px;
+    /* height: 84vh; check later */
+    /* margin: 20px 20px 20px 10px; */
   }
 
   .addnewlinkcontainer {
@@ -185,27 +176,87 @@
   }
 }
 
-
 /*Ipad Pro*/
 
 @media (max-width: 1024px) {
-  .phonePreview{
+  .customize {
+    /* justify-content: space-between; */
+  }
+
+  .link-middle-addnewlinkcontainer {
+    margin-top: 60px;
+    height: 75%;
+    /* background-color: rgba(239, 241, 243, 0.262); */
+  }
+
+  .link-middle {
+    height: 100%;
+  }
+
+  .link-middle-image {
+    width: 50%;
+    margin-bottom: 40px;
+  }
+
+  .link-middle-header {
+    /* width: 80%; */
+    margin-bottom: 30px;
+  }
+
+  .link-middle-mHeader {
+    font-size: 3rem !important;
+  }
+
+  .link-middle-text {
+    width: 90%;
+  }
+
+  .link-middle-mbody {
+    text-align: center !important;
+    width: 92%;
+    line-height: unset;
+    font-size: 1.5rem !important;
+  }
+
+  .addnewlinkcontainer {
+    max-height: 900px;
+  }
+
+  .phonePreview {
     display: none;
   }
 
   .customContainer {
-   width: 100%;
+    width: 100%;
   }
 
   .customelinkcontainer {
-    /* display: flex;
-    flex-direction: column;
-    justify-content: space-between; */
     width: 100%;
     height: unset;
-    /* background-color: white;
-    margin: 20px 20px 20px 10px; */
+    margin: 20px 25px 0px 25px;
   }
-  
 
+  .custome-save-button {
+    padding: 30px;
+  }
+}
+
+/*Ipad Mini*/
+
+@media (max-width: 821px) {
+  .link-middle-addnewlinkcontainer {
+    height: 70%;
+  }
+
+  .link-middle-mHeader {
+    font-size: 2.5rem !important;
+  }
+
+  .link-middle-mbody {
+    font-size: 1.2rem !important;
+  }
+
+  .addnewlinkcontainer {
+    max-height: 700px;
+  }
 }

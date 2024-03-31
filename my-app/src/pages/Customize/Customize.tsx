@@ -100,7 +100,7 @@ if (isSuccess) {
 
 
   return (
-    <section className="customize">
+    <section className="customize" >
       <Navbar isShowProfile={isShowProfile} setIsShowProfile={setIsShowProfile} />
       <div className="customContainer">
         <PhonePreview

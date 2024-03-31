@@ -319,6 +319,7 @@ export default function CustomeLink(Props: TProps) {
   return (
     <div className="customelinkcontainer">
       <form className="customForm" onSubmit={handleSave}>
+
         <div className="edit-links-remove">
           <div>
             <MHeader className="your-links" text="Customize your links" />
@@ -357,7 +358,7 @@ export default function CustomeLink(Props: TProps) {
                   <img src={picture} alt="get-started-icon" />
                 </div>
                 <div className="link-middle-header">
-                  <MHeader text="Let’s get you started" />
+                  <MHeader className="link-middle-mHeader" text="Let’s get you started" />
                 </div>
                 <div className="link-middle-text">
                   <MBody
@@ -380,6 +381,8 @@ export default function CustomeLink(Props: TProps) {
             type="submit"
           />
         </div>
+
+
       </form>
     </div>
   );
