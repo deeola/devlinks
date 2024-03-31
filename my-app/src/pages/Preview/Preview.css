@@ -38,6 +38,9 @@
     width: 16%;
     min-height: 400px;
 
+
+
+
 }
 
 .profile-image-container {
@@ -47,6 +50,7 @@
     overflow: hidden; 
     margin-bottom: 20px;
     border: 5px solid #633CFF;
+
 }
 
 .preview-img {
@@ -87,7 +91,7 @@ align-items: center;
 }
 
 .cards{
-   background-color: rgb(39, 121, 52); 
+
    margin-bottom: 20px;
    display: flex;
    justify-content: space-between;
@@ -96,6 +100,8 @@ align-items: center;
    border-radius: 8px;
    cursor: pointer;
    text-decoration: none;
+   /* max-height: 700px;
+   overflow-y: auto; */
 }
 
 .preview-card-icon-name-container{
@@ -121,6 +127,11 @@ align-items: center;
 .no-links{
    
     text-align: center;
+}
+
+.preview-cards{
+    max-height: 250px;
+    overflow-y: auto;
 }
 
 
