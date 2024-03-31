@@ -36,12 +36,14 @@ export default function UploadImage (Props: TUploadImage) {
           accept="image/*"
         />
       </div>
-      <div>
+
+      <div className="file-name-text">
         <MBody
           text={!selectedFiles.length ? text :  selectedFiles[0].name}
         />
         {(subtext && !selectedFiles.length) && <MBody text={subtext} />}
       </div>
+      
     </div>
   );
 }
