@@ -106,7 +106,7 @@ export default function Preview() {
               />
             </div>
 
-            <div>
+            <div className="preview-name-wrapper">
               <MBody text={UserInformation?.firstName ? UserInformation.firstName : "" } className="preview-username" />
               <MBody text={UserInformation?.lastName ? UserInformation.lastName : ""} className="preview-username" />
             </div>
@@ -134,6 +134,10 @@ export default function Preview() {
               </a>
             ))}
           </div>
+          {
+            linksArray.length === 0 && (<MBody text="No links added yet" className="no-links" />)
+          }
+
         </div>
       </div>
     </div>

@@ -63,11 +63,22 @@
     margin-bottom: 40px;
 }
 
+.preview-name-wrapper{
+    display: flex;
+align-items: center;
+    justify-content: center;
+    width: 90%;
+    
+}
+
 .preview-username{
     font-size: 20px !important;
     margin-bottom: 10px;
     color: black !important;
-    font-weight: 700 !important;
+    font-weight: 500 !important;
+  
+    /* width: 49%; */
+ 
 }
 
 .preview-email{
@@ -107,7 +118,13 @@
     color:white !important;
 }
 
-@media screen and (max-width: 1650px) {
+.no-links{
+   
+    text-align: center;
+}
+
+
+@media screen and (max-width: 1440px) {
     .preview-navbar-link{
         width: 12% !important;
        
@@ -115,9 +132,105 @@
 
     .preview-card-container{
         width: 20%;
+    }
+}
+
+
+@media (max-width: 1024px){
+
+    .preview-Header{
+        height: 35vh;
+      
+    }
+
+    .preview-body{
+        /* height: unset;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative; */
+        
+    }
+
+    .preview-card-container{
+        width: 50%;
+        height: 700px;
+    }
+
+    .preview-navbar-link{
+        width: 20% !important;
        
-    
+    }
+
+}
+
+@media (max-width: 821px){
+    .preview-card-container{
+        height: 500px;
+    }
+
+    .preview-navbar-link{
+        width: 30% !important;
+       
+    }
+}
+
+@media (max-width: 430px){
+
+    /* .preview-container{
+        display: flex;
+        flex-direction: column;
+    } */
+
+    .preview-Header{
+        height: unset;
+        background-color: unset;
+        border-radius: unset;
+        padding: unset;
     }
 
 
+    .preview-card-container{
+        width: 100%;
+        height: unset;
+    }
+
+    .preview-card-container{
+      background-color: unset;
+        position: unset;
+        top: unset;
+        padding: 20px 30px;
+        border-radius: 8px;
+        width: 100%;
+        min-height: unset;
+        margin-top: 80px;
+    
+    }
+    .preview-body{
+        height: unset;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: unset;
+        
+    }
+
+    .preview-navbar-link{
+        width: 47% !important;
+       
+    }
+
+    .preview-username{
+        font-size: 25px !important;
+        font-weight: 700 !important;
+      
+        /* width: 49%; */
+     
+    }
+    .preview-email{
+        font-size: 18px !important;
+    
+    }
+
+    
 }
