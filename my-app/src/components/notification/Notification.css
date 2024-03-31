@@ -52,3 +52,18 @@
     color: #856404;
     border: 1px solid #ffeeba;
   }
+
+
+  @media (max-width: 430px){
+    .notification-container {
+      width: 90%;
+      left: 4.5vw; 
+      bottom: 70px; 
+    }
+  }
+
+  @media (max-width: 375px){
+    .notification-container {
+      bottom: 50px; 
+    }
+  }

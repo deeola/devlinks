@@ -260,3 +260,60 @@
     max-height: 700px;
   }
 }
+
+
+/*Mobile*/
+
+@media (max-width: 430px) {
+  .edit-links-remove{
+    padding: unset;
+  }
+
+  .link-middle-addnewlinkcontainer{
+    margin-top: 30px;
+  }
+
+  .link-middle-mHeader {
+    font-size: 1.7rem !important;
+  }
+
+  .link-middle-mbody {
+    font-size: 1.1rem !important;
+  }
+
+  .custome-save-button {
+    padding: 20px 0px;
+
+  }
+  
+  .custom-button {
+    width: 100% !important ;
+  }
+
+  .addnewlinkcontainer {
+    max-height: 500px;
+  }
+
+
+
+}
+
+@media (max-width: 375px){
+
+  .link-middle-mHeader {
+    font-size: 1.4rem !important;
+  }
+
+  .link-middle-mbody {
+    font-size: .9rem !important;
+  }
+
+  .link-middle-image {
+    margin-bottom: 20px;
+  }
+
+  .addnewlinkcontainer {
+    max-height: 300px;
+  }
+
+}

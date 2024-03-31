@@ -48,6 +48,10 @@
 /* Iphone 14 */
 
 @media screen and (max-width: 430px){
+
+    .tabs {
+padding: 10px;
+    }
     .tabsText{
         display: none;
     }

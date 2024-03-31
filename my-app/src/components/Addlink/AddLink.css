@@ -47,3 +47,10 @@ align-items: center;
     }
 }
 
+@media (max-width: 430px){
+    .addlink-container{
+        padding: 20px 20px;
+        margin-bottom: 20px;
+ 
+    }
+}
