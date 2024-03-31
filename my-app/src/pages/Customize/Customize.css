@@ -261,6 +261,12 @@
   }
 }
 
+@media (max-width: 768px){
+  .addnewlinkcontainer {
+    max-height: 600px;
+  }
+}
+
 
 /*Mobile*/
 
