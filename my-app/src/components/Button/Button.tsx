@@ -1,19 +1,9 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+import React from "react";
 import "./Button.css";
+import { type Buttons } from "../../types";
 
-type Color = "active"| "secondary" | boolean;
-
-type Buttons = {
-  text: string;
-  buttonType?: string;
-  backgroundSubtype?: Color;
-  classname?: string;
-  onClick?: () => void;
-  isDisabled?: boolean;
-  type?: "submit" | "button" | "reset";
-  datatestid?: string;
-};
-
-export default function Button(Props: Buttons) {
+export default function Button (Props: Buttons) {
   const {
     text,
     buttonType,

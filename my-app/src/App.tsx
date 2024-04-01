@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";

@@ -101,3 +101,38 @@ export interface Tdropdown {
   handleButtonClick: (i: number) => void
   activeIndex: number | null
 };
+
+type Color = "active" | "secondary" | boolean;
+
+export interface Buttons {
+  text: string
+  buttonType?: string
+  backgroundSubtype?: Color
+  classname?: string
+  onClick?: () => void
+  isDisabled?: boolean
+  type?: "submit" | "button" | "reset"
+  datatestid?: string
+};
+
+export interface UInputs {
+  id: string
+  name: string
+  img?: string
+  placeholder?: string
+  type?: string
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  value: string | number
+  onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void
+  required?: boolean
+  inputRef?: React.LegacyRef<HTMLInputElement> | undefined
+  autoComplete?: string
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void
+  error?: boolean | string
+  errorMessage?: string
+  passwordImg?: boolean
+  handlePasswordClick?: () => void
+  handlePasswordLeave?: () => void
+  inputDataTestId?: string
+  readOnly?: boolean
+};
