@@ -136,3 +136,8 @@ export interface UInputs {
   inputDataTestId?: string
   readOnly?: boolean
 };
+
+export interface Tnavbar {
+  isShowProfile: boolean
+  setIsShowProfile: (value: boolean) => void
+};
