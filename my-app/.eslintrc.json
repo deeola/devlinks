@@ -1,0 +1,26 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "standard-with-typescript",
+        "plugin:react/recommended"
+    ],
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react"
+    ],
+    "rules": {
+        "semi": "off",
+        "quotes": "off",
+        "@typescript-eslint/semi": ["error", "always"],
+        "@typescript-eslint/quotes": "off"
+        // "avoidEscape": 0,
+        // "allowTemplateLiterals": true
+    }
+
+}

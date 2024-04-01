@@ -1,41 +1,14 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import React from "react";
 import { linkArray } from "../../linkArray";
 import "../Dropdown/Dropdown.css";
 import "../Input/InputField.css";
 import iconLink from "../../assets/images/icon-link.svg";
-import { MBody} from "../Text/Text";
+import { MBody } from "../Text/Text";
 import "../Addlink/AddLink.css";
+import { type IPrompts, type Tdropdown } from "../../types";
 
-
-type Tdropdown = {
-  errorMessage: string;
-  error: boolean;
-  type: string;
-  handleOptionClick: (
-    e: any,
-    i: any,
-    label: string,
-    image: string,
-    placeholder: string,
-    bgColor: string,
-    id: string
-  ) => void;
-  prompts: any;
-  handleInputChange: (
-    e: React.ChangeEvent<HTMLInputElement>,
-    i: number
-  ) => void;
-  handleDelete: (
-    e: React.MouseEvent<HTMLButtonElement>,
-    i: number,
-    id: string,
-    label: string
-  ) => void;
-  handleButtonClick: (i: number) => void;
-  activeIndex: number | null;
-};
-
-export default function AddnewLink(Props: Tdropdown) {
+export default function AddnewLink (Props: Tdropdown) {
   const {
     type,
     handleOptionClick,
@@ -43,12 +16,12 @@ export default function AddnewLink(Props: Tdropdown) {
     handleInputChange,
     handleDelete,
     handleButtonClick,
-    activeIndex,
+    activeIndex
   } = Props;
 
   return (
     <div>
-      {prompts.map((prompt: any, i: number) => (
+      {prompts.map((prompt: IPrompts, i: number) => (
         <div className="addlink-container" key={prompts.indexOf(prompt) + 1}>
           <div className="addlinknumber-remove">
             <MBody text={`= Link #${prompts.indexOf(prompt) + 1}`} />
@@ -56,7 +29,9 @@ export default function AddnewLink(Props: Tdropdown) {
               <button
                 type="button"
                 className="remove-button"
-                onClick={(e) => handleDelete(e, i, prompt.id, prompt.label)}
+                onClick={(e) => {
+                  handleDelete(e, i, prompt.id, prompt.label);
+                }}
               >
                 Remove
               </button>
@@ -80,18 +55,20 @@ export default function AddnewLink(Props: Tdropdown) {
                     aria-haspopup="listbox"
                     aria-expanded={i === activeIndex ? "true" : "false"}
                     aria-controls="select-dropdown"
-                    onClick={() => handleButtonClick(i)}
+                    onClick={() => {
+                      handleButtonClick(i);
+                    }}
                   >
                     <div className="dropdown-selected-value">
                       <span className="image">
                         <img
                           className="prompt-image"
-                          src={!prompt.image ? iconLink : prompt.image}
+                          src={prompt.image === "" ? iconLink : prompt.image}
                           alt="Icon"
                         />
                       </span>
                       <span className="selected-value">
-                        {!prompt.label
+                        {prompt.label === ""
                           ? "Please select a platform"
                           : prompt.label}
                       </span>
@@ -107,7 +84,7 @@ export default function AddnewLink(Props: Tdropdown) {
                       <li
                         key={index}
                         role="option"
-                        onClick={(e) =>
+                        onClick={(e) => {
                           handleOptionClick(
                             e,
                             i,
@@ -116,8 +93,8 @@ export default function AddnewLink(Props: Tdropdown) {
                             list.placeholder,
                             list.bgColor,
                             list.id
-                          )
-                        }
+                          );
+                        }}
                       >
                         <input type="radio" id={list.label} name={list.label} />
                         <div className="linkarraylabel">
@@ -144,7 +121,9 @@ export default function AddnewLink(Props: Tdropdown) {
                 <div className="input-and-error">
                   <input
                     value={prompt.answer}
-                    onChange={(e) => handleInputChange(e, i)}
+                    onChange={(e) => {
+                      handleInputChange(e, i);
+                    }}
                     type={type}
                     data-id="myInput"
                     className={`${prompt.error ? "error-text" : ""}`}

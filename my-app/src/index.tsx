@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/non-nullable-type-assertion-style */
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
@@ -11,19 +12,15 @@ import { ApiProvider } from "@reduxjs/toolkit/query/react";
 import { apiSlice } from "./state/api/apiSlice";
 import Notification from "./components/notification/Notification";
 
-
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
-);
+const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProvider>
         <ApiProvider api={apiSlice}>
           <Provider store={store}>
-           
             <App key="app" />
-            <Notification key="notification"  />
+            <Notification key="notification" />
           </Provider>
         </ApiProvider>
       </AuthProvider>
