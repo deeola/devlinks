@@ -1,18 +1,17 @@
-
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+import React from "react";
 import "./Notification.css";
 import { MBody } from "../Text/Text";
 import { useSelector, useDispatch } from "react-redux";
 import {
   removeNotification,
-  selectNotification,
+  selectNotification
 } from "../../state/notification/notificationSlice";
 
-import { TNotification } from "../../types";
+import { type TNotification } from "../../types";
 
-export default function Notification() {
-
+export default function Notification () {
   const notifications: TNotification[] = useSelector(selectNotification);
-
   const dispatch = useDispatch();
 
   const handleDismiss = (id: string) => {
@@ -29,7 +28,7 @@ export default function Notification() {
           <>
             <MBody text={notification.message} className="notification-text" />
           </>
-          <button className="notificationCloseButton" onClick={() => handleDismiss(notification.id)}>
+          <button className="notificationCloseButton" onClick={() => { handleDismiss(notification.id); }}>
             X
           </button>
         </div>

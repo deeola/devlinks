@@ -10,7 +10,6 @@ import PersistLogin from "./pages/auth/PersistLogin";
 import Missing from "./pages/auth/Missing";
 import RequireAuth from "./pages/auth/RequireAuth";
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 function App () {
   return (
     <Routes>

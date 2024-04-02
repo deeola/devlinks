@@ -1,3 +1,5 @@
+import { type Dispatch, type SetStateAction } from "react";
+
 export type TLogo = {
   size: "small" | "large",
   className?: string
@@ -140,4 +142,26 @@ export interface UInputs {
 export interface Tnavbar {
   isShowProfile: boolean
   setIsShowProfile: (value: boolean) => void
+};
+
+export interface TText {
+  text: string | undefined
+  className?: string
+}
+
+export interface TTabs {
+  text: string
+  TabsType?: string
+  default?: boolean
+  img?: string
+  links?: string
+  onClick?: () => void
+  classname?: string
+};
+
+export interface AuthData {
+  auth: any
+  setAuth: Dispatch<SetStateAction<any>>
+  persist: boolean
+  setPersist: Dispatch<SetStateAction<boolean>>
 };

@@ -1,19 +1,9 @@
-
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+import React from "react";
 import "./Tabs.css";
+import { type TTabs } from "../../types";
 
-
-type TTabs = {
-  text: string;
-  TabsType?: string;
-  default?: boolean;
-  img?: string;
-  links?: string;
-  onClick?: () => void;
-  classname?: string
-};
-
-
-export default function Tabs(Props: TTabs) {
+export default function Tabs (Props: TTabs) {
   const { text, TabsType, img, onClick, classname } = Props;
 
   return (

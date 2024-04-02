@@ -1,7 +1,10 @@
-import  { useState} from "react";
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
+/* eslint-disable @typescript-eslint/consistent-indexed-object-style */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 
+import { useState } from "react";
 
-//regex
+// regex
 const EMAIL_REGEX = /^[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
@@ -60,5 +63,3 @@ export const useAuthFormValidation = () => {
 
   return { errors, validateForm };
 };
-
-

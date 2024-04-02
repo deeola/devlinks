@@ -107,11 +107,12 @@ align-items: center;
 .preview-card-icon-name-container{
     display: flex;
     align-items: center;
+    width: 50%;
 }
 
 
 .preview-card-icon{
-    width: 25%;
+    width: 15%;
     margin-right: 5px;
 }
 
@@ -122,6 +123,8 @@ align-items: center;
 
 .card-name{
     color:white !important;
+
+
 }
 
 .no-links{

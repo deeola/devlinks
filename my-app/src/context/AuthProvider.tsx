@@ -1,14 +1,7 @@
-
-import { createContext, useState, ReactNode, useContext, Dispatch, SetStateAction } from "react";
-
-
-type AuthData = {
-  auth: any;
-  setAuth: Dispatch<SetStateAction<any>>;
-  persist: boolean;
-  setPersist: Dispatch<SetStateAction<boolean>>;
-};
-
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+import React from "react";
+import { createContext, useState, type ReactNode, useContext } from "react";
+import { type AuthData } from "../types";
 
 const initialAuthContext: AuthData = {
   auth: {},
@@ -19,18 +12,15 @@ const initialAuthContext: AuthData = {
 
 const AuthContext = createContext<AuthData>(initialAuthContext);
 
-type AuthProviderProps = {
-  children: ReactNode;
+export interface AuthProviderProps {
+  children: ReactNode
 };
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-
-  const [auth, setAuth] = useState({});
+  const [auth, setAuth] = useState({ });
   const persistValue = localStorage.getItem("persist");
-
-  const [persist, setPersist] = useState<boolean>(persistValue ? persistValue === "true" : false);
-  
-
+  // check here for persist value
+  const [persist, setPersist] = useState<boolean>((persistValue != null) ? persistValue === "true" : false);
 
   return (
     <AuthContext.Provider value={{ auth, setAuth, persist, setPersist }}>
@@ -42,5 +32,3 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 export const useAuth = () => useContext(AuthContext);
 
 export default AuthContext;
-
-
