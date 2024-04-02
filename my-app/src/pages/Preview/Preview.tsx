@@ -1,59 +1,48 @@
-import { useState } from "react";
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+import React from "react";
 import "./Preview.css";
 import Button from "../../components/Button/Button";
 import { MBody, SBody } from "../../components/Text/Text";
 import arrow from "../../assets/images/icon-arrow-right.svg";
-
 
 import { Link } from "react-router-dom";
 
 import {
   useGetLinksQuery,
   useGetUsersInfoQuery,
-  useGetPhotoQuery,
+  useGetPhotoQuery
 } from "../../state/api/apiSlice";
 import { useAuth } from "../../context/AuthProvider";
 
-
-export default function Preview() {
+export default function Preview () {
   const { auth } = useAuth();
-  let username = auth?.user;
-
+  const username = auth?.user;
 
   const {
     data: userInfo,
     isSuccess: userInfoSuccess,
     isError: userInfoError,
-    error: userInfoErrorData,
+    error: userInfoErrorData
   } = useGetUsersInfoQuery(username);
 
-  let UserInformation 
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  let UserInformation;
   let pictureLink;
 
-  console.log(userInfo, "userInfo in preview")
-  
   if (userInfoSuccess) {
     UserInformation = userInfo;
-
   } else if (userInfoError) {
     if ("status" in userInfoErrorData && userInfoErrorData.status === 404) {
       UserInformation = {};
     } else {
       UserInformation = {};
-      console.error("An error occurred:", userInfoErrorData);
     }
   }
 
-
-  console.log(UserInformation?.imgName)
-
   const {
-    data: pictured,
-    isSuccess: picturedSuccess,
-    isLoading: picturedLoading,
+    data: pictured
   } = useGetPhotoQuery(UserInformation?.imgName);
-
-
 
   if (pictured?.url !== undefined) {
     pictureLink = pictured.url;
@@ -66,14 +55,13 @@ export default function Preview() {
     isLoading,
     isSuccess,
     isError,
-    error,
+    error
   } = useGetLinksQuery(username);
 
   let linksArray;
 
   if (isLoading) {
     linksArray = [];
-  
   } else if (isSuccess) {
     linksArray = links;
   } else if (isError) {
@@ -143,6 +131,3 @@ export default function Preview() {
     </div>
   );
 }
-
-
-

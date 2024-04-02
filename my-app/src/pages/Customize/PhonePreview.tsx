@@ -1,38 +1,25 @@
-import { useEffect, useState} from "react";
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+
+import React, { useEffect, useState } from "react";
 import "./PhonePreview.css";
 import arrow from "../../assets/images/icon-arrow-right.svg";
 import { MBody, SBody } from "../../components/Text/Text";
+import { type TPhonePreviewProps } from "../../types";
 
+export default function PhonePreview (Props: TPhonePreviewProps) {
+  let { isPrompts, userInformation, profilePicture, userId, isPictureLoading } = Props;
 
-
-type TProps = {
-  isPrompts:  object[];
-  userId: string;
-  userInformation: any;
-  profilePicture: string;
-  isPictureLoading: boolean;
-  }
-
-
-export default function PhonePreview(Props: TProps ) {
-
-  let { isPrompts, userInformation, profilePicture, userId, isPictureLoading} = Props;
-
-  
   if (!userInformation) {
     userInformation = null;
   }
-  
 
- 
   const [details, setDetails] = useState({
     firstName: "",
     lastName: "",
     email: "",
     picture: ""
-  })
-
-
+  });
 
   useEffect(() => {
     if (userInformation !== null) {
@@ -42,29 +29,22 @@ export default function PhonePreview(Props: TProps ) {
         email: userInformation.email,
         picture: userInformation.imgName
       });
-    } 
-
+    }
   }, [userInformation]);
-  
 
-  
   if (!isPrompts) {
     // Handle the case where isPrompts (linksArray) is undefined
-    isPrompts = []
+    isPrompts = [];
   }
 
+  let mylinks: object[] = [];
 
-  let  mylinks: object[] = [];
-
-  if(isPrompts.length > 0){
-   mylinks = isPrompts
+  if (isPrompts.length > 0) {
+    mylinks = isPrompts;
   }
 
-
-
-  //hide other items if the length is more than 5
+  // hide other items if the length is more than 5
   const shouldScroll = isPrompts.length > 5;
-
 
   return (
     <div className="phonePreview">
@@ -84,9 +64,11 @@ export default function PhonePreview(Props: TProps ) {
           stroke="#737373"
           d="M12 55.5C12 30.923 31.923 11 56.5 11h24C86.851 11 92 16.149 92 22.5c0 8.008 6.492 14.5 14.5 14.5h95c8.008 0 14.5-6.492 14.5-14.5 0-6.351 5.149-11.5 11.5-11.5h24c24.577 0 44.5 19.923 44.5 44.5v521c0 24.577-19.923 44.5-44.5 44.5h-195C31.923 621 12 601.077 12 576.5v-521Z"
         />
-        {!profilePicture && !isPictureLoading ? (
+        {!profilePicture && !isPictureLoading
+          ? (
           <circle cx="153.5" cy="112" r="48" fill="#EEE" />
-        ) : (
+            )
+          : (
           <foreignObject
             x="100"
             y="64"
@@ -98,29 +80,34 @@ export default function PhonePreview(Props: TProps ) {
               <img src={profilePicture} alt="Profile" className="rounded-image" />
             </div>
           </foreignObject>
-        )}
+            )}
 
-        {!details.firstName && !details.lastName ? (
+        {!details.firstName && !details.lastName
+          ? (
           <rect width="160" height="16" x="73.5" y="185" fill="#EEE" rx="8" />
-        ) : (
+            )
+          : (
           <foreignObject x="0" y="180" className="nameEmailForeignObject">
             <div className="textFONAMES">
             <MBody className="textFNAME" text={details.firstName} />
             <MBody className="textLNAME" text={" " + details.lastName} />
             </div>
-            
-          </foreignObject>
-        )}
 
-        {!userId  ? (
+          </foreignObject>
+            )}
+
+        {!userId
+          ? (
           <rect width="160" height="16" x="73.5" y="207" fill="#EEE" rx="8" />
-        ) : (
+            )
+          : (
           <foreignObject x="0" y="220" className="nameEmailForeignObject">
             <SBody className="textFO" text={userId} />
           </foreignObject>
-        )}
+            )}
 
-        {mylinks.length === 0 ? (
+        {mylinks.length === 0
+          ? (
           <>
             <rect width="237" height="44" x="35" y="278" fill="#EEE" rx="8" />
             <rect width="237" height="44" x="35" y="342" fill="#EEE" rx="8" />
@@ -128,7 +115,8 @@ export default function PhonePreview(Props: TProps ) {
             <rect width="237" height="44" x="35" y="470" fill="#EEE" rx="8" />
             <rect width="237" height="44" x="35" y="534" fill="#EEE" rx="8" />
           </>
-        ) : (
+            )
+          : (
           <>
             {mylinks.slice(0, shouldScroll ? 5 : undefined).map(
               (myarray: any, index: any) =>
@@ -176,7 +164,7 @@ export default function PhonePreview(Props: TProps ) {
               ></foreignObject>
             )}
           </>
-        )}
+            )}
       </svg>
     </div>
   );

@@ -1,33 +1,23 @@
-import { useState, useEffect } from "react";
+/* eslint-disable multiline-ternary */
+/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+import React, { useState, useEffect } from "react";
 import { MBody, MHeader } from "../../components/Text/Text";
 import Button from "../../components/Button/Button";
 import picture from "../../assets/images/illustration-empty.svg";
 import { v4 as uuidv4 } from "uuid";
 import AddnewLink from "../../components/Addlink/Addnewlink";
-
-import { TCustomizeWithError } from "../../types";
-import {
-  useAddLinksMutation,
-  useDeleteLinkMutation,
-} from "../../state/api/apiSlice";
-import {
-  addNotification,
-  removeNotification,
-} from "../../state/notification/notificationSlice";
+import { type TCustomizeWithError, type TProps } from "../../types";
+import { useAddLinksMutation, useDeleteLinkMutation } from "../../state/api/apiSlice";
+import { addNotification, removeNotification } from "../../state/notification/notificationSlice";
 import { useDispatch } from "react-redux";
 
-type TProps = {
-  isPrompts: object[];
-  userId: string;
-  userInformation: any;
-};
-
-export default function CustomeLink(Props: TProps) {
+export default function CustomeLink (Props: TProps) {
   const dispatch = useDispatch();
   const [addLinks] = useAddLinksMutation();
   const [deleteLink] = useDeleteLinkMutation();
 
-  //display the prompt if true and let"s get you started if false
+  // display the prompt if true and let"s get you started if false
   const [isLinkAvaialable, setLinkAvaialable] = useState<boolean>(false);
 
   // get updated link from backend if there is any
@@ -35,6 +25,7 @@ export default function CustomeLink(Props: TProps) {
 
   let { isPrompts, userId } = Props;
 
+  // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
   if (!isPrompts) {
     // Handle the case where isPrompts (linksArray) is undefined
     isPrompts = [];
@@ -50,8 +41,8 @@ export default function CustomeLink(Props: TProps) {
       placeholder: "Enter a valid link",
       userId: "",
       error: false,
-      errorMessage: "",
-    },
+      errorMessage: ""
+    }
   ]);
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -73,7 +64,7 @@ export default function CustomeLink(Props: TProps) {
           placeholder: "",
           userId: link.userId,
           error: false,
-          errorMessage: "",
+          errorMessage: ""
         })
       );
 
@@ -89,19 +80,15 @@ export default function CustomeLink(Props: TProps) {
     setActiveIndex(i === activeIndex ? null : i);
   };
 
-
-
   // Function to add a new prompt
   const handleAddPrompt = () => {
     // Check if any prompt's answer is empty
 
-    console.log("oluwaloseyi")
-    setLinkAvaialable(true)
+    console.log("oluwaloseyi");
+    setLinkAvaialable(true);
     const hasEmptyAnswer = prompts.some((prompt) => prompt.answer === "");
 
     if (!hasEmptyAnswer) {
-      // setIsActive(true);
-
       // Add a new prompt to the prompts array
       setPrompts([
         ...prompts,
@@ -114,16 +101,16 @@ export default function CustomeLink(Props: TProps) {
           placeholder: "",
           userId: userId,
           error: false,
-          errorMessage: "",
-        },
+          errorMessage: ""
+        }
       ]);
     }
   };
 
   // Function to handle option click
   const handleOptionClick = (
-    e: any,
-    i: any,
+    e: React.MouseEvent<HTMLLIElement>,
+    i: number,
     label: string,
     image: string,
     placeholder: string,
@@ -136,7 +123,7 @@ export default function CustomeLink(Props: TProps) {
           type: "warning",
           message:
             "A link with the same label already exists. Please enter a different label.",
-          id: "duplicate-label",
+          id: "duplicate-label"
         })
       );
       setTimeout(() => {
@@ -154,7 +141,7 @@ export default function CustomeLink(Props: TProps) {
           image: image,
           placeholder: placeholder,
           label: label,
-          userId: userId,
+          userId: userId
         };
       }
       return prompt;
@@ -162,8 +149,6 @@ export default function CustomeLink(Props: TProps) {
     setPrompts(updatedPrompts);
     setActiveIndex(null);
   };
-
-
 
   // Function to handle input change
   const handleInputChange = (
@@ -175,14 +160,11 @@ export default function CustomeLink(Props: TProps) {
       const updatedPrompts = [...prevPrompts];
       updatedPrompts[i] = {
         ...updatedPrompts[i],
-        answer: value,
+        answer: value
       };
       return updatedPrompts;
     });
   };
-
- 
-
 
   // Function to handle prompt deletion
   const handleDelete = async (
@@ -194,9 +176,10 @@ export default function CustomeLink(Props: TProps) {
     e.preventDefault();
     try {
       // Remove the prompt from the prompts array
-      let deletePrompts = [...prompts];
+      const deletePrompts = [...prompts];
       deletePrompts.splice(i, 1);
-      deleteLink({ id, userId: userId });
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      deleteLink({ id, userId });
 
       // Optionally, update the local state with the modified prompts array
       setPrompts(deletePrompts);
@@ -206,27 +189,25 @@ export default function CustomeLink(Props: TProps) {
         setGetUpdatedLinks(false);
       }
 
-
       dispatch(
         addNotification({
           type: "success",
           message: `Link with  ${
             label !== "" ? "label " + label : "no label"
           } has been deleted.`,
-          id: "delete-link",
+          id: "delete-link"
         })
       );
       setTimeout(() => {
         dispatch(removeNotification("delete-link"));
       }, 3000);
-
     } catch (error) {
       // Handle any errors here
       dispatch(
         addNotification({
           type: "error",
           message: `Link with label "${label}" could not be  deleted. Try again later please`,
-          id: "delete-link-failed",
+          id: "delete-link-failed"
         })
       );
       setTimeout(() => {
@@ -234,9 +215,6 @@ export default function CustomeLink(Props: TProps) {
       }, 3000);
     }
   };
-
-
-
 
   // Function to save prompts
   const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -250,7 +228,7 @@ export default function CustomeLink(Props: TProps) {
           return {
             ...prompt,
             error: true,
-            errorMessage: "Please enter a link",
+            errorMessage: "Please enter a link"
           };
         }
         return prompt;
@@ -262,7 +240,7 @@ export default function CustomeLink(Props: TProps) {
         addNotification({
           type: "error",
           message: "Please enter a link",
-          id: "empty-answer",
+          id: "empty-answer"
         })
       );
       setTimeout(() => {
@@ -291,16 +269,17 @@ export default function CustomeLink(Props: TProps) {
         label,
         bgColor,
         image,
-        userId,
+        userId
       })
     );
 
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     addLinks(newPromptsArray);
     dispatch(
       addNotification({
         type: "success",
         message: "Links saved successfully",
-        id: "save-links",
+        id: "save-links"
       })
     );
   };
@@ -308,18 +287,9 @@ export default function CustomeLink(Props: TProps) {
   console.log("isLinkAvailable is " + isLinkAvaialable);
   console.log("link is  truly available  is " + getUpdatedLinks);
 
-  //if there is no items from the backend, isLinkAvailable should be false
-
-  // if there is links from the backend, isLinkAvaialable should be true
-
-  // if all items is deleted, isLinkAvailabke should be false
-
-  // if add new prompt is clicked, isLinkAvailable should be true
-
   return (
     <div className="customelinkcontainer">
       <form className="customForm" onSubmit={handleSave}>
-
         <div className="edit-links-remove">
           <div>
             <MHeader className="your-links" text="Customize your links" />
@@ -338,7 +308,7 @@ export default function CustomeLink(Props: TProps) {
           </div>
 
           <div className="link-middle-addnewlinkcontainer">
-            {isLinkAvaialable || getUpdatedLinks ? (
+            { isLinkAvaialable || getUpdatedLinks ? (
               <div className="addnewlinkcontainer">
                 <AddnewLink
                   errorMessage={errorMessage}
@@ -358,7 +328,10 @@ export default function CustomeLink(Props: TProps) {
                   <img src={picture} alt="get-started-icon" />
                 </div>
                 <div className="link-middle-header">
-                  <MHeader className="link-middle-mHeader" text="Let’s get you started" />
+                  <MHeader
+                    className="link-middle-mHeader"
+                    text="Let’s get you started"
+                  />
                 </div>
                 <div className="link-middle-text">
                   <MBody
@@ -371,8 +344,6 @@ export default function CustomeLink(Props: TProps) {
           </div>
         </div>
 
-
-
         <div className="custome-save-button">
           <Button
             backgroundSubtype={"active"}
@@ -381,8 +352,6 @@ export default function CustomeLink(Props: TProps) {
             type="submit"
           />
         </div>
-
-
       </form>
     </div>
   );
