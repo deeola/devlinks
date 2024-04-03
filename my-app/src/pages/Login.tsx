@@ -1,4 +1,9 @@
-import { useState, useEffect, useRef, MutableRefObject } from "react";
+/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+import React, { useState, useEffect, useRef, type MutableRefObject } from "react";
 import "./Auth.css";
 import Logo from "../components/Logo/Logo";
 import { MBody, MHeader, SBody } from "../components/Text/Text";
@@ -9,18 +14,15 @@ import password from "../assets/images/icon-password.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../state/user/authSlice";
-import { AppDispatch } from "../state/store";
+import { type AppDispatch } from "../state/store";
 import useAuth from "../hooks/useAuth";
 import { useLoginFormValidation } from "../hooks/useFormValidation";
 import {
   addNotification,
-  removeNotification,
+  removeNotification
 } from "../state/notification/notificationSlice";
 
-
-
-
-export default function Login() {
+export default function Login () {
   const { setAuth, persist, setPersist } = useAuth();
 
   const navigate = useNavigate();
@@ -28,18 +30,15 @@ export default function Login() {
 
   const dispatch = useDispatch<AppDispatch>();
   const emailRef: MutableRefObject<HTMLInputElement | null> = useRef(null);
-  const [user, setEmail] = useState("");
-  const [pwd, setPwd] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-
+  const [user, setEmail] = useState<string>("");
+  const [pwd, setPwd] = useState<string>("");
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   useEffect(() => {
     emailRef.current?.focus();
   }, []);
 
-
-
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const isValid = validateForm(user, pwd);
@@ -57,7 +56,7 @@ export default function Login() {
                   message:
                     "Login failed. Please check your details again and try again",
                   type: "error",
-                  id: "unauthorizedlogin",
+                  id: "unauthorizedlogin"
                 })
               );
 
@@ -75,7 +74,7 @@ export default function Login() {
                 addNotification({
                   message: "No server response, please try again later",
                   type: "error",
-                  id: "noserverresponse",
+                  id: "noserverresponse"
                 })
               );
 
@@ -90,7 +89,7 @@ export default function Login() {
           addNotification({
             message: "An unexpected error occurred. Please try again later.",
             type: "error",
-            id: "unexpectederror",
+            id: "unexpectederror"
           })
         );
 
@@ -101,13 +100,9 @@ export default function Login() {
     }
   };
 
-  
-
   const togglePersist = () => {
-    setPersist((prev: any) => !prev);
+    setPersist((prev: boolean) => !prev);
   };
-
-
 
   useEffect(() => {
     localStorage.setItem("persist", persist.toString());
@@ -135,11 +130,11 @@ export default function Login() {
                   name="email"
                   placeholder="e.g. alex@email.com"
                   value={user}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => { setEmail(e.target.value); }}
                   aria-describedby="uidnote"
                   inputRef={emailRef}
                   autoComplete="off"
-                  error={errors.email ? true : false}
+                  error={!!errors.email}
                   errorMessage={errors.email}
                 />
               </div>
@@ -153,19 +148,19 @@ export default function Login() {
                     name="password"
                     type={showPassword ? "text" : "password"}
                     id="password"
-                    onChange={(e) => setPwd(e.target.value)}
+                    onChange={(e) => { setPwd(e.target.value); }}
                     value={pwd}
                     aria-describedby="pwdnote"
-                    error={errors.password ? true : false}
+                    error={!!errors.password}
                     errorMessage={errors.password !==
                       "Password must be at least 8 characters long"
-                        ? errors.password
-                        : ""}
+                      ? errors.password
+                      : ""}
                     passwordImg
-                    handlePasswordClick={() => setShowPassword(true)}
-                    handlePasswordLeave={() => setShowPassword(false)}
+                    handlePasswordClick={() => { setShowPassword(true); }}
+                    handlePasswordLeave={() => { setShowPassword(false); }}
                     inputDataTestId="password-input"
-                    
+
                   />
                 </div>
               </div>
@@ -185,7 +180,7 @@ export default function Login() {
               <Button
               datatestid="login-button"
                 text="Login"
-                isDisabled={!user && !pwd ? true : false}
+                isDisabled={!!(!user && !pwd)}
                 backgroundSubtype={!user && !pwd ? "active" : "secondary"}
               />
             </div>

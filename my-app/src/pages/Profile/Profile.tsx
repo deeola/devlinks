@@ -1,4 +1,7 @@
-import React, { useState, useRef, SetStateAction } from "react";
+/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+import React, { useState, useRef, type SetStateAction } from "react";
 import { MBody, MHeader } from "../../components/Text/Text";
 import UploadImage from "../../components/Uploadimage/UploadImage";
 import InputField from "../../components/Input/InputField";
@@ -6,16 +9,11 @@ import Button from "../../components/Button/Button";
 import "./Profile.css";
 import {
   useAddUsersInfoMutation,
-  useSubmitPhotoMutation,
-  useGetPhotoQuery,
+  useSubmitPhotoMutation
 } from "../../state/api/apiSlice";
+import { type IProfileUserInfo } from "../../types";
 
-type TProps = {
-  userInformation: any;
-  userId: string;
-};
-
-export default function Profile(Props: TProps) {
+export default function Profile (Props: IProfileUserInfo) {
   const { userInformation, userId } = Props;
 
   const buttonText = userInformation?.firstName ? "Update" : "Save";
@@ -23,80 +21,69 @@ export default function Profile(Props: TProps) {
   const [addUserInfo] = useAddUsersInfoMutation();
 
   const ref = useRef<HTMLInputElement>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [profileImage, setProfileImage] =
     React.useState<SetStateAction<string>>("");
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [fileInputStyle, setFileInputStyle] = useState<React.CSSProperties>({});
-  const [file, setFile] = useState();
+  const [file, setFile] = useState<File | undefined>();
 
   const handleClick = () => {
     ref.current?.click();
   };
 
   const [userInfo, setUserInfo] = useState<{
-    firstName: string;
-    lastName: string;
-    email: string;
+    firstName: string
+    lastName: string
+    email: string
   }>({
     firstName: "",
     lastName: "",
-    email: userId,
+    email: userId
   });
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setUserInfo({
       ...userInfo,
-      [name]: value,
+      [name]: value
     });
-
-    console.log(name, value);
   };
 
-  const fileSelected = (event: any) => {
-    const file = event.target.files[0];
+  const fileSelected = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
     setFile(file);
 
-    const files = Array.from(event.currentTarget.files ?? []) as File[];
+    const files: File[] = Array.from(event.target.files ?? []);
     setSelectedFiles(files);
 
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (typeof reader.result === "string") {
-          setFileInputStyle({
-            backgroundImage: `url(${reader.result})`,
-          });
-          setProfileImage(reader.result as string);
-        }
-      };
-      reader.readAsDataURL(file);
-    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (typeof reader.result === "string") {
+        setFileInputStyle({
+          backgroundImage: `url(${reader.result})`
+        });
+        setProfileImage(reader.result);
+      }
+    };
+    reader.readAsDataURL(file);
   };
 
   const [submitPhotoMutation] = useSubmitPhotoMutation();
 
-  const handleSave = async (e: any) => {
+  const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    const response = { email: userId, profileImage: profileImage };
-    //  await dispatch(userImageURLThunk(response));
-
     const url = await submitPhotoMutation({ event: e, image: file });
-
-    console.log(url);
 
     let imageName;
     if ("data" in url && url.data) {
       imageName = url.data.imageName;
-    } else {
-      // Handle the case where data doesn't exist or is null/undefined
     }
-
     const userData = { ...userInfo, imgName: imageName };
 
-    console.log(userData, "userData");
-
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     addUserInfo(userData);
 
     return userData;
@@ -130,7 +117,6 @@ export default function Profile(Props: TProps) {
         </div>
 
         <div className="input-update-container">
-
 
           <div className="general-input-container">
             <div className="form_control">

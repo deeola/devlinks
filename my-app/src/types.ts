@@ -168,10 +168,13 @@ export interface userInfo {
   lastName: string
 };
 
-export interface TProps {
-  isPrompts: object[]
-  userId: string
+export interface IProfileUserInfo {
   userInformation: userInfo | null
+  userId: string
+};
+
+export interface TProps extends IProfileUserInfo {
+  isPrompts: object[]
 };
 
 export interface TPhonePreviewProps extends TProps {
