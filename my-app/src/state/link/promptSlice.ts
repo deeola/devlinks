@@ -1,8 +1,6 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import axios from "../../api/axios";
-import {ILinks, TLinks} from "../../types";
-import { RootState } from "../store";
-
+import { createSlice } from "@reduxjs/toolkit";
+import { type ILinks } from "../../types";
+import { type RootState } from "../store";
 
 const initialState: ILinks = {
   links: [],
@@ -10,23 +8,14 @@ const initialState: ILinks = {
   error: undefined
 };
 
-
-//delete thunk
-
-
-
-
-
+// delete thunk
 
 const promptSlice = createSlice({
   name: "prompts",
   initialState,
-  reducers: {},
+  reducers: {}
 });
 
-
-
 export const selectAllPrompts = (state: RootState) => state.promptSlice.links;
-
 
 export default promptSlice.reducer;

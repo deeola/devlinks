@@ -1,19 +1,20 @@
-
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
 import { createSlice } from "@reduxjs/toolkit";
 
-
-import { MergedValues } from "../../types";
+import { type MergedValues } from "../../types";
 
 const initialState = {
-  mergedValue:{  prompt: "",
-  answer: "",
-  label: "",
-  bgColor: "",
-  image: "",
-  id: "",
-  placeholder: "",
-  urlAddress: "",
-  timestamp: new Date().getTime(), } as MergedValues
+  mergedValue: {
+    prompt: "",
+    answer: "",
+    label: "",
+    bgColor: "",
+    image: "",
+    id: "",
+    placeholder: "",
+    urlAddress: "",
+    timestamp: new Date().getTime()
+  } as MergedValues
 };
 
 export const mergedValuesSlice = createSlice({
@@ -21,9 +22,9 @@ export const mergedValuesSlice = createSlice({
   initialState,
   reducers: {
     updateMergedValue: (state, action) => {
-        state.mergedValue = { ...state.mergedValue, ...action.payload };
+      state.mergedValue = { ...state.mergedValue, ...action.payload };
     }
-  },
+  }
 });
 
 export const { updateMergedValue } = mergedValuesSlice.actions;

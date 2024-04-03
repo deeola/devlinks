@@ -181,3 +181,26 @@ export interface TPhonePreviewProps extends TProps {
   profilePicture: string
   isPictureLoading: boolean
 };
+
+export interface IDropdown {
+  dropArray: Array<{
+    image: string
+    label: string
+    selected?: boolean
+  }>
+  dropArrayImage: string
+  selectedValue: string
+  onChange: (value: string) => void
+};
+
+export interface IUser {
+  firstName: string
+  lastName: string
+  email: string
+};
+
+export interface UserState {
+  users: IUser | null
+  status: 'idle' | 'succeeded' | 'failed'
+  error: string | null
+};

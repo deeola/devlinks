@@ -1,14 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { createSlice } from "@reduxjs/toolkit";
-import { MergedValues,  TLinkState  } from "../../types";
-
-
+import { type MergedValues, type TLinkState } from "../../types";
 
 const initialState: TLinkState = {
-  links: [],
+  links: []
 };
-
-
-
 
 const linkSlice = createSlice({
   name: "link",
@@ -25,7 +21,6 @@ const linkSlice = createSlice({
         );
         if (existingIndex !== -1) {
           state.links[existingIndex] = prompt;
-
         } else {
           state.links.push(prompt);
         }
@@ -33,8 +28,8 @@ const linkSlice = createSlice({
     },
     removeLink: (state, action) => {
       state.links = state.links.filter((link) => link.id !== action.payload);
-    },
-  },
+    }
+  }
 });
 
 export const { setAllPrompts, addNewLink, removeLink } = linkSlice.actions;
