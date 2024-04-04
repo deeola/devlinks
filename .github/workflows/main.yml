@@ -22,6 +22,10 @@ jobs:
       run: npm install --legacy-peer-deps
       working-directory: my-app
 
+    - name: Install Eslint plugin
+      run: npm install eslint-plugin-react@latest --save-dev --legacy-peer-deps
+      working-directory: my-app
+
     - name: Run Eslint
       run: npm run lint
       working-directory: my-app
