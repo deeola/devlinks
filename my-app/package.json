@@ -36,7 +36,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --watchAll --transformIgnorePatterns 'node_modules/(?!axios)/'",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint src/**/*.jsx src/**/*.tsx src/**/*.ts"
   },
   "eslintConfig": {
     "extends": [

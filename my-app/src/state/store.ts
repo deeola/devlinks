@@ -1,3 +1,4 @@
+/* eslint-disable object-shorthand */
 import { configureStore } from "@reduxjs/toolkit";
 import userSlice from "./user/userSlice";
 import { setupListeners } from "@reduxjs/toolkit/query/react";

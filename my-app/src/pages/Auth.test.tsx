@@ -1,19 +1,17 @@
+import React from "react";
 import {
   render,
   fireEvent,
   waitFor,
   screen,
-  cleanup,
+  cleanup
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Auth from "./Auth";
-import { BrowserRouter, MemoryRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "../context/AuthProvider";
 import { ApiProvider } from "@reduxjs/toolkit/query/react";
 import { apiSlice } from "../state/api/apiSlice";
-import Login from "./Login";
-
-
 
 afterEach(cleanup);
 
@@ -28,7 +26,6 @@ const MockApp = () => {
     </AuthProvider>
   );
 };
-
 
 describe("<Register />", () => {
   it("renders registration form with input fields and button", async () => {
@@ -112,7 +109,7 @@ describe("<Register />", () => {
 
   test("redirects to login page after successful registration", async () => {
     render(<MockApp />);
-    
+
     const emailInput = screen.getByPlaceholderText("e.g. alex@email.com");
     const passwordInput = screen.getByPlaceholderText("At least 8 characters");
     const passwordMatchInput = screen.getByPlaceholderText("Enter your password again");
@@ -129,7 +126,4 @@ describe("<Register />", () => {
       expect(window.location.pathname).toBe("/");
     });
   });
-
- 
-
 });
