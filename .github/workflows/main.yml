@@ -23,7 +23,7 @@ jobs:
       working-directory: my-app
 
     - name: Run Eslint
-      run: npm lint
+      run: npm run lint
       working-directory: my-app
 
     # - name: Run tests
