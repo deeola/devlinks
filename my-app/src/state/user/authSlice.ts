@@ -82,7 +82,6 @@ const authSlice = createSlice({
         state.accessToken = action.payload.accessToken;
       }).addCase(register.rejected, (state, action) => {
         state.status = 'failed';
-        console.log(state);
         state.error = action.error.message ?? 'Registration failed';
       });
   }

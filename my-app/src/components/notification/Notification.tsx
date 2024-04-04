@@ -19,7 +19,7 @@ export default function Notification () {
   };
 
   return (
-    <div className="notification-container">
+    <div className="notification-container" data-testid="notification-container">
       {notifications.map((notification) => (
         <div
           key={notification.id}

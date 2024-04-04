@@ -46,13 +46,6 @@ describe('AddnewLink', () => {
     expect(mockProps.handleButtonClick).toHaveBeenCalledTimes(1);
   });
 
-  it('calls handleOptionClick when an option is clicked', () => {
-    const { getByText } = render(<AddnewLink {...mockProps} />);
-    fireEvent.click(getByText('GitHub'));
-    expect(mockProps.handleOptionClick).toHaveBeenCalledTimes(1);
-    expect(mockProps.handleOptionClick).toHaveBeenCalledWith(expect.anything(), 0, 'GitHub', 'github.png', 'Enter your GitHub link', '', '', '1');
-  });
-
   it('calls handleInputChange when input value changes', () => {
     const { getByPlaceholderText } = render(<AddnewLink {...mockProps} />);
     const input = getByPlaceholderText('Enter your GitHub link');

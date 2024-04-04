@@ -67,7 +67,7 @@ export default function AddnewLink (Props: Tdropdown) {
                           alt="Icon"
                         />
                       </span>
-                      <span className="selected-value">
+                      <span className="selected-value" >
                         {prompt.label === ""
                           ? "Please select a platform"
                           : prompt.label}

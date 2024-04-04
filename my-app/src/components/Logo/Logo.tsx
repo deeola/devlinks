@@ -6,6 +6,6 @@ import "./Logo.css";
 import { type TLogo } from "../../types";
 
 export default function Logo (Props: TLogo) {
-  const { size, className } = Props;
-  return (<img className={`logo-img ${className}`} src={size === "small" ? smallLogo : largeLogo} alt="devlinks-logo"/>);
+  const { size, className, logoDataTestId } = Props;
+  return (<img data-testid={logoDataTestId} className={`logo-img ${className}`} src={size === "small" ? smallLogo : largeLogo} alt="devlinks-logo"/>);
 };

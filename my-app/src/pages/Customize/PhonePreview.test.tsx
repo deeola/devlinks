@@ -1,3 +1,4 @@
+import React from "react";
 import { render, screen } from "@testing-library/react";
 import PhonePreview from "./PhonePreview";
 
@@ -8,7 +9,7 @@ describe("<PhonePreview />", () => {
       firstName: "John",
       lastName: "Doe",
       email: "johndoe@example.com",
-      imgName: "profile.jpg",
+      imgName: "profile.jpg"
 
     },
     profilePicture: "https://example.com/profile.jpg",

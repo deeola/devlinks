@@ -1,5 +1,6 @@
+import React from "react";
 import { render, screen } from "@testing-library/react";
-import { MemoryRouter, Navigate } from "react-router-dom";
+import { MemoryRouter } from "react-router-dom";
 import RequireAuth from "./RequireAuth";
 import useAuth from "../../hooks/useAuth";
 
@@ -33,6 +34,5 @@ describe("RequireAuth component", () => {
     expect(screen.queryByText(/loading/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/protected/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/Login/i)).not.toBeInTheDocument();
-    
   });
 });

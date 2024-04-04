@@ -3,6 +3,7 @@ import { type Dispatch, type SetStateAction } from "react";
 export interface TLogo {
   size: "small" | "large"
   className?: string
+  logoDataTestId?: string
 }
 
 export interface TCustomize {
@@ -203,4 +204,14 @@ export interface UserState {
   users: IUser | null
   status: 'idle' | 'succeeded' | 'failed'
   error: string | null
+};
+
+export interface TUploadImage {
+  text: string
+  subtext?: string
+  onChange: React.ChangeEventHandler<HTMLInputElement>
+  selectedFiles: File[]
+  handleClick: () => void
+  inputRef: React.RefObject<HTMLInputElement>
+  fileInputStyle: React.CSSProperties
 };

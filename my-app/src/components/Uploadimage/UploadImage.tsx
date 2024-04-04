@@ -4,23 +4,14 @@ import React from "react";
 import uploadimageicon from "../../assets/images/icon-upload-image.svg";
 import "./UploadImage.css";
 import { MBody } from "../Text/Text";
-
-export interface TUploadImage {
-  text: string
-  subtext?: string
-  onChange: React.ChangeEventHandler<HTMLInputElement>
-  selectedFiles: File[]
-  handleClick: () => void
-  inputRef: React.RefObject<HTMLInputElement>
-  fileInputStyle: React.CSSProperties
-}
+import { type TUploadImage } from "../../types";
 
 export default function UploadImage (Props: TUploadImage) {
   const { text, subtext, onChange, selectedFiles, fileInputStyle, handleClick, inputRef } = Props;
 
   return (
-    <div className="upload-image-container">
-      <div onClick={handleClick} className={`file-input ${selectedFiles.length ? "uploaded" : ""}`} style={fileInputStyle}>
+    <div className="upload-image-container" data-testid="upload-image-container">
+      <div onClick={handleClick} className={`file-input ${selectedFiles.length ? "uploaded" : ""}`} style={fileInputStyle} data-testid="upload-click">
         <div className={`overlay ${selectedFiles.length ? "uploaded" : ""}`} ></div>
         <div className="upload-image-text">
           <img alt="profile" src={uploadimageicon} className={`upload-icon ${selectedFiles.length ? "uploaded" : ""}`} />

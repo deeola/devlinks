@@ -60,7 +60,6 @@ export default function Auth () {
               dispatch(removeNotification("accountcreated-auth"));
             }, 6000);
           } else {
-            console.log(action.payload);
             if (
               action.payload &&
               action.payload.message === "Username already exists"

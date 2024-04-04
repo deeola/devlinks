@@ -16,8 +16,8 @@ export const Navbar = (Props: Tnavbar) => {
   return (
     <nav className="Navbar">
       <div className="custom-logo-container">
-        <Logo size="large" className="large-logo" />
-        <Logo size="small" className="small-logo"/>
+        <Logo logoDataTestId="large-logo" size="large" className="large-logo" />
+        <Logo logoDataTestId="small-logo" size="small" className="small-logo"/>
       </div>
       <div className="navlinks-button">
           <Tabs

@@ -84,7 +84,6 @@ export default function CustomeLink (Props: TProps) {
   const handleAddPrompt = () => {
     // Check if any prompt's answer is empty
 
-    console.log("oluwaloseyi");
     setLinkAvaialable(true);
     const hasEmptyAnswer = prompts.some((prompt) => prompt.answer === "");
 
@@ -220,7 +219,6 @@ export default function CustomeLink (Props: TProps) {
   const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const hasEmptyAnswer = prompts.some((prompt) => prompt.answer === "");
-    console.log("hasEmptyAnswer", hasEmptyAnswer);
 
     if (hasEmptyAnswer) {
       const updatedPrompts = prompts.map((prompt) => {
@@ -254,7 +252,6 @@ export default function CustomeLink (Props: TProps) {
     // Check for duplicate labels
     const hasDuplicateLabel = prompts.some((prompt) => prompt.label === "");
 
-    console.log("hasDuplicateLabel", hasDuplicateLabel);
     if (hasDuplicateLabel) {
       console.error("Cannot save link with duplicate label.");
 
@@ -283,9 +280,6 @@ export default function CustomeLink (Props: TProps) {
       })
     );
   };
-
-  console.log("isLinkAvailable is " + isLinkAvaialable);
-  console.log("link is  truly available  is " + getUpdatedLinks);
 
   return (
     <div className="customelinkcontainer">

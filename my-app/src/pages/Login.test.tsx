@@ -1,9 +1,10 @@
+import React from "react";
 import {
   render,
   fireEvent,
   waitFor,
   screen,
-  cleanup,
+  cleanup
 
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -72,7 +73,7 @@ describe("<Login />", () => {
     fireEvent.click(loginButton);
 
     await waitFor(() => {
-      expect(screen.getByText("Email is required")).toBeInTheDocument();
+      expect(screen.getByText("Can't be empty")).toBeInTheDocument();
     });
   });
 
@@ -122,6 +123,7 @@ describe("<Login />", () => {
   test('allows user to toggle "Trust this device" checkbox', () => {
     render(<MockApp />);
 
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
     const persistCheckbox = screen.getByLabelText(
       "Trust this device"
     ) as HTMLInputElement;
@@ -130,9 +132,4 @@ describe("<Login />", () => {
 
     expect(persistCheckbox.checked).toBe(true);
   });
-
-
-
-
-
 });

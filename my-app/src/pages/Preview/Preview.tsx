@@ -67,7 +67,6 @@ export default function Preview () {
   } else if (isError) {
     if ("status" in error && error.status === 404) {
       linksArray = [];
-      console.log(linksArray.length);
     } else {
       console.error("An error occurred:", error);
     }
