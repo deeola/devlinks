@@ -11,9 +11,19 @@
         "ecmaVersion": "latest",
         "sourceType": "module"
     },
-    // "plugins": [
-    //     "react"
-    // ],
+    "plugins": [
+        "react"
+    ],
+    "workingDirectories": [
+        "Dir1",
+        "Dir2"
+      ],
+      "validate": [
+        "javascript",
+        "javascriptreact",
+        "typescript",
+        "typescriptreact",
+      ],
     "rules": {
         "@typescript-eslint/explicit-function-return-type": "off",
         "semi": "off",
