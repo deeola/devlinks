@@ -33,6 +33,9 @@ jobs:
     # - name: Run Eslint
     #   run: npx eslint src/**/*.jsx src/**/*.tsx src/**/*.ts
     #   working-directory: my-app
+    - name: Install Utils
+      run: npm install util --legacy-peer-deps
+      working-directory: my-app
 
     - name: Run tests
       run: npm run test
