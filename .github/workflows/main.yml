@@ -20,16 +20,16 @@ jobs:
 
     - name: Install dependencies
       run: npm install --legacy-peer-deps
-      working-directory: devlinks/my-app
+      working-directory: my-app
 
     - name: Install Eslint plugin
       run: npm install eslint-plugin-react@latest --save-dev --legacy-peer-deps
-      working-directory: devlinks/my-app
+      working-directory: my-app
 
-    - name: Run Eslint
-      run: npx eslint src/**/*.jsx src/**/*.tsx src/**/*.ts
-      working-directory: devlinks/my-app
-
-    # - name: Run tests
-    #   run: npm test
+    # - name: Run Eslint
+    #   run: npx eslint src/**/*.jsx src/**/*.tsx src/**/*.ts
     #   working-directory: my-app
+
+    - name: Run tests
+      run: npm run test
+      working-directory: my-app
