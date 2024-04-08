@@ -27,7 +27,7 @@ jobs:
       working-directory: my-app
 
     - name: Run Eslint
-      run: npm run lint
+      run: npx eslint src/**/*.jsx src/**/*.tsx src/**/*.ts
       working-directory: my-app
 
     # - name: Run tests
