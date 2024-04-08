@@ -30,9 +30,9 @@ jobs:
       run: npm install eslint-plugin-react@latest --save-dev --legacy-peer-deps
       working-directory: my-app
 
-    # - name: Run Eslint
-    #   run: npx eslint src/**/*.jsx src/**/*.tsx src/**/*.ts
-    #   working-directory: my-app
+    - name: Run Eslint
+      run: npx eslint src/**/*.jsx src/**/*.tsx src/**/*.ts
+      working-directory: my-app
 
     - name: Run tests
       run: npm run test
