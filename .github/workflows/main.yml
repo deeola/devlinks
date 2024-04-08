@@ -18,6 +18,10 @@ jobs:
       with:
         node-version: 20.10.0
 
+    - name: Update dependencies
+      run: npm update --legacy-peer-deps
+      working-directory: my-app
+
     - name: Install dependencies
       run: npm install --legacy-peer-deps
       working-directory: my-app
