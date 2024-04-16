@@ -117,53 +117,57 @@ export default function PhonePreview (Props: TPhonePreviewProps) {
           </>
             )
           : (
-          <>
-            {mylinks.slice(0, shouldScroll ? 5 : undefined).map(
-              (myarray: any, index: any) =>
-                myarray.label !== "Please select a label" &&
-                myarray.answer !== "" && (
-                  <foreignObject
-                    key={index}
-                    x="35"
-                    y={278 + index * 64}
-                    width="237"
-                    height="44"
-                  >
-                    <a
-                      className="linkTagContainer"
-                      style={{ backgroundColor: myarray.bgColor }}
-                      href={myarray.answer}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <div className="linkTagSubContainer">
-                        <img
-                          src={myarray.image}
-                          alt="Imagee"
-                          style={{ width: "100%" }}
-                        />
-                        <SBody className="labelText" text={myarray.label} />
-                      </div>
-                      <div>
-                        <img
-                          src={arrow}
-                          alt="arrow"
-                          style={{ width: "100%" }}
-                        />
-                      </div>
-                    </a>
-                  </foreignObject>
-                )
-            )}
-            {shouldScroll && (
-              <foreignObject
-                x="35"
-                y={278 + 5 * 64}
-                width="237"
-                height="44"
-              ></foreignObject>
-            )}
-          </>
+          <foreignObject className="foreignObjContainer" >
+  <div className="scrollableLink">
+    {mylinks.map(
+      (myarray: any, index: any) =>
+        myarray.label !== "Please select a label" &&
+        myarray.answer !== "" && (
+          <foreignObject
+            key={index}
+            x="35"
+            y={278 + index * 64}
+            width="237"
+            height="44"
+          >
+            <a
+              className="linkTagContainer"
+              style={{ backgroundColor: myarray.bgColor }}
+              href={myarray.answer}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <div className="linkTagSubContainer">
+                <img
+                  src={myarray.image}
+                  alt="Imagee"
+                  className="linkImage"
+                />
+                <SBody className="labelText" text={myarray.label} />
+              </div>
+              <div className="linkArrowContainer" >
+                <img
+                  src={arrow}
+                  alt="arrow"
+                  className="linkArrow"
+                />
+              </div>
+            </a>
+          </foreignObject>
+        )
+    )}
+    {/* Empty foreignObject element to reserve space for scrollbar */}
+    {shouldScroll && (
+      <foreignObject
+        x="35"
+        y={278 + 5 * 64}
+        width="237"
+        height="44"
+      ></foreignObject>
+    )}
+  </div>
+</foreignObject>
+
             )}
       </svg>
     </div>

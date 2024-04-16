@@ -43,41 +43,93 @@ const getAllSpecificLinks = async (req, res) => {
     }
 };
 
+// const createNewLinks = async (req, res) => {
+//     try {
+//         if (!Array.isArray(req.body)) {
+//             return res.status(400).json({ message: 'Request body should be an array.' });
+//         }
+//         const linksToInsert = [];
+        
+
+//         console.log('req.body', req.body )
+
+//         for (const linkData of req.body) {
+//             const existingLink = await Link.findOne({
+//                 id: linkData.id,
+//                 label: linkData.label,
+//                 answer: linkData.answer
+//             });
+
+//             console.log('existingLink', existingLink);
+
+//             if (!existingLink) {
+//                 // No duplicate found, add to the array of links to insert
+//                 linksToInsert.push(linkData);
+//             }
+//         }
+
+//         if (linksToInsert.length === 0) {
+//             return res.status(400).json({ message: 'All provided links are duplicates.' });
+//         }
+
+//         const createdLinks = await Link.insertMany(linksToInsert);
+//         res.status(201).json({ message: 'Links created successfully.', createdLinks });
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ message: 'Internal Server Error.' });
+//     }
+// };
+
 const createNewLinks = async (req, res) => {
     try {
         if (!Array.isArray(req.body)) {
             return res.status(400).json({ message: 'Request body should be an array.' });
         }
+        const linksToUpdate = [];
         const linksToInsert = [];
 
-        console.log('req.body', req.body )
+        console.log('req.body', req.body );
 
         for (const linkData of req.body) {
-            const existingLink = await Link.findOne({
-                id: linkData.id,
-                label: linkData.label,
-                answer: linkData.answer
-            });
+            // Try to find an existing link with the provided id
+            const existingLink = await Link.findOne({ id: linkData.id });
+            console.log("exisiting link found", existingLink)
 
-            console.log('existingLink', existingLink);
-
-            if (!existingLink) {
-                // No duplicate found, add to the array of links to insert
-                linksToInsert.push(linkData);
+            if (existingLink) {
+                // If an existing link is found, update it with the new data
+                const updatedLink = await Link.findOneAndUpdate(
+                    { id: linkData.id },
+                    linkData, // Update with new data
+                    { new: true } // Return the modified document after update
+                );
+                linksToUpdate.push(updatedLink);
+            } else {
+                // If no existing link is found, insert the new data as a new link
+                const newLink = new Link(linkData);
+                const createdLink = await newLink.save();
+                linksToInsert.push(createdLink);
             }
         }
 
-        if (linksToInsert.length === 0) {
-            return res.status(400).json({ message: 'All provided links are duplicates.' });
+        let message;
+        if (linksToUpdate.length > 0 && linksToInsert.length > 0) {
+            message = 'Some links updated and some created successfully.';
+        } else if (linksToUpdate.length > 0) {
+            message = 'Links updated successfully.';
+        } else if (linksToInsert.length > 0) {
+            message = 'Links created successfully.';
+        } else {
+            message = 'No links were updated or created.';
         }
 
-        const createdLinks = await Link.insertMany(linksToInsert);
-        res.status(201).json({ message: 'Links created successfully.', createdLinks });
+
+        res.status(201).json({ message, updatedLinks: linksToUpdate, createdLinks: linksToInsert });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal Server Error.' });
     }
 };
+
 
 
 

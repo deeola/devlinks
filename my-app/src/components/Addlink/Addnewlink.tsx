@@ -122,7 +122,7 @@ export default function AddnewLink (Props: Tdropdown) {
                   <input
                     value={prompt.answer}
                     onChange={(e) => {
-                      handleInputChange(e, i);
+                      handleInputChange(e, i, prompt.label, prompt.id);
                     }}
                     type={type}
                     data-id="myInput"

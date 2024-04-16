@@ -88,7 +88,9 @@ export interface Tdropdown {
   prompts: IPrompts[]
   handleInputChange: (
     e: React.ChangeEvent<HTMLInputElement>,
-    i: number
+    i: number,
+    label: string,
+    uid: string
   ) => void
   handleDelete: (
     e: React.MouseEvent<HTMLButtonElement>,

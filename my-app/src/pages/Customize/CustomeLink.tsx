@@ -98,7 +98,7 @@ export default function CustomeLink (Props: TProps) {
           bgColor: "",
           image: "",
           placeholder: "",
-          userId: userId,
+          userId,
           error: false,
           errorMessage: ""
         }
@@ -136,11 +136,11 @@ export default function CustomeLink (Props: TProps) {
       if (index === i) {
         return {
           ...prompt,
-          bgColor: bgColor,
-          image: image,
-          placeholder: placeholder,
-          label: label,
-          userId: userId
+          bgColor,
+          image,
+          placeholder,
+          label,
+          userId
         };
       }
       return prompt;
@@ -152,17 +152,26 @@ export default function CustomeLink (Props: TProps) {
   // Function to handle input change
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement>,
-    i: number
+    i: number,
+    label: string,
+    uid: string
   ) => {
     const { value } = e.target;
-    setPrompts((prevPrompts: any) => {
-      const updatedPrompts = [...prevPrompts];
-      updatedPrompts[i] = {
-        ...updatedPrompts[i],
-        answer: value
-      };
-      return updatedPrompts;
-    });
+    console.log({ value, i, prompts });
+
+    setPrompts(prevPropmtItems => prevPropmtItems.map(item =>
+      item.label === label && item.id === uid ? { ...item, answer: value } : item
+    ));
+
+    // setPrompts((prevPrompts: any) => {
+    //   const updatedPrompts = [...prevPrompts];
+    //   console.log(updatedPrompts);
+    //   updatedPrompts[i] = {
+    //     ...updatedPrompts[i],
+    //     answer: value
+    //   };
+    //   return updatedPrompts;
+    // });
   };
 
   // Function to handle prompt deletion
@@ -219,7 +228,6 @@ export default function CustomeLink (Props: TProps) {
   const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const hasEmptyAnswer = prompts.some((prompt) => prompt.answer === "");
-
     if (hasEmptyAnswer) {
       const updatedPrompts = prompts.map((prompt) => {
         if (prompt.answer === "") {
@@ -252,11 +260,12 @@ export default function CustomeLink (Props: TProps) {
     // Check for duplicate labels
     const hasDuplicateLabel = prompts.some((prompt) => prompt.label === "");
 
-    if (hasDuplicateLabel) {
+    if (hasDuplicateLabel || hasEmptyAnswer) {
       console.error("Cannot save link with duplicate label.");
-
       return;
     }
+
+    console.log({ "prompts before mapping =": prompts });
 
     // Save prompts
     const newPromptsArray = prompts.map(
@@ -270,6 +279,8 @@ export default function CustomeLink (Props: TProps) {
       })
     );
 
+    console.log({ "prompts right before saving =": newPromptsArray });
+
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     addLinks(newPromptsArray);
     dispatch(
@@ -280,6 +291,10 @@ export default function CustomeLink (Props: TProps) {
       })
     );
   };
+
+  // button prop
+
+  const isButtonActive = prompts.length === 0 || (prompts[0].label === "" && prompts[0].answer === "");
 
   return (
     <div className="customelinkcontainer">
@@ -340,7 +355,7 @@ export default function CustomeLink (Props: TProps) {
 
         <div className="custome-save-button">
           <Button
-            backgroundSubtype={"active"}
+            backgroundSubtype={ isButtonActive ? "active" : "secondary"}
             classname="custom-button"
             text="Save"
             type="submit"
