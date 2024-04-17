@@ -127,7 +127,7 @@ export default function AddnewLink (Props: Tdropdown) {
                     type={type}
                     data-id="myInput"
                     className={`${prompt.error ? "error-text" : ""}`}
-                    placeholder={prompt.placeholder}
+                    placeholder={!prompt.error ? prompt.placeholder : ""}
                     id={`answer-${i}`}
                     name={`answer-${i}`}
                   />

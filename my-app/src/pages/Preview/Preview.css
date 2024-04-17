@@ -55,6 +55,15 @@
     object-fit: cover; 
 }
 
+.txtProfileImg{
+    background-color: #633CFF;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
 .preview-card-user-details{
     display: flex;
     flex-direction: column;

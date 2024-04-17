@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import React from "react";
@@ -22,9 +23,45 @@ export default function Preview () {
   const dispatch = useDispatch();
   // share link
 
+  const {
+    data: userInfo,
+    isSuccess: userInfoSuccess,
+    isError: userInfoError,
+    error: userInfoErrorData
+  } = useGetUsersInfoQuery(username);
+
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  let UserInformation;
+  let pictureLink;
+
+  if (userInfoSuccess) {
+    UserInformation = userInfo;
+  } else if (userInfoError) {
+    if ("status" in userInfoErrorData && userInfoErrorData.status === 404) {
+      UserInformation = {};
+    } else {
+      UserInformation = {};
+    }
+  }
+
   const link = `${window.location.origin}/shared/${username}`;
 
   const copyLink = () => {
+    if (!userInfo) {
+      dispatch(
+        addNotification({
+          type: "error",
+          message: "Unable to copy profile link. Enter your user info please.",
+          id: "cannot-copy-links"
+        })
+      );
+
+      setTimeout(() => {
+        dispatch(removeNotification("cannot-copy-links"));
+      }, 4000);
+      return;
+    }
+
     navigator.clipboard.writeText(link)
       .then(() => {
         dispatch(
@@ -54,27 +91,6 @@ export default function Preview () {
         }, 3000);
       });
   };
-
-  const {
-    data: userInfo,
-    isSuccess: userInfoSuccess,
-    isError: userInfoError,
-    error: userInfoErrorData
-  } = useGetUsersInfoQuery(username);
-
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  let UserInformation;
-  let pictureLink;
-
-  if (userInfoSuccess) {
-    UserInformation = userInfo;
-  } else if (userInfoError) {
-    if ("status" in userInfoErrorData && userInfoErrorData.status === 404) {
-      UserInformation = {};
-    } else {
-      UserInformation = {};
-    }
-  }
 
   const {
     data: pictured
@@ -108,12 +124,16 @@ export default function Preview () {
     }
   }
 
+  const urlRegex = /^https:\/\/deola-devlinks\.s3\.eu-central-1\.amazonaws\.com\/undefined/;
+
+  const testedProfilePicture = urlRegex.test(pictureLink);
+
   return (
     <div className="preview-container">
       <div className="preview-Header">
         <div className="preview-navbar-container">
           <Link to={"/customize"} className="preview-navbar-link">
-            <Button text="Back to Editor" />
+            <Button text="Back to Editor" buttonType="secondary" />
           </Link>
           <Button text="Share Link" classname="preview-navbar-link" onClick={copyLink} />
         </div>
@@ -122,11 +142,17 @@ export default function Preview () {
         <div className="preview-card-container">
           <div className="preview-card-user-details">
             <div className="profile-image-container">
-              <img
+
+              {
+                !testedProfilePicture
+                  ? <img
                 className="preview-img"
-                src={pictureLink}
+                src={pictureLink }
                 alt="display-img"
               />
+                  : <h1 className="preview-img txtProfileImg">{username.charAt(0).toUpperCase() }</h1>
+              }
+
             </div>
 
             <div className="preview-name-wrapper">

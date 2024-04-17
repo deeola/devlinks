@@ -12,14 +12,10 @@ import {
   useGetUsersInfoQuery,
   useGetPhotoQuery
 } from "../../state/api/apiSlice";
-// import { useAuth } from "../../context/AuthProvider";
 import { Link, useParams } from 'react-router-dom';
 
 export default function Share () {
   const { userId } = useParams();
-
-  console.log(userId);
-  //   const { auth } = useAuth();
   const username = userId;
 
   const {
@@ -46,7 +42,6 @@ export default function Share () {
   } = useGetPhotoQuery(UserInformation?.imgName);
 
   if (pictured?.url !== undefined) {
-    console.log(pictured.url);
     pictureLink = pictured.url;
   } else {
     pictureLink = "";
@@ -78,17 +73,26 @@ export default function Share () {
     return (<h1>no user found</h1>);
   }
 
+  const urlRegex = /^https:\/\/deola-devlinks\.s3\.eu-central-1\.amazonaws\.com\/undefined/;
+
+  const testedProfilePicture = urlRegex.test(pictureLink);
+
   return (
     <div className="preview-container">
       <section className="preview-body">
         <div className="share-preview-card-container">
           <div className="preview-card-user-details">
             <div className="profile-image-container">
-              <img
+            {
+                !testedProfilePicture
+                  ? <img
                 className="preview-img"
-                src={pictureLink}
+                src={pictureLink }
                 alt="display-img"
               />
+                  : <h1 className="preview-img txtProfileImg">{UserInformation?.email.charAt(0).toUpperCase() }</h1>
+              }
+
             </div>
 
             <div className="preview-name-wrapper">
