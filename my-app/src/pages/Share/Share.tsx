@@ -1,59 +1,24 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import React from "react";
-import "./Preview.css";
-import Button from "../../components/Button/Button";
+import "./Share.css";
+import "../Preview/Preview.css";
 import { MBody, SBody } from "../../components/Text/Text";
 import arrow from "../../assets/images/icon-arrow-right.svg";
-
-import { Link } from "react-router-dom";
-import { addNotification, removeNotification } from "../../state/notification/notificationSlice";
 import {
   useGetLinksQuery,
   useGetUsersInfoQuery,
   useGetPhotoQuery
 } from "../../state/api/apiSlice";
-import { useAuth } from "../../context/AuthProvider";
-import { useDispatch } from "react-redux";
+// import { useAuth } from "../../context/AuthProvider";
+import { useParams } from 'react-router-dom';
 
-export default function Preview () {
-  const { auth } = useAuth();
-  const username = auth?.user;
-  const dispatch = useDispatch();
-  // share link
+export default function Share () {
+  const { userId } = useParams();
 
-  const link = `${window.location.origin}/shared/${username}`;
-
-  const copyLink = () => {
-    navigator.clipboard.writeText(link)
-      .then(() => {
-        dispatch(
-          addNotification({
-            type: "success",
-            message: "Profile link copied to clipboard successfully",
-            id: "copy-links"
-          })
-        );
-
-        setTimeout(() => {
-          dispatch(removeNotification("copy-links"));
-        }, 4000);
-      })
-      .catch((err) => {
-        console.error('Could not copy text: ', err);
-        dispatch(
-          addNotification({
-            type: "error",
-            message: "Unable to copy profile link",
-            id: "copy-link-error"
-          })
-        );
-
-        setTimeout(() => {
-          dispatch(removeNotification("copy-link-error"));
-        }, 3000);
-      });
-  };
+  console.log(userId);
+  //   const { auth } = useAuth();
+  const username = userId;
 
   const {
     data: userInfo,
@@ -71,8 +36,6 @@ export default function Preview () {
   } else if (userInfoError) {
     if ("status" in userInfoErrorData && userInfoErrorData.status === 404) {
       UserInformation = {};
-    } else {
-      UserInformation = {};
     }
   }
 
@@ -81,6 +44,7 @@ export default function Preview () {
   } = useGetPhotoQuery(UserInformation?.imgName);
 
   if (pictured?.url !== undefined) {
+    console.log(pictured.url);
     pictureLink = pictured.url;
   } else {
     pictureLink = "";
@@ -110,18 +74,10 @@ export default function Preview () {
 
   return (
     <div className="preview-container">
-      <div className="preview-Header">
-        <div className="preview-navbar-container">
-          <Link to={"/customize"} className="preview-navbar-link">
-            <Button text="Back to Editor" />
-          </Link>
-          <Button text="Share Link" classname="preview-navbar-link" onClick={copyLink} />
-        </div>
-      </div>
       <div className="preview-body">
         <div className="preview-card-container">
-          <div className="preview-card-user-details">
-            <div className="profile-image-container">
+          <div className="preview-card-user-detailss">
+            <div className="profile-image-containers">
               <img
                 className="preview-img"
                 src={pictureLink}

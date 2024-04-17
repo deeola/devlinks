@@ -9,6 +9,7 @@ import Login from "./pages/Login";
 import PersistLogin from "./pages/auth/PersistLogin";
 import Missing from "./pages/auth/Missing";
 import RequireAuth from "./pages/auth/RequireAuth";
+import Share from "./pages/Share/Share";
 
 function App () {
   return (
@@ -16,6 +17,7 @@ function App () {
       <Route >
         <Route path="/" element={<Login/>} />
         <Route path="register" element={<Auth /> } />
+        <Route path="/shared/:userId" element={<Share /> } />
         <Route element={ <PersistLogin /> } >
           <Route element={ <RequireAuth /> } >
             <Route path="customize" element={<Customize />} />

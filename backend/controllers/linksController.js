@@ -43,43 +43,6 @@ const getAllSpecificLinks = async (req, res) => {
     }
 };
 
-// const createNewLinks = async (req, res) => {
-//     try {
-//         if (!Array.isArray(req.body)) {
-//             return res.status(400).json({ message: 'Request body should be an array.' });
-//         }
-//         const linksToInsert = [];
-        
-
-//         console.log('req.body', req.body )
-
-//         for (const linkData of req.body) {
-//             const existingLink = await Link.findOne({
-//                 id: linkData.id,
-//                 label: linkData.label,
-//                 answer: linkData.answer
-//             });
-
-//             console.log('existingLink', existingLink);
-
-//             if (!existingLink) {
-//                 // No duplicate found, add to the array of links to insert
-//                 linksToInsert.push(linkData);
-//             }
-//         }
-
-//         if (linksToInsert.length === 0) {
-//             return res.status(400).json({ message: 'All provided links are duplicates.' });
-//         }
-
-//         const createdLinks = await Link.insertMany(linksToInsert);
-//         res.status(201).json({ message: 'Links created successfully.', createdLinks });
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).json({ message: 'Internal Server Error.' });
-//     }
-// };
-
 const createNewLinks = async (req, res) => {
     try {
         if (!Array.isArray(req.body)) {

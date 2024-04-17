@@ -162,16 +162,6 @@ export default function CustomeLink (Props: TProps) {
     setPrompts(prevPropmtItems => prevPropmtItems.map(item =>
       item.label === label && item.id === uid ? { ...item, answer: value } : item
     ));
-
-    // setPrompts((prevPrompts: any) => {
-    //   const updatedPrompts = [...prevPrompts];
-    //   console.log(updatedPrompts);
-    //   updatedPrompts[i] = {
-    //     ...updatedPrompts[i],
-    //     answer: value
-    //   };
-    //   return updatedPrompts;
-    // });
   };
 
   // Function to handle prompt deletion
@@ -265,8 +255,6 @@ export default function CustomeLink (Props: TProps) {
       return;
     }
 
-    console.log({ "prompts before mapping =": prompts });
-
     // Save prompts
     const newPromptsArray = prompts.map(
       ({ answer, label, bgColor, image, id, userId }) => ({
@@ -279,8 +267,6 @@ export default function CustomeLink (Props: TProps) {
       })
     );
 
-    console.log({ "prompts right before saving =": newPromptsArray });
-
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     addLinks(newPromptsArray);
     dispatch(
@@ -290,6 +276,10 @@ export default function CustomeLink (Props: TProps) {
         id: "save-links"
       })
     );
+
+    setTimeout(() => {
+      dispatch(removeNotification("save-links"));
+    }, 3000);
   };
 
   // button prop
