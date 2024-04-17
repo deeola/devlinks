@@ -53,3 +53,16 @@ cursor: pointer;
 }
 
 
+@media (max-width: 430px){
+  .button-base{
+    font-size: 15px;
+    }
+    
+}
+
+@media (max-width: 325px){
+  .button-base{
+    font-size: 13px;
+    }
+    
+}

@@ -8,3 +8,35 @@
     width: 16%;
     min-height: 400px;
 }
+
+@media (max-width: 1024px){
+
+    .share-preview-card-container{
+        width: 50%;
+        height: 700px;
+    }
+
+}
+
+@media (max-width: 821px){
+    .share-preview-card-container{
+        height: 500px;
+    }
+
+}
+
+@media (max-width: 430px){
+
+    .share-preview-card-container{
+      background-color: unset;
+        position: unset;
+        top: unset;
+        padding: 20px 30px;
+        border-radius: 8px;
+        width: 100%;
+        min-height: unset;
+        margin-top: 80px;
+    
+    }
+    
+}

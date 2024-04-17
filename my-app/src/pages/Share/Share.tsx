@@ -128,7 +128,7 @@ export default function Share () {
           }
 
            <Link className="link-to" to={"/register"}>
-                <MBody className="loginQuestion" text={"Create yout own devlinks account"} />
+                <MBody className="loginQuestion" text={"Create your own devlinks account"} />
         </Link>
         </div>
       </section>
