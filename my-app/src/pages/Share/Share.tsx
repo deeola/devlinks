@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import React from "react";
@@ -11,7 +13,7 @@ import {
   useGetPhotoQuery
 } from "../../state/api/apiSlice";
 // import { useAuth } from "../../context/AuthProvider";
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 export default function Share () {
   const { userId } = useParams();
@@ -72,12 +74,16 @@ export default function Share () {
     }
   }
 
+  if (!userInfo && !isLoading) {
+    return (<h1>no user found</h1>);
+  }
+
   return (
     <div className="preview-container">
-      <div className="preview-body">
-        <div className="preview-card-container">
-          <div className="preview-card-user-detailss">
-            <div className="profile-image-containers">
+      <section className="preview-body">
+        <div className="share-preview-card-container">
+          <div className="preview-card-user-details">
+            <div className="profile-image-container">
               <img
                 className="preview-img"
                 src={pictureLink}
@@ -117,8 +123,11 @@ export default function Share () {
             linksArray.length === 0 && (<MBody text="No links added yet" className="no-links" />)
           }
 
+           <Link className="link-to" to={"/register"}>
+                <MBody className="loginQuestion" text={"Create yout own devlinks account"} />
+        </Link>
         </div>
-      </div>
+      </section>
     </div>
   );
 }

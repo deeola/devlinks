@@ -24,14 +24,14 @@ export const Navbar = (Props: Tnavbar) => {
             links="/"
             img={linkIcon}
             text="Links"
-            TabsType={isShowProfile === undefined ? "default" : "active"}
+            TabsType={isShowProfile ? "default" : "active"}
             onClick={() => { setIsShowProfile(false); }}
           />
           <Tabs
             links="/"
             img={profiledetails}
             text="Profile Details"
-            TabsType={isShowProfile !== undefined ? "default" : "active"}
+            TabsType={!isShowProfile ? "default" : "active"}
             onClick={() => { setIsShowProfile(true); }}
           />
         </div>

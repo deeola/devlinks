@@ -1,0 +1,10 @@
+
+.share-preview-card-container{
+    background-color: white;
+    /* position: absolute; */
+    /* top: -150px; */
+    padding: 40px;
+    border-radius: 8px;
+    width: 16%;
+    min-height: 400px;
+}

@@ -131,7 +131,7 @@ export default function Preview () {
 
             <div className="preview-name-wrapper">
               <MBody text={UserInformation?.firstName ? UserInformation.firstName : "" } className="preview-username" />
-              <MBody text={UserInformation?.lastName ? UserInformation.lastName : ""} className="preview-username" />
+              <MBody text={UserInformation?.lastName ? " " + UserInformation.lastName : ""} className="preview-username" />
             </div>
             <SBody text={username} className="preview-email" />
           </div>
