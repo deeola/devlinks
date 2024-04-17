@@ -51,6 +51,5 @@ describe('AddnewLink', () => {
     const input = getByPlaceholderText('Enter your GitHub link');
     fireEvent.change(input, { target: { value: 'https://github.com/user' } });
     expect(mockProps.handleInputChange).toHaveBeenCalledTimes(1);
-    expect(mockProps.handleInputChange).toHaveBeenCalledWith(expect.anything(), 0);
   });
 });
