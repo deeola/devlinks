@@ -171,7 +171,8 @@ export default function Profile (Props: IProfileUserInfo) {
           </div>
 
           <div>
-            <div className="custome-save-button ">
+            <div className="custome-save-button">
+             <Button classname="custom-button" text={"Deactive"} />
               <Button classname="custom-button" text={buttonText} />
             </div>
           </div>

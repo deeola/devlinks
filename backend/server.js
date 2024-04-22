@@ -51,8 +51,11 @@ app.use('/info', require('./routes/info'));
 app.use('/s3upload', require('./routes/uploadImage'));
 
 
-//  app.use(verifyJWT);
+
+// app.use(verifyJWT);
+
 app.use('/links', require('./routes/api/links'));
+app.use('/deactivate', require('./routes/delete'));
 
 app.all('*', (req, res) => {
     res.status(404);

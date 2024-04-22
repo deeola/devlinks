@@ -51,7 +51,6 @@ const createNewLinks = async (req, res) => {
         const linksToUpdate = [];
         const linksToInsert = [];
 
-        console.log('req.body', req.body );
 
         for (const linkData of req.body) {
             // Try to find an existing link with the provided id
@@ -121,8 +120,6 @@ const deleteLinks = async (req, res) => {
     try {
         const { id, userId } = req.body;
 
-        // Confirm data
-        console.log('id', id);
 
         if (!id) {
             return res.status(400).json({ message: 'Link ID required' });
